@@ -7,13 +7,13 @@ namespace dae
 	class Texture2D;
 
 	// todo: this should become final.
-	class GameObject 
+	class GameObject final
 	{
 	public:
 		virtual void Update();
 		virtual void Render() const;
 
-		void SetTexture(const std::string& filename);
+		//void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
 
 		GameObject() = default;
@@ -26,6 +26,6 @@ namespace dae
 	private:
 		Transform m_transform{};
 		// todo: mmm, every gameobject has a texture? Is that correct?
-		std::shared_ptr<Texture2D> m_texture{};
+		//std::shared_ptr<Texture2D> m_texture{};
 	};
 }
