@@ -1,0 +1,60 @@
+#include "TextComponent.h"
+#include <SDL_ttf.h>
+#include <stdexcept>
+#include "Renderer.h"
+
+//using namespace dae;
+using dae::Renderer;
+
+TextComponent::TextComponent(const std::string& text, std::unique_ptr<dae::Font>& font)
+	: m_NeedsUpdate{ true }, m_Text{ text }, m_FontUPtr{ std::move(font) }, m_TextTextureUPtr(nullptr)
+{
+
+}
+
+void TextComponent::Update()
+{
+	if (m_NeedsUpdate)
+	{
+		//TODO: add ability to change text color
+		const SDL_Color color = { 255, 255, 255, 255 }; //only supports white text atm
+		const auto surf = TTF_RenderText_Blended(m_FontUPtr->GetFont(), m_Text.c_str(), color); //surface
+
+		if (surf == nullptr)
+		{
+			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
+		}
+
+		auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf);
+
+		if (texture == nullptr)
+		{
+			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
+		}
+
+		SDL_FreeSurface(surf);
+		m_TextTextureUPtr = std::make_unique<dae::Texture2D>(texture);
+		m_NeedsUpdate = false;
+	}
+}
+
+void TextComponent::Render() const
+{
+	if (m_TextTextureUPtr == nullptr) return;
+
+	const auto& pos{ m_Transform.GetPosition() };
+	Renderer::GetInstance().RenderTexture(*m_TextTextureUPtr, pos.x, pos.y);
+}
+
+void TextComponent::SetText(const std::string& text)
+{
+	m_Text = text;
+	m_NeedsUpdate = true; //dirty flag pattern
+}
+
+void TextComponent::SetPosition(float x, float y)
+{
+	m_Transform.SetPosition(x, y, 0.0f);
+}
+
+
