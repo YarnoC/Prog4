@@ -10,6 +10,10 @@ class TextComponent final : public Component
 public:
 	void Update();
 	void inline FixedUpdate() {}; //textcomponent doesn't need a fixed update
+	void Render() const;
+
+	void SetText(const std::string& text);
+	void SetPosition(float x, float y);
 
 	TextComponent(const std::string& text, std::unique_ptr<dae::Font>& font);
 

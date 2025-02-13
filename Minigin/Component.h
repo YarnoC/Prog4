@@ -1,7 +1,10 @@
 #pragma once
 #include "Transform.h"
 
+namespace dae
+{
 class GameObject;
+}
 
 class Component
 {
@@ -11,10 +14,11 @@ public:
     virtual void Update() = 0;
     virtual void FixedUpdate() = 0;
 
-    GameObject* GetOwner() const;
+    dae::GameObject* GetOwner() const;
+    void SetOwner(dae::GameObject* ownerPtr);
 
 protected:
-    GameObject* m_OwnerPtr;
+    dae::GameObject* m_OwnerPtr;
     bool m_IsTerminal{ false };
 
     Component() = default;

@@ -1,6 +1,9 @@
 #pragma once
 #include <memory>
 #include "Transform.h"
+#include "Component.h"
+#include <vector>
+#include "Font.h"
 
 namespace dae
 {
@@ -16,6 +19,16 @@ namespace dae
 		//void SetTexture(const std::string& filename);
 		void SetPosition(float x, float y);
 
+		//TODO: maybe change this to a concept for better errors
+		template<typename ComponentType, typename... TArgs>
+		void AddComponent(const TArgs... tArgs)
+		{
+			//push back gets optimized so it's equally fast as emplace back
+			m_ComponentVec.emplace_back(std::make_unique<ComponentType>(std::move(tArgs)...));
+			//auto comp = m_ComponentVec.back();
+			//comp.SetOwner(this);
+		}
+
 		GameObject() = default;
 		virtual ~GameObject();
 		GameObject(const GameObject& other) = delete;
@@ -25,6 +38,7 @@ namespace dae
 
 	private:
 		Transform m_transform{};
+		std::vector<Component> m_ComponentVec{};
 		// todo: mmm, every gameobject has a texture? Is that correct?
 		//std::shared_ptr<Texture2D> m_texture{};
 	};
