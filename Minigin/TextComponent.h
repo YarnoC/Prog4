@@ -1,16 +1,16 @@
 #pragma once
-#include "Component.h"
+//#include "Component.h"
 #include "Font.h"
 #include "Texture2D.h"
 #include <memory>
 //#include <iostream>
+#include "Renderable.h"
 
-class TextComponent final : public Component
+class TextComponent final : public Renderable
 {
 public:
 	void Update();
-	void inline FixedUpdate() {}; //textcomponent doesn't need a fixed update
-	void Render() const;
+	void Render() const override;
 
 	void SetText(const std::string& text);
 	void SetPosition(float x, float y);
