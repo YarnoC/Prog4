@@ -21,7 +21,7 @@ namespace dae
 
 		//TODO: maybe change this to a concept for better errors
 		template<typename ComponentType, typename... TArgs>
-		void AddComponent(const TArgs... tArgs)
+		void AddComponent(TArgs... tArgs)
 		{
 			//push back gets optimized so it's equally fast as emplace back
 			m_ComponentVec.emplace_back(std::make_unique<ComponentType>(std::move(tArgs)...));
@@ -38,7 +38,7 @@ namespace dae
 
 	private:
 		Transform m_transform{};
-		std::vector<Component> m_ComponentVec{};
+		std::vector<std::unique_ptr<Component>> m_ComponentVec{};
 		// todo: mmm, every gameobject has a texture? Is that correct?
 		//std::shared_ptr<Texture2D> m_texture{};
 	};
