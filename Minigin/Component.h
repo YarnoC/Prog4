@@ -15,13 +15,12 @@ public:
     virtual inline void FixedUpdate() {};
 
     dae::GameObject* GetOwner() const;
-    void SetOwner(dae::GameObject* ownerPtr);
 
 protected:
     dae::GameObject* m_OwnerPtr;
     bool m_IsTerminal{ false };
 
-    Component() = default;
+    Component(dae::GameObject* ownerPtr);
 
 private:
 };

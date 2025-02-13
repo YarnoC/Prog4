@@ -24,7 +24,7 @@ namespace dae
 		void AddComponent(TArgs... tArgs)
 		{
 			//push back gets optimized so it's equally fast as emplace back
-			m_ComponentVec.emplace_back(std::make_unique<ComponentType>(std::move(tArgs)...));
+			m_ComponentVec.emplace_back(std::make_unique<ComponentType>(this, std::move(tArgs)...));
 			//auto comp = m_ComponentVec.back();
 			//comp.SetOwner(this);
 		}

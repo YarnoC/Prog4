@@ -16,7 +16,7 @@ public:
 	void SetPosition(float x, float y);
 
 	//TextComponent(const std::string& text, std::shared_ptr<dae::Font>& font);
-	TextComponent(const std::string& text, dae::Font* font);
+	TextComponent(dae::GameObject* ownerPtr, const std::string& text, dae::Font* font);
 
 	virtual ~TextComponent() = default;
 	TextComponent(const TextComponent& other) = delete;

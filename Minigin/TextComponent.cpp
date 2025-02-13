@@ -6,8 +6,8 @@
 //using namespace dae;
 using dae::Renderer;
 
-TextComponent::TextComponent(const std::string& text, dae::Font* font)
-	: m_NeedsUpdate{ true }, m_Text{ text }, m_FontPtr{ font }, m_TextTextureSPtr(nullptr)
+TextComponent::TextComponent(dae::GameObject* ownerPtr, const std::string& text, dae::Font* font)
+	: Component(ownerPtr), m_NeedsUpdate{ true }, m_Text{ text }, m_FontPtr{ font }, m_TextTextureSPtr(nullptr)
 {
 
 }

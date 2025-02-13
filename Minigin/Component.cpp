@@ -6,7 +6,6 @@ dae::GameObject* Component::GetOwner() const
     return m_OwnerPtr;
 }
 
-void Component::SetOwner(dae::GameObject* ownerPtr)
+Component::Component(dae::GameObject* ownerPtr) : m_OwnerPtr{ ownerPtr }
 {
-    m_OwnerPtr = ownerPtr;
 }
