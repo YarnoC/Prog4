@@ -9,10 +9,10 @@ class GameObject;
 class Component
 {
 public:
-    virtual inline ~Component(){};
+    virtual ~Component() = default;
 
-    virtual void Update() = 0;
-    virtual void FixedUpdate() = 0;
+    virtual inline void Update() {};
+    virtual inline void FixedUpdate() {};
 
     dae::GameObject* GetOwner() const;
     void SetOwner(dae::GameObject* ownerPtr);

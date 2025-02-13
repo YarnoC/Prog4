@@ -21,7 +21,7 @@ namespace dae
 
 		//TODO: maybe change this to a concept for better errors
 		template<typename ComponentType, typename... TArgs>
-		void AddComponent(const TArgs... tArgs)
+		void AddComponent(TArgs... tArgs)
 		{
 			//push back gets optimized so it's equally fast as emplace back
 			m_ComponentVec.emplace_back(std::make_unique<ComponentType>(std::move(tArgs)...));

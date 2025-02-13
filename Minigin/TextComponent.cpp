@@ -6,8 +6,8 @@
 //using namespace dae;
 using dae::Renderer;
 
-TextComponent::TextComponent(const std::string& text, std::unique_ptr<dae::Font>& font)
-	: m_NeedsUpdate{ true }, m_Text{ text }, m_FontUPtr{ std::move(font) }, m_TextTextureUPtr(nullptr)
+TextComponent::TextComponent(const std::string& text, dae::Font* font)
+	: m_NeedsUpdate{ true }, m_Text{ text }, m_FontPtr{ font }, m_TextTextureSPtr(nullptr)
 {
 
 }
@@ -18,7 +18,7 @@ void TextComponent::Update()
 	{
 		//TODO: add ability to change text color
 		const SDL_Color color = { 255, 255, 255, 255 }; //only supports white text atm
-		const auto surf = TTF_RenderText_Blended(m_FontUPtr->GetFont(), m_Text.c_str(), color); //surface
+		const auto surf = TTF_RenderText_Blended(m_FontPtr->GetFont(), m_Text.c_str(), color); //surface
 
 		if (surf == nullptr)
 		{
@@ -33,17 +33,17 @@ void TextComponent::Update()
 		}
 
 		SDL_FreeSurface(surf);
-		m_TextTextureUPtr = std::make_unique<dae::Texture2D>(texture);
+		m_TextTextureSPtr = std::make_unique<dae::Texture2D>(texture);
 		m_NeedsUpdate = false;
 	}
 }
 
 void TextComponent::Render() const
 {
-	if (m_TextTextureUPtr == nullptr) return;
+	if (m_TextTextureSPtr == nullptr) return;
 
 	const auto& pos{ m_Transform.GetPosition() };
-	Renderer::GetInstance().RenderTexture(*m_TextTextureUPtr, pos.x, pos.y);
+	Renderer::GetInstance().RenderTexture(*m_TextTextureSPtr, pos.x, pos.y);
 }
 
 void TextComponent::SetText(const std::string& text)
