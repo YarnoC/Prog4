@@ -89,7 +89,6 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& input = InputManager::GetInstance();
 
 	// todo: this update loop could use some work.
-    //auto lastTime{ std::chrono::high_resolution_clock::now() };
     double lag{ 0.0 };
 
 	bool doContinue = true;

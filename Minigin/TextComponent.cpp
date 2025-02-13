@@ -56,5 +56,3 @@ void TextComponent::SetPosition(float x, float y)
 {
 	m_Transform.SetPosition(x, y, 0.0f);
 }
-
-

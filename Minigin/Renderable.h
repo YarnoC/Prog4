@@ -7,8 +7,5 @@ public:
 	void virtual Render() const = 0;
 
 protected:
-	Renderable(dae::GameObject* ownerPtr) : Component(ownerPtr)
-	{
-
-	};
+	Renderable(dae::GameObject* ownerPtr) : Component(ownerPtr) {};
 };
