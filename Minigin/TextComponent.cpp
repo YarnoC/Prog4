@@ -2,6 +2,7 @@
 #include <SDL_ttf.h>
 #include <stdexcept>
 #include "Renderer.h"
+#include "GameObject.h"
 
 //using namespace dae;
 using dae::Renderer;
@@ -42,7 +43,7 @@ void TextComponent::Render() const
 {
 	if (m_TextTextureSPtr == nullptr) return;
 
-	const auto& pos{ m_Transform.GetPosition() };
+	const auto& pos{ m_OwnerPtr->GetTranform().GetPosition() };
 	Renderer::GetInstance().RenderTexture(*m_TextTextureSPtr, pos.x, pos.y);
 }
 
@@ -52,7 +53,7 @@ void TextComponent::SetText(const std::string& text)
 	m_NeedsUpdate = true; //dirty flag pattern
 }
 
-void TextComponent::SetPosition(float x, float y)
-{
-	m_Transform.SetPosition(x, y, 0.0f);
-}
+//void TextComponent::SetPosition(float x, float y)
+//{
+//	m_OwnerPtr->SetPosition(x, y);
+//}

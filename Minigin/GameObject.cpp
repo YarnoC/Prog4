@@ -4,6 +4,11 @@
 #include "Renderer.h"
 #include "TextComponent.h"
 
+dae::Transform dae::GameObject::GetTranform() const
+{
+	return m_Transform;
+}
+
 dae::GameObject::~GameObject() = default;
 
 void dae::GameObject::Update()
@@ -29,5 +34,5 @@ void dae::GameObject::Render() const
 
 void dae::GameObject::SetPosition(float x, float y)
 {
-	m_transform.SetPosition(x, y, 0.0f);
+	m_Transform.SetPosition(x, y, 0.0f);
 }

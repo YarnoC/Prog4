@@ -24,6 +24,8 @@ namespace dae
 			m_ComponentVec.emplace_back(std::make_unique<ComponentType>(this, std::move(tArgs)...));
 		}
 
+		virtual dae::Transform GetTranform() const;
+
 		GameObject() = default;
 		virtual ~GameObject();
 		GameObject(const GameObject& other) = delete;
@@ -32,7 +34,7 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		Transform m_transform{};
+		Transform m_Transform{};
 		std::vector<std::unique_ptr<Component>> m_ComponentVec{};
 	};
 }
