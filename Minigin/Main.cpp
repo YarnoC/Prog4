@@ -33,18 +33,18 @@ void load()
 	go->SetPosition(216, 180);
 	scene.Add(go);
 
-	//TODO: this returns a shared_ptr, change this to unique at some point or to raw
-	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	//TODO: this returns a shared_ptr, change this to raw
+	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 30);
 
 	auto textObject = std::make_shared<dae::GameObject>(); //TODO: make unique later
 	textObject->AddComponent<TextComponent>("Programming 4 Assignment", font.get());
-	textObject->SetPosition(80, 20);
+	textObject->SetPosition(100, 20);
 	scene.Add(textObject);
 
 	go = std::make_shared<dae::GameObject>();
 	go->AddComponent<FpsComponent>();
 	go->AddComponent<TextComponent>(" ", font.get());
-	go->SetPosition(20, 40);
+	go->SetPosition(20, 20);
 	scene.Add(go);
 }
 
