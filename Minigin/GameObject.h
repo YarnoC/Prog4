@@ -27,13 +27,20 @@ namespace dae
 		dae::Transform GetTranform() const;
 
 		template<typename ComponentType>
-		Component* GetComponent()
+		ComponentType* GetComponent()
 		{
-			auto&& result = std::find_if(m_ComponentVec.begin(), m_ComponentVec.end(), [&](const std::unique_ptr<Component>& compUPtr)
+			//didn't use find_if for this because i'd have to either dyn cast twice or ignore the it return val which causes a warning
+			for (const auto& comp : m_ComponentVec)
+			{
+				ComponentType* compPtr = dynamic_cast<ComponentType*>(comp.get());
+
+				if (compPtr != nullptr)
 				{
-					return dynamic_cast<ComponentType*>(compUPtr.get()) != nullptr;
-				});
-			return result->get();
+					return compPtr;
+				}
+			}
+
+			return nullptr;
 		}
 
 		
@@ -61,7 +68,10 @@ namespace dae
 				{
 					return dynamic_cast<ComponentType*>(compUPtr.get()) != nullptr;
 				});
-			return result->get();
+
+			if (result == m_ComponentVec.end()) return nullptr;
+
+			return result->get(); //returns Comp* which is not useful for actual operations but does not matter for this purpose
 		}
 	};
 }
