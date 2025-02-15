@@ -11,6 +11,6 @@ TextureComponent::TextureComponent(dae::GameObject* ownerPtr, const std::string&
 
 void TextureComponent::Render() const
 {
-	//const auto& pos = m_OwnerPtr->GetTranform().GetPosition();
-	//dae::Renderer::GetInstance().RenderTexture(*m_TexturePtr, pos.x, pos.y);
+	const auto& pos = m_OwnerPtr->GetTranform().GetPosition();
+	dae::Renderer::GetInstance().RenderTexture(*m_TexturePtr, pos.x, pos.y);
 }
