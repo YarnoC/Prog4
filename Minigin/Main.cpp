@@ -17,17 +17,19 @@
 #include "TextComponent.h"
 #include "TextureComponent.h"
 
+#include <iostream>
+
 void load()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
 
+	//background
 	auto go = std::make_shared<dae::GameObject>();
-	//set background
 	go->AddComponent<TextureComponent>("background.tga");
 	scene.Add(go);
 
+	//logo
 	go = std::make_shared<dae::GameObject>();
-	//set logo
 	go->AddComponent<TextureComponent>("logo.tga");
 	go->SetPosition(216, 180);
 	scene.Add(go);

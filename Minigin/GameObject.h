@@ -12,8 +12,8 @@ namespace dae
 	class GameObject final
 	{
 	public:
-		virtual void Update();
-		virtual void Render() const;
+		void Update();
+		void Render() const;
 
 		void SetPosition(float x, float y);
 
@@ -24,10 +24,27 @@ namespace dae
 			m_ComponentVec.emplace_back(std::make_unique<ComponentType>(this, std::move(tArgs)...));
 		}
 
-		virtual dae::Transform GetTranform() const;
+		dae::Transform GetTranform() const;
+
+		template<typename ComponentType>
+		Component* GetComponent()
+		{
+			auto&& result = std::find_if(m_ComponentVec.begin(), m_ComponentVec.end(), [&](const std::unique_ptr<Component>& compUPtr)
+				{
+					return dynamic_cast<ComponentType*>(compUPtr.get()) != nullptr;
+				});
+			return result->get();
+		}
+
+		
+		template<typename ComponentType>
+		bool HasComponent() const
+		{
+			return InternalGetComponent<ComponentType>() != nullptr;
+		}
 
 		GameObject() = default;
-		virtual ~GameObject();
+		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
@@ -36,5 +53,15 @@ namespace dae
 	private:
 		Transform m_Transform{};
 		std::vector<std::unique_ptr<Component>> m_ComponentVec{};
+
+		template<typename ComponentType>
+		const Component* InternalGetComponent() const //DO NOT USE ANYWHERE EXCEPT IN IMPL OF HASCOMPONENT()
+		{
+			const auto& result = std::find_if(m_ComponentVec.begin(), m_ComponentVec.end(), [&](const std::unique_ptr<Component>& compUPtr)
+				{
+					return dynamic_cast<ComponentType*>(compUPtr.get()) != nullptr;
+				});
+			return result->get();
+		}
 	};
 }
