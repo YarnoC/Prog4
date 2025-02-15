@@ -1,11 +1,12 @@
 #include "GameTime.h"
 #include <chrono>
+#include <algorithm>
 
 using namespace GAMETIME;
 
 double g_Dt = 0.0;
 double g_FixedDt = 1 / 60.0;
-std::chrono::steady_clock::time_point g_LastTime = std::chrono::high_resolution_clock::now();
+auto g_LastTime = std::chrono::high_resolution_clock::now();
 
 [[nodiscard]] double GAMETIME::GetDt()
 {
