@@ -15,6 +15,7 @@
 
 #include "GameObject.h"
 #include "TextComponent.h"
+#include "TextureComponent.h"
 
 void load()
 {
@@ -22,10 +23,12 @@ void load()
 
 	auto go = std::make_shared<dae::GameObject>();
 	//set background
+	go->AddComponent<TextureComponent>("background.tga");
 	scene.Add(go);
 
 	go = std::make_shared<dae::GameObject>();
 	//set logo
+	go->AddComponent<TextureComponent>("logo.tga");
 	go->SetPosition(216, 180);
 	scene.Add(go);
 
