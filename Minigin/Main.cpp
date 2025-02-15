@@ -16,8 +16,7 @@
 #include "GameObject.h"
 #include "TextComponent.h"
 #include "TextureComponent.h"
-
-#include <iostream>
+#include "FpsComponent.h"
 
 void load()
 {
@@ -41,6 +40,12 @@ void load()
 	textObject->AddComponent<TextComponent>("Programming 4 Assignment", font.get());
 	textObject->SetPosition(80, 20);
 	scene.Add(textObject);
+
+	go = std::make_shared<dae::GameObject>();
+	go->AddComponent<FpsComponent>();
+	go->AddComponent<TextComponent>(" ", font.get());
+	go->SetPosition(20, 40);
+	scene.Add(go);
 }
 
 int main(int, char*[]) {
