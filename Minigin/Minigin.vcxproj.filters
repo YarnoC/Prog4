@@ -72,6 +72,9 @@
     <ClInclude Include="Renderable.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="FpsComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -121,6 +124,9 @@
     </ClCompile>
     <ClCompile Include="TextureComponent.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="FpsComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
