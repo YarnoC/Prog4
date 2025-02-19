@@ -92,24 +92,23 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	bool doContinue = true;
 	while (doContinue)
 	{
-        GAMETIME::UpdateDt();
+        GameTime::UpdateDt();
 
-		lag += GAMETIME::GetDt();
+		lag += GameTime::GetDt();
 
 		doContinue = input.ProcessInput();
 
-		while (lag >= GAMETIME::GetFixedDt())
+		while (lag >= GameTime::GetFixedDt())
 		{
 			//do fixed update here
 
-            lag -= GAMETIME::GetFixedDt();
+            lag -= GameTime::GetFixedDt();
 		}
 
 		sceneManager.Update();
 		renderer.Render();
 
-		const auto sleepTime = GAMETIME::GetCurrentClockTime() + std::chrono::milliseconds(m_MsPerFrame) - std::chrono::high_resolution_clock::now();
+		const auto sleepTime = GameTime::GetCurrentClockTime() + std::chrono::milliseconds(m_MsPerFrame) - std::chrono::high_resolution_clock::now();
 		std::this_thread::sleep_for(sleepTime);
-		
 	}
 }

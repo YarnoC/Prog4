@@ -9,7 +9,7 @@
 
 void FpsComponent::Update()
 {
-	const double fps = 1.0 / GAMETIME::GetDt();
+	const double fps = 1.0 / GameTime::GetDt();
 	
 	TextComponent* ptr = m_OwnerPtr->GetComponent<TextComponent>();
 	if (ptr == nullptr)
