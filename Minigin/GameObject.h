@@ -27,6 +27,8 @@ namespace dae
 		template<IsComponentType ComponentType, typename... TArgs>
 		void AddComponent(TArgs... tArgs)
 		{
+			if (HasComponent<ComponentType>() == true) return; //only allow one (1) instance of a component type on a game object
+
 			m_ComponentVec.emplace_back(std::make_unique<ComponentType>(this, std::move(tArgs)...));
 		}
 
