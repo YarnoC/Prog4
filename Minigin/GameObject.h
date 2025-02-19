@@ -4,6 +4,7 @@
 #include "Component.h"
 #include <vector>
 #include "Font.h"
+#include "RenderComponent.h"
 
 namespace dae
 {
@@ -20,7 +21,7 @@ namespace dae
 	{
 	public:
 		void Update();
-		void Render() const;
+		void Render();
 
 		void SetPosition(float x, float y);
 
@@ -80,5 +81,8 @@ namespace dae
 
 			return result->get(); //returns Comp* which is not useful for actual operations but does not matter for this purpose
 		}
+
+		//cached components
+		RenderComponent* m_RenderComponent;
 	};
 }

@@ -8,7 +8,7 @@
 using dae::Renderer;
 
 TextComponent::TextComponent(dae::GameObject* ownerPtr, const std::string& text, dae::Font* font)
-	: Renderable(ownerPtr), m_NeedsUpdate{ true }, m_Text{ text }, m_FontPtr{ font }, m_TextTextureSPtr(nullptr)
+	: Component(ownerPtr), m_NeedsUpdate{ true }, m_Text{ text }, m_FontPtr{ font }, m_TextTextureSPtr(nullptr)
 {
 
 }
@@ -39,13 +39,18 @@ void TextComponent::Update()
 	}
 }
 
-void TextComponent::Render() const
+dae::Texture2D* TextComponent::GetTexturePtr() const
 {
-	if (m_TextTextureSPtr == nullptr) return;
-
-	const auto& pos{ m_OwnerPtr->GetTranform().GetPosition() };
-	Renderer::GetInstance().RenderTexture(*m_TextTextureSPtr, pos.x, pos.y);
+	return m_TextTextureSPtr.get();
 }
+
+//void TextComponent::Render() const
+//{
+//	if (m_TextTextureSPtr == nullptr) return;
+//
+//	const auto& pos{ m_OwnerPtr->GetTranform().GetPosition() };
+//	Renderer::GetInstance().RenderTexture(*m_TextTextureSPtr, pos.x, pos.y);
+//}
 
 void TextComponent::SetText(const std::string& text)
 {

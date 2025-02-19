@@ -1,11 +1,12 @@
 #pragma once
-#include "Renderable.h"
+#include "Component.h"
 #include "Texture2D.h"
 
-class TextureComponent : public Renderable
+class TextureComponent : public Component
 {
 public:
-	void Render() const override;
+	//void Render() const override;
+	dae::Texture2D* GetTexturePtr() const override;
 
 	TextureComponent(dae::GameObject* ownerPtr, const std::string& fileName);
 

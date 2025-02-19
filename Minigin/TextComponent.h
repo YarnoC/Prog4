@@ -1,16 +1,16 @@
 #pragma once
-//#include "Component.h"
+#include "Component.h"
 #include "Font.h"
 #include "Texture2D.h"
 #include <memory>
 //#include <iostream>
-#include "Renderable.h"
 
-class TextComponent final : public Renderable
+class TextComponent final : public Component
 {
 public:
 	void Update();
-	void Render() const override;
+	//void Render() const override;
+	dae::Texture2D* GetTexturePtr() const override;
 
 	void SetText(const std::string& text);
 	//void SetPosition(float x, float y);

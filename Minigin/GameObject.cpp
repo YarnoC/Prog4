@@ -19,17 +19,28 @@ void dae::GameObject::Update()
 	}
 }
 
-void dae::GameObject::Render() const
+//TODO: make awake so this can be const again
+void dae::GameObject::Render()
 {
-	for (auto&& comp : m_ComponentVec) //universal ref
+	//should maybe make an awake so i can do the stuff there
+	if (m_RenderComponent == nullptr)
 	{
-		auto renderPtr = dynamic_cast<Renderable*>(comp.get());
-
-		if (renderPtr)
-		{
-			renderPtr->Render();
-		}
+		m_RenderComponent = GetComponent<RenderComponent>();
 	}
+
+	if (m_RenderComponent == nullptr) return;
+
+	m_RenderComponent->Render();
+
+	//for (auto&& comp : m_ComponentVec) //universal ref
+	//{
+	//	auto renderPtr = dynamic_cast<Renderable*>(comp.get());
+	//
+	//	if (renderPtr)
+	//	{
+	//		renderPtr->Render();
+	//	}
+	//}
 }
 
 void dae::GameObject::SetPosition(float x, float y)
