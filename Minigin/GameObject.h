@@ -9,6 +9,13 @@ namespace dae
 {
 	class Texture2D;
 
+	template<typename ComponentType>
+	concept IsComponentType = requires(ComponentType) {
+		{
+			std::derived_from<ComponentType, Component>
+		};
+	};
+
 	class GameObject final
 	{
 	public:
@@ -17,8 +24,7 @@ namespace dae
 
 		void SetPosition(float x, float y);
 
-		//TODO: maybe change this to a concept for better errors
-		template<typename ComponentType, typename... TArgs>
+		template<IsComponentType ComponentType, typename... TArgs>
 		void AddComponent(TArgs... tArgs)
 		{
 			m_ComponentVec.emplace_back(std::make_unique<ComponentType>(this, std::move(tArgs)...));
@@ -26,7 +32,7 @@ namespace dae
 
 		dae::Transform GetTranform() const;
 
-		template<typename ComponentType>
+		template<IsComponentType ComponentType>
 		ComponentType* GetComponent()
 		{
 			//didn't use find_if for this because i'd have to either dyn cast twice or ignore the it return val which causes a warning
@@ -42,9 +48,8 @@ namespace dae
 
 			return nullptr;
 		}
-
 		
-		template<typename ComponentType>
+		template<IsComponentType ComponentType>
 		bool HasComponent() const
 		{
 			return InternalGetComponent<ComponentType>() != nullptr;
@@ -61,7 +66,7 @@ namespace dae
 		Transform m_Transform{};
 		std::vector<std::unique_ptr<Component>> m_ComponentVec{};
 
-		template<typename ComponentType>
+		template<IsComponentType ComponentType>
 		const Component* InternalGetComponent() const //DO NOT USE ANYWHERE EXCEPT IN IMPL OF HASCOMPONENT()
 		{
 			const auto& result = std::find_if(m_ComponentVec.begin(), m_ComponentVec.end(), [&](const std::unique_ptr<Component>& compUPtr)
