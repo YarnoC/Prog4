@@ -98,12 +98,13 @@ void dae::Minigin::Run(const std::function<void()>& load)
 
 		doContinue = input.ProcessInput();
 
-		while (lag >= GameTime::GetFixedDt())
-		{
-			//do fixed update here
-
-            lag -= GameTime::GetFixedDt();
-		}
+		//don't need this one yet so no need to cycle through it, most likely optimized out but still
+		//while (lag >= GameTime::GetFixedDt())
+		//{
+		//	//do fixed update here
+		//
+        //    lag -= GameTime::GetFixedDt();
+		//}
 
 		sceneManager.Update();
 		renderer.Render();
