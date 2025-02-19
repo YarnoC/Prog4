@@ -19,12 +19,12 @@ public:
     dae::GameObject* GetOwner() const;
 
 protected:
-    dae::GameObject* m_OwnerPtr;
     bool m_IsTerminal{ false };
     
 
     Component(dae::GameObject* ownerPtr);
 
 private:
+    dae::GameObject* m_OwnerPtr;
 };
 

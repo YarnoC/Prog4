@@ -11,7 +11,8 @@ void FpsComponent::Update()
 {
 	const double fps = 1.0 / GameTime::GetDt();
 	
-	TextComponent* ptr = m_OwnerPtr->GetComponent<TextComponent>();
+	//cache this, no getcomponent every frame in the hot code path
+	TextComponent* ptr = GetOwner()->GetComponent<TextComponent>();
 	if (ptr == nullptr)
 	{
 		std::cerr << "No TextComponent found\n";
