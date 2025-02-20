@@ -64,7 +64,7 @@ namespace dae
 		GameObject* GetParent() const;
 		void SetParent(GameObject* parent, bool keepWorldPos);
 		int GetChildCount() const;
-		GameObject* GetChildAt(int index) const;
+		GameObject* GetChildAt(size_t index) const;
 		const glm::vec3& GetWorldPosition();
 		void SetLocalPosition(const glm::vec3& newPos);
 		void SetPositionDirty();

@@ -51,7 +51,7 @@ int dae::GameObject::GetChildCount() const
 	return 0;
 }
 
-dae::GameObject* dae::GameObject::GetChildAt(int index) const
+dae::GameObject* dae::GameObject::GetChildAt(size_t index) const
 {
 	if (index < 0 or index >= m_ChildrenVec.size()) return nullptr;
 
