@@ -40,20 +40,18 @@ void load()
 	go->GetComponent<RenderComponent>()->LinkTexture(go->GetComponent<TextureComponent>()->GetTexturePtr());
 	scene.Add(go);
 
-	
-
 	//TODO: this returns a shared_ptr, change this to raw
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 30);
 
-	//don't name some of them differently, leads to stupid typing mistakes
 	auto textObject = std::make_shared<dae::GameObject>(); //TODO: make unique later
 	textObject->AddComponent<TextComponent>("Programming 4 Assignment", font.get());
 	textObject->SetPosition(100, 20);
 	textObject->AddComponent<RenderComponent>();
 	textObject->GetComponent<RenderComponent>()->LinkTexture(textObject->GetComponent<TextComponent>()->GetTexturePtr());
+
 	scene.Add(textObject);
 
-	//currently broken, will fix later but first the scenegraph
+	//TODO: FIX, currently broken, will fix later but first the scenegraph
 	/*
 
 	go = std::make_shared<dae::GameObject>();

@@ -33,6 +33,7 @@ namespace dae
 			m_ComponentVec.emplace_back(std::make_unique<ComponentType>(this, std::move(tArgs)...));
 		}
 
+		//TODO: make RemoveComponent
 		//use std::erase_if for the remove func
 
 		dae::Transform GetTranform() const;
@@ -60,6 +61,14 @@ namespace dae
 			return InternalGetComponent<ComponentType>() != nullptr;
 		}
 
+		GameObject* GetParent() const;
+		void SetParent(GameObject* parent, bool keepWorldPos);
+		int GetChildCount() const;
+		GameObject* GetChildAt(int index) const;
+		const glm::vec3& GetWorldPosition();
+		void SetLocalPosition(const glm::vec3& newPos);
+		void SetPositionDirty();
+
 		GameObject() = default;
 		~GameObject();
 		GameObject(const GameObject& other) = delete;
@@ -68,8 +77,21 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		Transform m_Transform{};
 		std::vector<std::unique_ptr<Component>> m_ComponentVec{};
+
+		GameObject* m_ParentPtr = nullptr;
+		std::vector<GameObject*> m_ChildrenVec;
+		Transform m_Transform{};
+		bool m_PositionIsDirty{ true };
+		glm::vec3 m_WorldPosition{};
+		glm::vec3 m_LocalPosition{};
+
+		//functions
+
+		void AddChild(GameObject* child);
+		void RemoveChild(GameObject* child);
+		void UpdateWorldPosition();
+		bool IsChild(GameObject* child) const;
 
 		template<IsComponentType ComponentType>
 		const Component* InternalGetComponent() const //DO NOT USE ANYWHERE EXCEPT IN IMPL OF HASCOMPONENT()

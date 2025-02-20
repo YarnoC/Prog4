@@ -4,12 +4,127 @@
 #include "Renderer.h"
 #include "TextComponent.h"
 
+#include <functional>
+
 dae::Transform dae::GameObject::GetTranform() const
 {
 	return m_Transform;
 }
 
+dae::GameObject* dae::GameObject::GetParent() const
+{
+	return nullptr;
+}
+
+void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPos)
+{
+	if (IsChild(parent) or parent == this or m_ParentPtr == parent) return;
+
+	if (parent == nullptr)
+	{
+		SetLocalPosition(GetWorldPosition());
+	}
+	else
+	{
+		if (keepWorldPos)
+		{
+			SetLocalPosition(GetWorldPosition() - parent->GetWorldPosition());
+		}
+		SetPositionDirty();
+	}
+
+	if (m_ParentPtr)
+	{
+		m_ParentPtr->RemoveChild(this);
+	}
+
+	m_ParentPtr = parent;
+
+	if (m_ParentPtr)
+	{
+		m_ParentPtr->AddChild(this);
+	}
+}
+
+int dae::GameObject::GetChildCount() const
+{
+	return 0;
+}
+
+dae::GameObject* dae::GameObject::GetChildAt(int index) const
+{
+	if (index < 0 or index >= m_ChildrenVec.size()) return nullptr;
+
+	return m_ChildrenVec[index];
+}
+
+const glm::vec3& dae::GameObject::GetWorldPosition()
+{
+	if (m_PositionIsDirty)
+	{
+		UpdateWorldPosition();
+	}
+	return m_WorldPosition;
+}
+
+void dae::GameObject::SetLocalPosition(const glm::vec3& newPos)
+{
+	m_LocalPosition = newPos;
+	SetPositionDirty();
+}
+
+void dae::GameObject::SetPositionDirty()
+{
+	m_PositionIsDirty = true;
+	std::for_each(m_ChildrenVec.begin(), m_ChildrenVec.end(), std::mem_fn(&dae::GameObject::SetPositionDirty));
+}
+
 dae::GameObject::~GameObject() = default;
+
+void dae::GameObject::AddChild(GameObject* child)
+{
+	m_ChildrenVec.push_back(child);
+}
+
+void dae::GameObject::RemoveChild(GameObject* child)
+{
+	auto it = std::find_if(m_ChildrenVec.begin(), m_ChildrenVec.end(), [&](const auto& ownedChild)
+		{
+			return ownedChild == child;
+		});
+
+	if (it == m_ChildrenVec.end()) return;
+
+	m_ChildrenVec.erase(it); //doesn't matter if it invalidates iterators because only doing 1 item at a time
+}
+
+void dae::GameObject::UpdateWorldPosition()
+{
+	if (m_PositionIsDirty)
+	{
+		if (m_ParentPtr == nullptr)
+		{
+			m_WorldPosition = m_LocalPosition;
+		}
+		else
+		{
+			m_WorldPosition = m_ParentPtr->GetWorldPosition() + m_LocalPosition;
+		}
+	}
+	m_PositionIsDirty = false;
+}
+
+bool dae::GameObject::IsChild(GameObject* object) const
+{
+	for (const auto& child : m_ChildrenVec)
+	{
+		if (child == object)
+		{
+			return true;
+		}
+	}
+	return false;
+}
 
 void dae::GameObject::Update()
 {
