@@ -33,6 +33,8 @@ namespace dae
 			m_ComponentVec.emplace_back(std::make_unique<ComponentType>(this, std::move(tArgs)...));
 		}
 
+		//use std::erase_if for the remove func
+
 		dae::Transform GetTranform() const;
 
 		template<IsComponentType ComponentType>

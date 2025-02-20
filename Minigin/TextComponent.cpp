@@ -8,12 +8,12 @@
 using dae::Renderer;
 
 TextComponent::TextComponent(dae::GameObject* ownerPtr, const std::string& text, dae::Font* font)
-	: Component(ownerPtr), m_NeedsUpdate{ true }, m_Text{ text }, m_FontPtr{ font }, m_TextTextureSPtr(nullptr)
+	: Component(ownerPtr), m_NeedsUpdate{ true }, m_Text{ text }, m_FontPtr{ font }, m_TextTextureUPtr(nullptr)
 {
-
+	UpdateText();
 }
 
-void TextComponent::Update()
+void TextComponent::UpdateText()
 {
 	if (m_NeedsUpdate)
 	{
@@ -34,14 +34,22 @@ void TextComponent::Update()
 		}
 
 		SDL_FreeSurface(surf);
-		m_TextTextureSPtr = std::make_unique<dae::Texture2D>(texture);
+		//m_TextTextureSPtr = std::make_unique<dae::Texture2D>(texture);
+		//m_TextTexturePtr = dae::Texture2D(texture);
+		m_TextTextureUPtr = std::make_unique<dae::Texture2D>(texture);
 		m_NeedsUpdate = false;
 	}
 }
 
+void TextComponent::Update()
+{
+	UpdateText();
+}
+
 dae::Texture2D* TextComponent::GetTexturePtr() const
 {
-	return m_TextTextureSPtr.get();
+	//return m_TextTextureSPtr.get();
+	return m_TextTextureUPtr.get();
 }
 
 //void TextComponent::Render() const

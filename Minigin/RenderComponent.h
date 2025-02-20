@@ -7,10 +7,13 @@ namespace dae
 	class GameObject;
 }
 
-class RenderComponent : Component
+class RenderComponent : public Component
 {
 public:
 	void Render() const;
+
+	//there has to be a better way than this, ask alex or tom
+	void LinkTexture(dae::Texture2D* texture);
 
 	RenderComponent(dae::GameObject* ownerPtr);
 
@@ -21,6 +24,6 @@ public:
 	RenderComponent& operator=(RenderComponent&&) = delete;
 
 private:
-	std::vector<Component*> m_RenderVec;
+	dae::Texture2D* m_LinkedTexture;
 };
 

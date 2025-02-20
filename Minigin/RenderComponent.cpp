@@ -5,20 +5,17 @@
 
 void RenderComponent::Render() const
 {
-	for (const auto& comp : m_RenderVec)
-	{
-		//const auto& pos = comp->GetOwner()->GetTranform();
-		const auto& pos = comp->GetOwner()->GetTranform().GetPosition();
-		dae::Renderer::GetInstance().RenderTexture(*(comp->GetTexturePtr()), pos.x, pos.y);
-	}
+	if (m_LinkedTexture == nullptr) return; //HACK: ask about optimizing the linking
+
+	const auto& pos = GetOwner()->GetTranform().GetPosition();
+	dae::Renderer::GetInstance().RenderTexture(*m_LinkedTexture, pos.x, pos.y);
 }
 
-RenderComponent::RenderComponent(dae::GameObject* ownerPtr) : Component(ownerPtr)
+void RenderComponent::LinkTexture(dae::Texture2D* texture)
+{
+	m_LinkedTexture = texture;
+}
+
+RenderComponent::RenderComponent(dae::GameObject* ownerPtr) : Component(ownerPtr), m_LinkedTexture{nullptr}
 {
 }
-
-//void TextureComponent::Render() const
-//{
-//	const auto& pos = m_OwnerPtr->GetTranform().GetPosition();
-//	dae::Renderer::GetInstance().RenderTexture(*m_TexturePtr, pos.x, pos.y);
-//}

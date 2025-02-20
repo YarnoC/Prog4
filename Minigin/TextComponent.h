@@ -29,5 +29,9 @@ private:
 	std::string m_Text;
 	//dae::Transform m_Transform{}; //move whole gameobect instead
 	dae::Font* m_FontPtr;
-	std::shared_ptr<dae::Texture2D> m_TextTextureSPtr; //TODO: probably change this to a raw pointer as well
+	//std::shared_ptr<dae::Texture2D> m_TextTextureSPtr; //TODO: probably change this to a raw pointer as well
+	std::unique_ptr<dae::Texture2D> m_TextTextureUPtr;
+	//dae::Texture2D* m_TextTexturePtr;
+
+	void UpdateText();
 };
