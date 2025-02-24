@@ -18,6 +18,7 @@
 #include "TextureComponent.h"
 #include "FpsComponent.h"
 #include "RenderComponent.h"
+#include "RotatorComponent.h"
 
 void load()
 {
@@ -35,7 +36,7 @@ void load()
 	//logo
 	go = std::make_shared<dae::GameObject>();
 	go->AddComponent<TextureComponent>("logo.tga");
-	go->SetPosition(216, 180);
+	go->SetLocalPosition({ 216, 180, 0 });
 	go->AddComponent<RenderComponent>();
 	go->GetComponent<RenderComponent>()->LinkTexture(go->GetComponent<TextureComponent>()->GetTexturePtr());
 	scene.Add(go);
@@ -45,11 +46,40 @@ void load()
 
 	auto textObject = std::make_shared<dae::GameObject>(); //TODO: make unique later
 	textObject->AddComponent<TextComponent>("Programming 4 Assignment", font.get());
-	textObject->SetPosition(100, 20);
+	textObject->SetLocalPosition({ 100, 20, 0 });
 	textObject->AddComponent<RenderComponent>();
 	textObject->GetComponent<RenderComponent>()->LinkTexture(textObject->GetComponent<TextComponent>()->GetTexturePtr());
 
 	scene.Add(textObject);
+
+	auto axisObj = std::make_shared<dae::GameObject>();
+	axisObj->SetLocalPosition({100, 100, 0});
+
+	//axisObj->AddComponent<RotatorComponent>(glm::vec3{100, 100, 100}, 1.f, false);
+	
+	auto qbertObj = std::make_shared<dae::GameObject>();
+	qbertObj->SetLocalPosition({ 100, 0, 0 });
+	qbertObj->SetParent(axisObj.get(), false);
+	qbertObj->AddComponent<RenderComponent>();
+	auto renderComp = qbertObj->GetComponent<RenderComponent>();
+	qbertObj->AddComponent<TextureComponent>("QBert.png");
+	auto textureObj = qbertObj->GetComponent<TextureComponent>();
+	renderComp->LinkTexture(textureObj->GetTexturePtr());
+	qbertObj->AddComponent<RotatorComponent>(1.f, false);
+
+	auto qbertObj2 = std::make_shared<dae::GameObject>();
+	qbertObj2->SetLocalPosition({ 100, 0, 0 });
+	qbertObj2->SetParent(qbertObj.get(), false);
+	qbertObj2->AddComponent<RenderComponent>();
+	auto renderComp2 = qbertObj2->GetComponent<RenderComponent>();
+	qbertObj2->AddComponent<TextureComponent>("QBert.png");
+	auto textureObj2 = qbertObj2->GetComponent<TextureComponent>();
+	renderComp2->LinkTexture(textureObj2->GetTexturePtr());
+	qbertObj2->AddComponent<RotatorComponent>(1.f, false);
+
+	scene.Add(axisObj);
+	scene.Add(qbertObj);
+	scene.Add(qbertObj2);
 
 	//TODO: FIX, currently broken, will fix later but first the scenegraph
 	/*

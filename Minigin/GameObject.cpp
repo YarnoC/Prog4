@@ -13,7 +13,7 @@ dae::Transform dae::GameObject::GetTranform() const
 
 dae::GameObject* dae::GameObject::GetParent() const
 {
-	return nullptr;
+	return m_ParentPtr;
 }
 
 void dae::GameObject::SetParent(GameObject* parent, bool keepWorldPos)
