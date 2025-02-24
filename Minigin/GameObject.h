@@ -67,6 +67,7 @@ namespace dae
 		GameObject* GetChildAt(size_t index) const;
 		const glm::vec3& GetWorldPosition();
 		void SetLocalPosition(const glm::vec3& newPos);
+		glm::vec3 GetLocalPosition() const;
 		void SetPositionDirty();
 
 		GameObject() = default;

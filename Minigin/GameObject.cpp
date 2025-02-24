@@ -73,6 +73,11 @@ void dae::GameObject::SetLocalPosition(const glm::vec3& newPos)
 	SetPositionDirty();
 }
 
+glm::vec3 dae::GameObject::GetLocalPosition() const
+{
+	return m_LocalPosition;
+}
+
 void dae::GameObject::SetPositionDirty()
 {
 	m_PositionIsDirty = true;
