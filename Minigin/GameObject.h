@@ -61,6 +61,8 @@ namespace dae
 			return InternalGetComponent<ComponentType>() != nullptr;
 		}
 
+		bool IsTerminal() const;
+
 		GameObject* GetParent() const;
 		void SetParent(GameObject* parent, bool keepWorldPos);
 		int GetChildCount() const;
@@ -93,6 +95,8 @@ namespace dae
 		void RemoveChild(GameObject* child);
 		void UpdateWorldPosition();
 		bool IsChild(GameObject* child) const;
+
+		bool m_IsTerminal{ false };
 
 		template<IsComponentType ComponentType>
 		const Component* InternalGetComponent() const //DO NOT USE ANYWHERE EXCEPT IN IMPL OF HASCOMPONENT()

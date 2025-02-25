@@ -40,3 +40,11 @@ void Scene::Render() const
 	}
 }
 
+void dae::Scene::RemoveTerminalObjects()
+{
+	std::erase_if(m_objects, [](std::unique_ptr<dae::GameObject>& obj)
+		{
+			return obj->IsTerminal();
+		});
+}
+

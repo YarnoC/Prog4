@@ -41,7 +41,7 @@ void load()
 	go->GetComponent<RenderComponent>()->LinkTexture(go->GetComponent<TextureComponent>()->GetTexturePtr());
 	scene.Add(go);
 
-	//TODO: this returns a shared_ptr, change this to raw
+	//TODO: this returns a shared_ptr, change this to raw, maybe not need to ask about something here
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 30);
 
 	auto textObject = std::make_unique<dae::GameObject>();

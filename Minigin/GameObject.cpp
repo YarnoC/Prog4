@@ -11,6 +11,11 @@ dae::Transform dae::GameObject::GetTranform() const
 	return m_Transform;
 }
 
+bool dae::GameObject::IsTerminal() const
+{
+	return m_IsTerminal;
+}
+
 dae::GameObject* dae::GameObject::GetParent() const
 {
 	return m_ParentPtr;

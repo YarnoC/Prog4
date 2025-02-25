@@ -16,6 +16,8 @@ namespace dae
 		void Update();
 		void Render() const;
 
+		void RemoveTerminalObjects();
+
 		~Scene();
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;
