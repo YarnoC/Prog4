@@ -63,6 +63,9 @@ namespace dae
 
 		bool IsTerminal() const;
 
+		//schedules for destruction after the update loop
+		void Destroy();
+
 		GameObject* GetParent() const;
 		void SetParent(GameObject* parent, bool keepWorldPos);
 		int GetChildCount() const;

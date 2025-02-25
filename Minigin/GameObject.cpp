@@ -16,6 +16,11 @@ bool dae::GameObject::IsTerminal() const
 	return m_IsTerminal;
 }
 
+void dae::GameObject::Destroy()
+{
+	m_IsTerminal = true;
+}
+
 dae::GameObject* dae::GameObject::GetParent() const
 {
 	return m_ParentPtr;

@@ -7,7 +7,7 @@
 #include <math.h>
 #include <iostream>
 
-static const float m_2Pi = static_cast<float>(M_PI * 2);
+const float RotatorComponent::m_2Pi = static_cast<float>(M_PI * 2);
 
 void RotatorComponent::Update()
 {
