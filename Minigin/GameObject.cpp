@@ -19,6 +19,12 @@ bool dae::GameObject::IsTerminal() const
 void dae::GameObject::Destroy()
 {
 	m_IsTerminal = true;
+
+	//schedule destroy for all children in scenegraph
+	for (const auto& child : m_ChildrenVec)
+	{
+		child->Destroy();
+	}
 }
 
 dae::GameObject* dae::GameObject::GetParent() const
@@ -93,8 +99,6 @@ void dae::GameObject::SetPositionDirty()
 	m_PositionIsDirty = true;
 	std::for_each(m_ChildrenVec.begin(), m_ChildrenVec.end(), std::mem_fn(&dae::GameObject::SetPositionDirty));
 }
-
-//dae::GameObject::~GameObject() = default;
 
 void dae::GameObject::AddChild(GameObject* child)
 {
@@ -171,16 +175,6 @@ void dae::GameObject::Render()
 	if (m_RenderComponent == nullptr) return;
 
 	m_RenderComponent->Render();
-
-	//for (auto&& comp : m_ComponentVec) //universal ref
-	//{
-	//	auto renderPtr = dynamic_cast<Renderable*>(comp.get());
-	//
-	//	if (renderPtr)
-	//	{
-	//		renderPtr->Render();
-	//	}
-	//}
 }
 
 void dae::GameObject::SetPosition(float x, float y)
