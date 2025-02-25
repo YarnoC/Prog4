@@ -16,6 +16,10 @@ public:
     virtual inline void FixedUpdate() {};
     virtual dae::Texture2D* GetTexturePtr() const;
 
+    //marks as terminal and will be destroyed at and of late update
+    void Destroy();
+    bool IsTerminal();
+
     dae::GameObject* GetOwner() const;
 
 protected:

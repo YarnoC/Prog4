@@ -1,6 +1,16 @@
 #include "Component.h"
 #include "GameObject.h"
 
+void Component::Destroy()
+{
+    m_IsTerminal = true;
+}
+
+bool Component::IsTerminal()
+{
+    return m_IsTerminal;
+}
+
 dae::GameObject* Component::GetOwner() const
 {
     return m_OwnerPtr;

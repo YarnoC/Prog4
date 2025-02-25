@@ -21,6 +21,7 @@ namespace dae
 	{
 	public:
 		void Update();
+		void LateUpdate();
 		void Render();
 
 		void SetPosition(float x, float y);
@@ -61,10 +62,10 @@ namespace dae
 			return InternalGetComponent<ComponentType>() != nullptr;
 		}
 
-		bool IsTerminal() const;
 
-		//schedules for destruction after the update loop
+		//schedules for destruction at the end of the late update
 		void Destroy();
+		bool IsTerminal() const;
 
 		GameObject* GetParent() const;
 		void SetParent(GameObject* parent, bool keepWorldPos);

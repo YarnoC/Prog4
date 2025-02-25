@@ -149,6 +149,16 @@ void dae::GameObject::Update()
 	}
 }
 
+void dae::GameObject::LateUpdate()
+{
+
+	//destroy any terminal components
+	std::erase_if(m_ComponentVec, [](std::unique_ptr<Component>& comp)
+		{
+			return comp->IsTerminal();
+		});
+}
+
 //TODO: make awake so this can be const again
 void dae::GameObject::Render()
 {
