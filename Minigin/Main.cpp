@@ -25,7 +25,7 @@ void load()
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
 
 	//background
-	auto go = std::make_shared<dae::GameObject>();
+	auto go = std::make_unique<dae::GameObject>();
 	go->AddComponent<RenderComponent>();
 	go->AddComponent<TextureComponent>("background.tga");
 	auto rend = go->GetComponent<RenderComponent>();
@@ -34,7 +34,7 @@ void load()
 	scene.Add(go);
 
 	//logo
-	go = std::make_shared<dae::GameObject>();
+	go = std::make_unique<dae::GameObject>();
 	go->AddComponent<TextureComponent>("logo.tga");
 	go->SetLocalPosition({ 216, 180, 0 });
 	go->AddComponent<RenderComponent>();
@@ -44,7 +44,7 @@ void load()
 	//TODO: this returns a shared_ptr, change this to raw
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 30);
 
-	auto textObject = std::make_shared<dae::GameObject>(); //TODO: make unique later
+	auto textObject = std::make_unique<dae::GameObject>();
 	textObject->AddComponent<TextComponent>("Programming 4 Assignment", font.get());
 	textObject->SetLocalPosition({ 100, 20, 0 });
 	textObject->AddComponent<RenderComponent>();
@@ -52,12 +52,10 @@ void load()
 
 	scene.Add(textObject);
 
-	auto axisObj = std::make_shared<dae::GameObject>();
+	auto axisObj = std::make_unique<dae::GameObject>();
 	axisObj->SetLocalPosition({100, 100, 0});
 
-	//axisObj->AddComponent<RotatorComponent>(glm::vec3{100, 100, 100}, 1.f, false);
-	
-	auto qbertObj = std::make_shared<dae::GameObject>();
+	auto qbertObj = std::make_unique<dae::GameObject>();
 	qbertObj->SetLocalPosition({ 100, 0, 0 });
 	qbertObj->SetParent(axisObj.get(), false);
 	qbertObj->AddComponent<RenderComponent>();
@@ -67,7 +65,7 @@ void load()
 	renderComp->LinkTexture(textureObj->GetTexturePtr());
 	qbertObj->AddComponent<RotatorComponent>(1.f, false);
 
-	auto qbertObj2 = std::make_shared<dae::GameObject>();
+	auto qbertObj2 = std::make_unique<dae::GameObject>();
 	qbertObj2->SetLocalPosition({ 100, 0, 0 });
 	qbertObj2->SetParent(qbertObj.get(), false);
 	qbertObj2->AddComponent<RenderComponent>();

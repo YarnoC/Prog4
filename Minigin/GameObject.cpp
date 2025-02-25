@@ -84,7 +84,7 @@ void dae::GameObject::SetPositionDirty()
 	std::for_each(m_ChildrenVec.begin(), m_ChildrenVec.end(), std::mem_fn(&dae::GameObject::SetPositionDirty));
 }
 
-dae::GameObject::~GameObject() = default;
+//dae::GameObject::~GameObject() = default;
 
 void dae::GameObject::AddChild(GameObject* child)
 {
