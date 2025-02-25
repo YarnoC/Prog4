@@ -3,12 +3,20 @@
 #include <cmath>
 #include "GameTime.h"
 
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include <iostream>
+
+static const float m_2Pi = static_cast<float>(M_PI * 2);
 
 void RotatorComponent::Update()
 {
 	const auto& owner = GetOwner();
 	m_CurrentAngle += static_cast<float>(m_RadPerSec * GameTime::GetDt());
+	if (m_CurrentAngle > m_2Pi)
+	{
+		m_CurrentAngle -= m_2Pi;
+	}
 	glm::vec3 pos{};
 	int angleDirection = m_TurnsClockWise ? -1 : 1;
 	pos.x = std::cos(m_CurrentAngle) * m_Radius * angleDirection;

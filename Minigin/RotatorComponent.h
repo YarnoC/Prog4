@@ -27,5 +27,6 @@ private:
 	bool m_TurnsClockWise;
 	float m_Radius{};
 	float m_CurrentAngle{};
+	static const float m_2Pi;
 };
 
