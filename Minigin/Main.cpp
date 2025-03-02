@@ -20,6 +20,8 @@
 #include "RenderComponent.h"
 #include "RotatorComponent.h"
 
+#include "CacheBenchmark.h"
+
 void load()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
@@ -52,32 +54,12 @@ void load()
 
 	scene.Add(textObject);
 
-	auto axisObj = std::make_unique<dae::GameObject>();
-	axisObj->SetLocalPosition({100, 100, 0});
+	//Trash the Cache
+	CacheBenchmark cacheTest{};
 
-	auto qbertObj = std::make_unique<dae::GameObject>();
-	qbertObj->SetLocalPosition({ 100, 0, 0 });
-	qbertObj->SetParent(axisObj.get(), false);
-	qbertObj->AddComponent<RenderComponent>();
-	auto renderComp = qbertObj->GetComponent<RenderComponent>();
-	qbertObj->AddComponent<TextureComponent>("QBert.png");
-	auto textureObj = qbertObj->GetComponent<TextureComponent>();
-	renderComp->LinkTexture(textureObj->GetTexturePtr());
-	qbertObj->AddComponent<RotatorComponent>(1.f, false);
-
-	auto qbertObj2 = std::make_unique<dae::GameObject>();
-	qbertObj2->SetLocalPosition({ 100, 0, 0 });
-	qbertObj2->SetParent(qbertObj.get(), false);
-	qbertObj2->AddComponent<RenderComponent>();
-	auto renderComp2 = qbertObj2->GetComponent<RenderComponent>();
-	qbertObj2->AddComponent<TextureComponent>("QBert.png");
-	auto textureObj2 = qbertObj2->GetComponent<TextureComponent>();
-	renderComp2->LinkTexture(textureObj2->GetTexturePtr());
-	qbertObj2->AddComponent<RotatorComponent>(1.f, false);
-
-	scene.Add(axisObj);
-	scene.Add(qbertObj);
-	scene.Add(qbertObj2);
+	cacheTest.TimeInts();
+	cacheTest.TimeGo();
+	cacheTest.TimeGoa();
 
 	//TODO: FIX, currently broken, will fix later but first the scenegraph
 	/*
