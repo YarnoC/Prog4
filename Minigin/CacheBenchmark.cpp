@@ -34,7 +34,7 @@ void CacheBenchmark::TimeInts()
 	{
 		auto begin = std::chrono::high_resolution_clock::now();
 
-		for (int i{}; i < m_ArrSize; i += stepsize)
+		for (size_t i{}; i < m_ArrSize; i += stepsize)
 		{
 			m_IntArr[i] *= 2;
 		}
@@ -59,7 +59,7 @@ void CacheBenchmark::TimeGo()
 	{
 		auto begin = std::chrono::high_resolution_clock::now();
 
-		for (int i{}; i < m_ArrSize; i += stepsize)
+		for (size_t i{}; i < m_ArrSize; i += stepsize)
 		{
 			m_GoArr[i].Id *= 2;
 		}
@@ -84,7 +84,7 @@ void CacheBenchmark::TimeGoa()
 	{
 		auto begin = std::chrono::high_resolution_clock::now();
 
-		for (int i{}; i < m_ArrSize; i += stepsize)
+		for (size_t i{}; i < m_ArrSize; i += stepsize)
 		{
 			m_GoaArr[i].Id *= 2;
 		}
