@@ -141,6 +141,8 @@ bool dae::GameObject::IsChild(GameObject* object) const
 		{
 			return true;
 		}
+
+		child->IsChild(object);
 	}
 	return false;
 }
