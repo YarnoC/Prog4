@@ -1,18 +1,27 @@
 #include "GamepadHandler.h"
 
-GamepadHandler::GamepadHandler()
+dae::InputManager::GamepadHandler::GamepadHandler()
 {
 
 }
 
-Command* GamepadHandler::HandleGamepadInput()
+dae::InputManager::GamepadHandler::~GamepadHandler()
+{
+}
+
+dae::InputManager::~InputManager()
+{
+	//needs to be defined here else the unique_ptr complains about an incomplete type
+}
+
+Command* dae::InputManager::GamepadHandler::HandleGamepadInput()
 {
 	//polling
 	CopyMemory(&m_PreviousState, &m_CurrentState, sizeof(XINPUT_STATE));
 	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
 	DWORD dwResult = XInputGetState(m_GamepadIndex, &m_CurrentState);
 
-	if (dwResult != ERROR_SUCCESS) return;
+	if (dwResult != ERROR_SUCCESS) return nullptr;
 
 	auto buttonChanges = m_CurrentState.Gamepad.wButtons ^ m_PreviousState.Gamepad.wButtons;
 	m_ButtonsPressedThisFrame = buttonChanges ^ m_CurrentState.Gamepad.wButtons;
@@ -27,19 +36,19 @@ Command* GamepadHandler::HandleGamepadInput()
 }
 
 //got pressed this frame
-bool GamepadHandler::IsDownThisFrame(unsigned int button) const
+bool dae::InputManager::GamepadHandler::IsDownThisFrame(unsigned int button) const
 {
 	return m_ButtonsPressedThisFrame & button;
 }
 
 //released this frame
-bool GamepadHandler::IsUpThisFrame(unsigned int button) const
+bool dae::InputManager::GamepadHandler::IsUpThisFrame(unsigned int button) const
 {
 	return m_ButtonsReleasedThisFrame & button;
 }
 
 //is down this frame, either already or pressed this frame
-bool GamepadHandler::IsPressed(unsigned int button) const
+bool dae::InputManager::GamepadHandler::IsPressed(unsigned int button) const
 {
 	return m_CurrentState.Gamepad.wButtons ^ button;
 }

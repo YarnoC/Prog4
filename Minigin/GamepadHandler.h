@@ -6,12 +6,16 @@
 
 #include "Command.h"
 #include <memory>
+#include "InputManager.h"
 
-class GamepadHandler
+
+class dae::InputManager::GamepadHandler
 {
 public:
-	GamepadHandler();
 	Command* HandleGamepadInput();
+
+	GamepadHandler();
+	~GamepadHandler();
 
 private:
 	std::unique_ptr<Command> m_MoveCommand;

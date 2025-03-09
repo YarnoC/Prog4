@@ -1,5 +1,4 @@
 #include <SDL.h>
-#include "InputManager.h"
 #include "GamepadHandler.h"
 
 bool dae::InputManager::ProcessInput()
@@ -34,10 +33,17 @@ bool dae::InputManager::ProcessInput()
 		// etc...
 	}
 
+	cmd = m_pImpl->HandleGamepadInput();
+
 	if (cmd)
 	{
 		cmd->Execute();
 	}
 
 	return true;
+}
+
+dae::InputManager::InputManager()
+	: m_pImpl{ std::make_unique<GamepadHandler>() }
+{
 }

@@ -13,9 +13,11 @@ namespace dae
 		bool ProcessInput();
 		void RegisterCommand(const InputButton& button, const Command& command);
 
-		~InputManager() = default;
+		InputManager();
+		~InputManager();
 	private:
 		class GamepadHandler;
+		//GamepadHandler* m_pImpl;
 		std::unique_ptr<GamepadHandler> m_pImpl;
 		Command* m_LeftCmd{ nullptr };
 		Command* m_RightCmd{ nullptr };
