@@ -43,6 +43,33 @@ bool dae::InputManager::ProcessInput()
 	return true;
 }
 
+void dae::InputManager::RegisterCommand(const InputButton& button, Command* command)
+{
+	switch (button)
+	{
+	case InputButton::AKey:
+		m_LeftCmd = command;
+		break;
+	case InputButton::DKey:
+		m_RightCmd = command;
+		break;
+	case InputButton::WKey:
+		m_UpCmd = command;
+		break;
+	case InputButton::SKey:
+		m_DownCmd = command;
+		break;
+	case InputButton::DpadLeft:
+	case InputButton::DpadRight:
+	case InputButton::DpadUp:
+	case InputButton::DpadDown:
+		m_pImpl->RegisterCommand(button, command); //allowed to waterfall cause gets sorted out in gamepadHandler.RegisterCommand()
+		break;
+	default:
+		break;
+	}
+}
+
 dae::InputManager::InputManager()
 	: m_pImpl{ std::make_unique<GamepadHandler>() }
 {

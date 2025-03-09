@@ -11,7 +11,7 @@ namespace dae
 	{
 	public:
 		bool ProcessInput();
-		void RegisterCommand(const InputButton& button, const Command& command);
+		void RegisterCommand(const InputButton& button, Command* command);
 
 		InputManager();
 		~InputManager();

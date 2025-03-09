@@ -35,6 +35,25 @@ Command* dae::InputManager::GamepadHandler::HandleGamepadInput()
 	return nullptr;
 }
 
+void dae::InputManager::GamepadHandler::RegisterCommand(const InputButton& button, Command* command)
+{
+	switch (button)
+	{
+	case InputButton::DpadLeft:
+		m_LeftCmd = command;
+		break;
+	case InputButton::DpadRight:
+		m_RightCmd = command;
+		break;
+	case InputButton::DpadUp:
+		m_UpCmd = command;
+		break;
+	case InputButton::DpadDown:
+		m_DownCmd = command;
+		break;
+	}
+}
+
 //got pressed this frame
 bool dae::InputManager::GamepadHandler::IsDownThisFrame(unsigned int button) const
 {

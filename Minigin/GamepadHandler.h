@@ -8,11 +8,11 @@
 #include <memory>
 #include "InputManager.h"
 
-
 class dae::InputManager::GamepadHandler
 {
 public:
 	Command* HandleGamepadInput();
+	void RegisterCommand(const InputButton& button, Command* command);
 
 	GamepadHandler();
 	~GamepadHandler();
