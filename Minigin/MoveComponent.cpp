@@ -10,7 +10,7 @@ void MoveComponent::Update()
 		auto pos = owner->GetLocalPosition();
 		auto dt = GameTime::GetDt();
 		glm::vec3 newPos{ pos.x + m_MoveVec.x * dt, pos.y + m_MoveVec.y * dt, 0 };
-		GetOwner()->SetLocalPosition(newPos);
+		owner->SetLocalPosition(newPos);
 		m_MoveIsDirty = false;
 	}
 }
@@ -21,7 +21,7 @@ void MoveComponent::Move(const glm::vec2& moveVec)
 	m_MoveIsDirty = true;
 }
 
-MoveComponent::MoveComponent(dae::GameObject* owner)
-	: Component(owner)
+MoveComponent::MoveComponent(dae::GameObject* owner, glm::vec2 moveVec)
+	: Component(owner), m_MoveVec{moveVec}
 {
 }
