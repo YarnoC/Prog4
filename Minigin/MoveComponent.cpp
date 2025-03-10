@@ -21,7 +21,7 @@ void MoveComponent::Move(const glm::vec2& moveVec)
 	m_MoveIsDirty = true;
 }
 
-MoveComponent::MoveComponent(dae::GameObject* owner, glm::vec2 moveVec)
-	: Component(owner), m_MoveVec{moveVec}
+MoveComponent::MoveComponent(dae::GameObject* owner)
+	: Component(owner), m_MoveVec{}
 {
 }

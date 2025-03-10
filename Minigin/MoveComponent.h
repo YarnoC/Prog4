@@ -12,7 +12,7 @@ public:
 	void Update() override;
 	void Move(const glm::vec2& moveVec);
 
-	MoveComponent(dae::GameObject* owner, glm::vec2 moveVec);
+	MoveComponent(dae::GameObject* owner);
 	~MoveComponent() = default;
 	MoveComponent(const MoveComponent&) = delete;
 	MoveComponent(MoveComponent&&) = delete;
