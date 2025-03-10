@@ -2,6 +2,7 @@
 #include "MoveComponent.h"
 #include "GameObject.h"
 #include <cassert>
+#include "GameTime.h"
 
 GameActorCommand::GameActorCommand(dae::GameObject* actor)
     : m_Actor{actor}
@@ -23,5 +24,10 @@ MoveActorCommand::MoveActorCommand(dae::GameObject* actor, glm::vec2 moveVec)
 
 void MoveActorCommand::Execute()
 {
-    m_MoveComponent->Move(m_MoveVec);
+    auto actor = GetGameActor();
+    auto loc = actor->GetLocalPosition();
+    loc += m_MoveVec;
+    auto dt = GameTime::GetDt();
+    actor->SetLocalPosition({ loc.x * dt, loc.y * dt, 0 });
+    //m_MoveComponent->Move(m_MoveVec);
 }
