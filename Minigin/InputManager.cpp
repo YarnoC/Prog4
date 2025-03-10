@@ -14,16 +14,16 @@ bool dae::InputManager::ProcessInput()
 			switch (e.key.keysym.scancode)
 			{
 			case SDL_SCANCODE_LEFT:
-				cmd = m_LeftCmd;
+				cmd = m_LeftCmd.get();
 				break;
 			case SDL_SCANCODE_RIGHT:
-				cmd = m_RightCmd;
+				cmd = m_RightCmd.get();
 				break;
 			case SDL_SCANCODE_UP:
-				cmd = m_UpCmd;
+				cmd = m_UpCmd.get();
 				break;
 			case SDL_SCANCODE_DOWN:
-				cmd = m_DownCmd;
+				cmd = m_DownCmd.get();
 				break;
 			}
 		}
@@ -43,27 +43,27 @@ bool dae::InputManager::ProcessInput()
 	return true;
 }
 
-void dae::InputManager::RegisterCommand(const InputButton& button, Command* command)
+void dae::InputManager::RegisterCommand(const InputButton& button, std::unique_ptr<Command> command)
 {
 	switch (button)
 	{
 	case InputButton::AKey:
-		m_LeftCmd = command;
+		m_LeftCmd = std::move(command);
 		break;
 	case InputButton::DKey:
-		m_RightCmd = command;
+		m_RightCmd = std::move(command);
 		break;
 	case InputButton::WKey:
-		m_UpCmd = command;
+		m_UpCmd = std::move(command);
 		break;
 	case InputButton::SKey:
-		m_DownCmd = command;
+		m_DownCmd = std::move(command);
 		break;
 	case InputButton::DpadLeft:
 	case InputButton::DpadRight:
 	case InputButton::DpadUp:
 	case InputButton::DpadDown:
-		m_pImpl->RegisterCommand(button, command); //allowed to waterfall cause gets sorted out in gamepadHandler.RegisterCommand()
+		m_pImpl->RegisterCommand(button, std::move(command)); //allowed to waterfall cause gets sorted out in gamepadHandler.RegisterCommand()
 		break;
 	default:
 		break;

@@ -27,29 +27,29 @@ Command* dae::InputManager::GamepadHandler::HandleGamepadInput()
 	m_ButtonsPressedThisFrame = buttonChanges ^ m_CurrentState.Gamepad.wButtons;
 	m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
 
-	if (IsDownThisFrame(XINPUT_GAMEPAD_DPAD_LEFT)) return m_LeftCmd;
-	if (IsDownThisFrame(XINPUT_GAMEPAD_DPAD_RIGHT)) return m_RightCmd;
-	if (IsDownThisFrame(XINPUT_GAMEPAD_DPAD_UP)) return m_UpCmd;
-	if (IsDownThisFrame(XINPUT_GAMEPAD_DPAD_DOWN)) return m_DownCmd;
+	if (IsDownThisFrame(XINPUT_GAMEPAD_DPAD_LEFT)) return m_LeftCmd.get();
+	if (IsDownThisFrame(XINPUT_GAMEPAD_DPAD_RIGHT)) return m_RightCmd.get();
+	if (IsDownThisFrame(XINPUT_GAMEPAD_DPAD_UP)) return m_UpCmd.get();
+	if (IsDownThisFrame(XINPUT_GAMEPAD_DPAD_DOWN)) return m_DownCmd.get();
 
 	return nullptr;
 }
 
-void dae::InputManager::GamepadHandler::RegisterCommand(const InputButton& button, Command* command)
+void dae::InputManager::GamepadHandler::RegisterCommand(const InputButton& button, std::unique_ptr<Command> command)
 {
 	switch (button)
 	{
 	case InputButton::DpadLeft:
-		m_LeftCmd = command;
+		m_LeftCmd = std::move(command);
 		break;
 	case InputButton::DpadRight:
-		m_RightCmd = command;
+		m_RightCmd = std::move(command);
 		break;
 	case InputButton::DpadUp:
-		m_UpCmd = command;
+		m_UpCmd = std::move(command);
 		break;
 	case InputButton::DpadDown:
-		m_DownCmd = command;
+		m_DownCmd = std::move(command);
 		break;
 	}
 }

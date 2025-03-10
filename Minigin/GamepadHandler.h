@@ -12,7 +12,7 @@ class dae::InputManager::GamepadHandler
 {
 public:
 	Command* HandleGamepadInput();
-	void RegisterCommand(const InputButton& button, Command* command);
+	void RegisterCommand(const InputButton& button, std::unique_ptr<Command> command);
 
 	GamepadHandler();
 	~GamepadHandler();
@@ -26,10 +26,10 @@ private:
 	DWORD m_ButtonsPressedThisFrame{};
 	DWORD m_ButtonsReleasedThisFrame{};
 
-	Command* m_LeftCmd{ nullptr };
-	Command* m_RightCmd{ nullptr };
-	Command* m_UpCmd{ nullptr };
-	Command* m_DownCmd{ nullptr };
+	std::unique_ptr<Command> m_LeftCmd{ nullptr };
+	std::unique_ptr<Command> m_RightCmd{ nullptr };
+	std::unique_ptr<Command> m_UpCmd{ nullptr };
+	std::unique_ptr<Command> m_DownCmd{ nullptr };
 
 	bool IsDownThisFrame(unsigned int button) const;
 	bool IsUpThisFrame(unsigned int button) const;
