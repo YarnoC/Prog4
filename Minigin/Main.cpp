@@ -67,12 +67,12 @@ void load()
 	auto textureObj = qbertObj->GetComponent<TextureComponent>();
 	renderComp->LinkTexture(textureObj->GetTexturePtr());
 	qbertObj->AddComponent<MoveComponent>();
-	auto leftCmd = std::make_unique<MoveActorCommand>(qbertObj, glm::vec2{ -20.f, 0.f });
-	auto rightCmd = std::make_unique<MoveActorCommand>(qbertObj, glm::vec2{ 20.f, 0.f });
-	auto upCmd = std::make_unique<MoveActorCommand>(qbertObj, glm::vec2{ 0.f, -20.f });
-	auto downCmd = std::make_unique<MoveActorCommand>(qbertObj, glm::vec2{ 0.f, 20.f });
+	auto leftCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{-20.f, 0.f});
+	auto rightCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{20.f, 0.f});
+	auto upCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{0.f, -20.f});
+	auto downCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{0.f, 20.f});
 
-	auto& inputMan = dae::InputManager::GetInstance();
+	//auto& inputMan = dae::InputManager::GetInstance();
 	//inputMan.RegisterCommand(InputButton::DpadLeft, leftCmd);
 
 	auto qbertObj2 = std::make_unique<dae::GameObject>();
