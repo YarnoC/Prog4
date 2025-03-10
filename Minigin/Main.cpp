@@ -23,6 +23,7 @@
 
 #include "Command.h"
 #include "Inputs.h"
+#include "InputManager.h"
 
 void load()
 {
@@ -65,7 +66,14 @@ void load()
 	qbertObj->AddComponent<TextureComponent>("QBert.png");
 	auto textureObj = qbertObj->GetComponent<TextureComponent>();
 	renderComp->LinkTexture(textureObj->GetTexturePtr());
-	//qbertObj->AddComponent<RotatorComponent>(1.f, false);
+	qbertObj->AddComponent<MoveComponent>();
+	auto leftCmd = std::make_unique<MoveActorCommand>(qbertObj, glm::vec2{ -20.f, 0.f });
+	auto rightCmd = std::make_unique<MoveActorCommand>(qbertObj, glm::vec2{ 20.f, 0.f });
+	auto upCmd = std::make_unique<MoveActorCommand>(qbertObj, glm::vec2{ 0.f, -20.f });
+	auto downCmd = std::make_unique<MoveActorCommand>(qbertObj, glm::vec2{ 0.f, 20.f });
+
+	auto& inputMan = dae::InputManager::GetInstance();
+	//inputMan.RegisterCommand(InputButton::DpadLeft, leftCmd);
 
 	auto qbertObj2 = std::make_unique<dae::GameObject>();
 	qbertObj2->SetLocalPosition({ 100, 400, 0 });
@@ -74,7 +82,7 @@ void load()
 	qbertObj2->AddComponent<TextureComponent>("QBert.png");
 	auto textureObj2 = qbertObj2->GetComponent<TextureComponent>();
 	renderComp2->LinkTexture(textureObj2->GetTexturePtr());
-	//qbertObj2->AddComponent<RotatorComponent>(1.f, false);
+	qbertObj2->AddComponent<MoveComponent>();
 
 	scene.Add(qbertObj);
 	scene.Add(qbertObj2);
