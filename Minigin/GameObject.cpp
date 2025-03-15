@@ -168,19 +168,8 @@ void dae::GameObject::LateUpdate()
 		});
 }
 
-//TODO: make awake so this can be const again
 void dae::GameObject::Render()
 {
-	//should maybe make an awake so i can do the stuff there
-	//if (m_RenderComponent == nullptr)
-	//{
-	//	m_RenderComponent = GetComponent<RenderComponent>();
-	//}
-	//
-	//if (m_RenderComponent == nullptr) return;
-	//
-	//m_RenderComponent->Render();
-
 	for (auto&& comp : m_ComponentVec)
 	{
 		comp->Render();
