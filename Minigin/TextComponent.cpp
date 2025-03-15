@@ -34,8 +34,6 @@ void TextComponent::UpdateText()
 		}
 
 		SDL_FreeSurface(surf);
-		//m_TextTextureSPtr = std::make_unique<dae::Texture2D>(texture);
-		//m_TextTexturePtr = dae::Texture2D(texture);
 		m_TextTextureUPtr = std::make_unique<dae::Texture2D>(texture);
 		m_NeedsUpdate = false;
 	}
@@ -44,6 +42,12 @@ void TextComponent::UpdateText()
 void TextComponent::Update()
 {
 	UpdateText();
+}
+
+void TextComponent::Render() const
+{
+	const auto& pos = GetOwner()->GetWorldPosition();
+	Renderer::GetInstance().RenderTexture(*m_TextTextureUPtr, pos.x, pos.y);
 }
 
 dae::Texture2D* TextComponent::GetTexturePtr() const

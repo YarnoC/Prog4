@@ -172,14 +172,19 @@ void dae::GameObject::LateUpdate()
 void dae::GameObject::Render()
 {
 	//should maybe make an awake so i can do the stuff there
-	if (m_RenderComponent == nullptr)
+	//if (m_RenderComponent == nullptr)
+	//{
+	//	m_RenderComponent = GetComponent<RenderComponent>();
+	//}
+	//
+	//if (m_RenderComponent == nullptr) return;
+	//
+	//m_RenderComponent->Render();
+
+	for (auto&& comp : m_ComponentVec)
 	{
-		m_RenderComponent = GetComponent<RenderComponent>();
+		comp->Render();
 	}
-
-	if (m_RenderComponent == nullptr) return;
-
-	m_RenderComponent->Render();
 }
 
 void dae::GameObject::SetPosition(float x, float y)

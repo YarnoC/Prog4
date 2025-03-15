@@ -12,18 +12,19 @@ void FpsComponent::Update()
 	const double fps = 1.0 / GameTime::GetDt();
 	
 	//cache this, no getcomponent every frame in the hot code path
-	TextComponent* ptr = GetOwner()->GetComponent<TextComponent>();
-	if (ptr == nullptr)
-	{
-		std::cerr << "No TextComponent found\n";
-		return;
-	}
+	//TextComponent* ptr = GetOwner()->GetComponent<TextComponent>();
+	//if (ptr == nullptr)
+	//{
+	//	std::cerr << "No TextComponent found\n";
+	//	return;
+	//}
 
 	std::stringstream stream;
 	stream << std::fixed << std::setprecision(1) << fps;
 
-	ptr->SetText(stream.str());
+	m_TextComponentPtr->SetText(stream.str());
 }
 
-FpsComponent::FpsComponent(dae::GameObject* ownerPtr) : Component(ownerPtr)
+FpsComponent::FpsComponent(dae::GameObject* ownerPtr, TextComponent* textComp)
+	: Component(ownerPtr), m_TextComponentPtr{textComp}
 {}
