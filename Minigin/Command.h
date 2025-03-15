@@ -5,7 +5,6 @@ namespace dae
 {
 	class GameObject;
 }
-class MoveComponent;
 
 class Command
 {
@@ -34,6 +33,5 @@ public:
 
 private:
 	glm::vec2 m_MoveVec;
-	MoveComponent* m_MoveComponent;
 };
 

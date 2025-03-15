@@ -90,9 +90,6 @@
     <ClInclude Include="GamepadHandler.h">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
-    <ClInclude Include="MoveComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ResourceManager.cpp">
@@ -157,9 +154,6 @@
     </ClCompile>
     <ClCompile Include="GamepadHandler.cpp">
       <Filter>Source Files\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="MoveComponent.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Inputs.h">
       <Filter>Header Files\Input</Filter>

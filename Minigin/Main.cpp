@@ -19,7 +19,6 @@
 #include "FpsComponent.h"
 #include "RenderComponent.h"
 #include "RotatorComponent.h"
-#include "MoveComponent.h"
 
 #include "Command.h"
 #include "Inputs.h"
@@ -66,11 +65,12 @@ void load()
 	qbertObj->AddComponent<TextureComponent>("QBert.png");
 	auto textureObj = qbertObj->GetComponent<TextureComponent>();
 	renderComp->LinkTexture(textureObj->GetTexturePtr());
-	qbertObj->AddComponent<MoveComponent>();
 	auto leftCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{-20.f, 0.f});
 	auto rightCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{20.f, 0.f});
 	auto upCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{0.f, -20.f});
 	auto downCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{0.f, 20.f});
+
+	//ran into issues binding the controls :(
 
 	//auto& inputMan = dae::InputManager::GetInstance();
 	//inputMan.RegisterCommand(InputButton::DpadLeft, leftCmd);
@@ -82,7 +82,6 @@ void load()
 	qbertObj2->AddComponent<TextureComponent>("QBert.png");
 	auto textureObj2 = qbertObj2->GetComponent<TextureComponent>();
 	renderComp2->LinkTexture(textureObj2->GetTexturePtr());
-	qbertObj2->AddComponent<MoveComponent>();
 
 	scene.Add(qbertObj);
 	scene.Add(qbertObj2);
