@@ -7,9 +7,9 @@
 class Gamepad::GamepadImpl
 {
 public:
-	bool IsDownThisFrame(unsigned int button) const;
-	bool IsUpThisFrame(unsigned int button) const;
-	bool IsPressed(unsigned int button) const;
+	bool IsDownThisFrame(const GamePadButton& button) const;
+	bool IsUpThisFrame(const GamePadButton& button) const;
+	bool IsPressed(const GamePadButton& button) const;
 
 	GamepadImpl(uint8_t index);
 
@@ -43,17 +43,17 @@ Gamepad::~Gamepad()
 {
 }
 
-bool Gamepad::IsDownThisFrame(unsigned int button) const
+bool Gamepad::IsDownThisFrame(const GamePadButton& button) const
 {
 	return m_pImpl->IsDownThisFrame(button);
 }
 
-bool Gamepad::IsUpThisFrame(unsigned int button) const
+bool Gamepad::IsUpThisFrame(const GamePadButton& button) const
 {
 	return m_pImpl->IsUpThisFrame(button);
 }
 
-bool Gamepad::IsPressed(unsigned int button) const
+bool Gamepad::IsPressed(const GamePadButton& button) const
 {
 	return m_pImpl->IsPressed(button);
 }
@@ -123,21 +123,21 @@ bool Gamepad::IsPressed(unsigned int button) const
 //}
 
 //pressed this frame
-bool Gamepad::GamepadImpl::IsDownThisFrame(unsigned int button) const
+bool Gamepad::GamepadImpl::IsDownThisFrame(const GamePadButton& button) const
 {
-	return m_ButtonsPressedThisFrame & button;
+	return m_ButtonsPressedThisFrame & static_cast<DWORD>(button);
 }
 
 //released this frame
-bool Gamepad::GamepadImpl::IsUpThisFrame(unsigned int button) const
+bool Gamepad::GamepadImpl::IsUpThisFrame(const GamePadButton& button) const
 {
-	return m_ButtonsReleasedThisFrame & button;
+	return m_ButtonsReleasedThisFrame & static_cast<DWORD>(button);
 }
 
 //currently down, not indicated when it was originally pressed
-bool Gamepad::GamepadImpl::IsPressed(unsigned int button) const
+bool Gamepad::GamepadImpl::IsPressed(const GamePadButton& button) const
 {
-	return m_CurrentState.Gamepad.wButtons ^ button;
+	return m_CurrentState.Gamepad.wButtons ^ static_cast<DWORD>(button);
 }
 
 Gamepad::GamepadImpl::GamepadImpl(uint8_t index)

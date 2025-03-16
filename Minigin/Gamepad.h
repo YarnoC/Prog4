@@ -1,6 +1,7 @@
 #pragma once
 #include "Command.h"
 #include <memory>
+#include "Inputs.h"
 
 class Gamepad
 {
@@ -10,9 +11,9 @@ public:
 	uint8_t GetGamepadIndex() const;
 
 	//maybe change these to take from the enum
-	bool IsDownThisFrame(unsigned int button) const;
-	bool IsUpThisFrame(unsigned int button) const;
-	bool IsPressed(unsigned int button) const;
+	bool IsDownThisFrame(const GamePadButton& button) const;
+	bool IsUpThisFrame(const GamePadButton& button) const;
+	bool IsPressed(const GamePadButton& button) const;
 
 	Gamepad(uint8_t index);
 	~Gamepad();

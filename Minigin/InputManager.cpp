@@ -22,19 +22,19 @@ bool dae::InputManager::ProcessInput()
 			switch (command->inputAction)
 			{
 			case ButtonState::Pressed:
-				if (gamepad->IsDownThisFrame(static_cast<unsigned int>(command->button)))
+				if (gamepad->IsDownThisFrame(command->button))
 				{
 					command->command->Execute();
 				}
 				break;
 			case ButtonState::Released:
-				if (gamepad->IsUpThisFrame(static_cast<unsigned int>(command->button)))
+				if (gamepad->IsUpThisFrame(command->button))
 				{
 					command->command->Execute();
 				}
 				break;
 			case ButtonState::Held:
-				if (gamepad->IsPressed(static_cast<unsigned int>(command->button)))
+				if (gamepad->IsPressed(command->button))
 				{
 					command->command->Execute();
 				}
