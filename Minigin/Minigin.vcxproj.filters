@@ -84,7 +84,7 @@
     <ClInclude Include="Command.h">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
-    <ClInclude Include="GamepadHandler.h">
+    <ClInclude Include="Gamepad.h">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
@@ -146,7 +146,7 @@
     <ClCompile Include="Command.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
-    <ClCompile Include="GamepadHandler.cpp">
+    <ClCompile Include="Gamepad.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
     <ClCompile Include="Inputs.h">

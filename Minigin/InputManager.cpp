@@ -1,40 +1,40 @@
 #pragma once
+#include "InputManager.h"
 #include <SDL.h>
-#include "GamepadHandler.h"
 
 bool dae::InputManager::ProcessInput()
 {
-	Command* cmd{ nullptr };
-
 	SDL_Event e;
-	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT) {
+	while (SDL_PollEvent(&e))
+	{
+		if (e.type == SDL_QUIT)
+		{
 			return false;
 		}
-		if (e.type == SDL_KEYDOWN) {
-			switch (e.key.keysym.scancode)
-			{
-			}
-		}
-		if (e.type == SDL_MOUSEBUTTONDOWN) {
-			
-		}
-		// etc...
 	}
 
-	cmd = m_pImpl->HandleGamepadInput();
+	//cmd = m_pImpl->HandleGamepadInput();
 
-	if (cmd)
-	{
-		cmd->Execute();
-	}
+	//if (cmd)
+	//{
+	//	cmd->Execute();
+	//}
 
 	return true;
 }
 
+void dae::InputManager::AddGamepad()
+{
+	if (m_CurrentGamepadIndex >= m_MaxGamepadIndex) return;
+
+	m_Gamepads.emplace_back(std::make_unique<Gamepad>(m_CurrentGamepadIndex));
+	++m_CurrentGamepadIndex;
+}
+
+/*
 void dae::InputManager::RegisterCommand(const GamePadButton& button, std::unique_ptr<Command> command)
 {
-	m_pImpl->RegisterCommand(button, std::move(command));
+	//m_pImpl->RegisterCommand(button, std::move(command));
 
 	//switch (button)
 	//{
@@ -60,8 +60,8 @@ void dae::InputManager::RegisterCommand(const GamePadButton& button, std::unique
 	//	break;
 	//}
 }
+*/
 
 dae::InputManager::InputManager()
-	: m_pImpl{ std::make_unique<GamepadHandler>() }
 {
 }

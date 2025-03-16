@@ -183,7 +183,7 @@
     <ClInclude Include="FpsComponent.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameTime.h" />
-    <ClInclude Include="GamepadHandler.h" />
+    <ClInclude Include="Gamepad.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="Renderer.h" />
@@ -205,7 +205,7 @@
     <ClCompile Include="FpsComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTime.cpp" />
-    <ClCompile Include="GamepadHandler.cpp" />
+    <ClCompile Include="Gamepad.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Inputs.h" />
     <ClCompile Include="Main.cpp" />
