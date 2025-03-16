@@ -33,9 +33,11 @@ namespace dae
 		InputManager();
 		~InputManager() = default;
 	private:
-		const uint8_t m_MaxGamepads{ 4 };
+		const uint8_t m_MaxGamepadIndex{ 4 };
 		uint8_t m_CurrentGamepadIndex{ 0 };
-		std::vector <std::unique_ptr<Gamepad>> m_Gamepads;
+		std::vector<std::unique_ptr<Gamepad>> m_Gamepads;
+		std::vector<std::unique_ptr<GamepadCommandBind>> m_GamepadCommands;
+		std::vector<std::unique_ptr<KeyboardCommandBind>> m_KeyboardCommands;
 	};
 
 }

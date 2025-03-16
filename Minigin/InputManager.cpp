@@ -13,6 +13,36 @@ bool dae::InputManager::ProcessInput()
 		}
 	}
 
+	for (auto&& command : m_GamepadCommands)
+	{
+		for (auto&& gamepad : m_Gamepads)
+		{
+			if (gamepad->GetGamepadIndex() != command->gamepadIndex) continue;
+
+			switch (command->inputAction)
+			{
+			case ButtonState::Pressed:
+				if (gamepad->IsDownThisFrame(static_cast<unsigned int>(command->button)))
+				{
+					command->command->Execute();
+				}
+				break;
+			case ButtonState::Released:
+				if (gamepad->IsUpThisFrame(static_cast<unsigned int>(command->button)))
+				{
+					command->command->Execute();
+				}
+				break;
+			case ButtonState::Held:
+				if (gamepad->IsPressed(static_cast<unsigned int>(command->button)))
+				{
+					command->command->Execute();
+				}
+				break;
+			}
+		}
+	}
+
 	//cmd = m_pImpl->HandleGamepadInput();
 
 	//if (cmd)
