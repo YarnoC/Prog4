@@ -19,3 +19,10 @@ enum class GamePadButton
 	XButton = 0x4000,
 	YButton = 0x8000
 };
+
+enum class ButtonState
+{
+	Pressed,
+	Released,
+	Held
+};

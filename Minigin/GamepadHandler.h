@@ -31,7 +31,7 @@ private:
 	std::unique_ptr<Command> m_UpCmd{ nullptr };
 	std::unique_ptr<Command> m_DownCmd{ nullptr };
 
-	std::vector <std::unique_ptr<Command>> m_Commands;
+	std::vector<std::unique_ptr<Command>> m_Commands;
 
 	bool IsDownThisFrame(unsigned int button) const;
 	bool IsUpThisFrame(unsigned int button) const;

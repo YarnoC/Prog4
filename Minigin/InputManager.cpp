@@ -14,18 +14,6 @@ bool dae::InputManager::ProcessInput()
 		if (e.type == SDL_KEYDOWN) {
 			switch (e.key.keysym.scancode)
 			{
-			case SDL_SCANCODE_LEFT:
-				cmd = m_LeftCmd.get();
-				break;
-			case SDL_SCANCODE_RIGHT:
-				cmd = m_RightCmd.get();
-				break;
-			case SDL_SCANCODE_UP:
-				cmd = m_UpCmd.get();
-				break;
-			case SDL_SCANCODE_DOWN:
-				cmd = m_DownCmd.get();
-				break;
 			}
 		}
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
