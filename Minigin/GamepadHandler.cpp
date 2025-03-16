@@ -35,20 +35,20 @@ Command* dae::InputManager::GamepadHandler::HandleGamepadInput()
 	return nullptr;
 }
 
-void dae::InputManager::GamepadHandler::RegisterCommand(const InputButton& button, std::unique_ptr<Command> command)
+void dae::InputManager::GamepadHandler::RegisterCommand(const GamePadButton& button, std::unique_ptr<Command> command)
 {
 	switch (button)
 	{
-	case InputButton::DpadLeft:
+	case GamePadButton::DpadLeft:
 		m_LeftCmd = std::move(command);
 		break;
-	case InputButton::DpadRight:
+	case GamePadButton::DpadRight:
 		m_RightCmd = std::move(command);
 		break;
-	case InputButton::DpadUp:
+	case GamePadButton::DpadUp:
 		m_UpCmd = std::move(command);
 		break;
-	case InputButton::DpadDown:
+	case GamePadButton::DpadDown:
 		m_DownCmd = std::move(command);
 		break;
 	}

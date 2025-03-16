@@ -12,7 +12,7 @@ class dae::InputManager::GamepadHandler
 {
 public:
 	Command* HandleGamepadInput();
-	void RegisterCommand(const InputButton& button, std::unique_ptr<Command> command);
+	void RegisterCommand(const GamePadButton& button, std::unique_ptr<Command> command);
 
 	GamepadHandler();
 	~GamepadHandler();
