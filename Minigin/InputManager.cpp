@@ -1,3 +1,4 @@
+#pragma once
 #include <SDL.h>
 #include "GamepadHandler.h"
 
@@ -43,7 +44,7 @@ bool dae::InputManager::ProcessInput()
 	return true;
 }
 
-void dae::InputManager::RegisterCommand(const InputButton& button, std::unique_ptr<Command> command)
+void dae::InputManager::RegisterCommand(const GamePadButton& button, std::unique_ptr<Command> command)
 {
 	m_pImpl->RegisterCommand(button, std::move(command));
 
