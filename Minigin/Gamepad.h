@@ -9,6 +9,7 @@ public:
 	//Command* HandleGamepadInput();
 	//void RegisterCommand(const GamePadButton& button, std::unique_ptr<Command> command);
 	uint8_t GetGamepadIndex() const;
+	void Update();
 
 	//maybe change these to take from the enum
 	bool IsDownThisFrame(const GamePadButton& button) const;

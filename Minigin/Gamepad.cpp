@@ -35,6 +35,11 @@ uint8_t Gamepad::GetGamepadIndex() const
 	return m_GamepadIndex;
 }
 
+void Gamepad::Update()
+{
+	m_pImpl->Update();
+}
+
 Gamepad::Gamepad(uint8_t index)
 	: m_GamepadIndex{index}
 {
