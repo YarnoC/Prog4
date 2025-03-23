@@ -38,6 +38,15 @@ namespace dae
 		std::vector<std::unique_ptr<Gamepad>> m_Gamepads;
 		std::vector<std::unique_ptr<GamepadCommandBind>> m_GamepadCommands;
 		std::vector<std::unique_ptr<KeyboardCommandBind>> m_KeyboardCommands;
+
+		std::vector<uint8_t> m_CurrentKeyboardState;
+		std::vector<uint8_t> m_PreviousKeyboardState;
+
+		bool IsKeyDownThisFrame(SDL_Scancode key) const;
+		bool IsKeyUpThisFrame(SDL_Scancode key) const;
+		bool IsKeyPressedThisFrame(SDL_Scancode key) const;
+
+		void UpdateKeyboardState();
 	};
 
 }

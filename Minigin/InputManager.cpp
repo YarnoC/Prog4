@@ -13,6 +13,11 @@ bool dae::InputManager::ProcessInput()
 		}
 	}
 
+	for (auto&& gamepad : m_Gamepads)
+	{
+		gamepad->Update();
+	}
+
 	for (auto&& command : m_GamepadCommands)
 	{
 		for (auto&& gamepad : m_Gamepads)
@@ -40,6 +45,33 @@ bool dae::InputManager::ProcessInput()
 				}
 				break;
 			}
+		}
+	}
+
+	UpdateKeyboardState();
+
+	for (auto&& command : m_KeyboardCommands)
+	{
+		switch (command->inputAction)
+		{
+		case ButtonState::Pressed:
+			if (IsKeyDownThisFrame(command->key))
+			{
+				command->command->Execute();
+			}
+			break;
+		case ButtonState::Released:
+			if (IsKeyUpThisFrame(command->key))
+			{
+				command->command->Execute();
+			}
+			break;
+		case ButtonState::Held:
+			if (IsKeyPressedThisFrame(command->key))
+			{
+				command->command->Execute();
+			}
+			break;
 		}
 	}
 
@@ -94,4 +126,31 @@ void dae::InputManager::RegisterCommand(const GamePadButton& button, std::unique
 
 dae::InputManager::InputManager()
 {
+	int keyAmount{};
+	SDL_GetKeyboardState(&keyAmount);
+	m_CurrentKeyboardState.resize(keyAmount, 0);
+	m_PreviousKeyboardState.resize(keyAmount, 0);
+}
+
+bool dae::InputManager::IsKeyDownThisFrame(SDL_Scancode key) const
+{
+	return m_CurrentKeyboardState[key] && !m_PreviousKeyboardState[key];
+}
+
+bool dae::InputManager::IsKeyUpThisFrame(SDL_Scancode key) const
+{
+	return !m_CurrentKeyboardState[key] && m_PreviousKeyboardState[key];
+}
+
+bool dae::InputManager::IsKeyPressedThisFrame(SDL_Scancode key) const
+{
+	return m_CurrentKeyboardState[key];
+}
+
+void dae::InputManager::UpdateKeyboardState()
+{
+	m_PreviousKeyboardState = m_CurrentKeyboardState;
+
+	const uint8_t* state = SDL_GetKeyboardState(nullptr);
+	m_CurrentKeyboardState.assign(state, state + m_CurrentKeyboardState.size());
 }
