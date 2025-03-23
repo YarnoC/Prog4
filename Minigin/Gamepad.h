@@ -13,6 +13,7 @@ public:
 	//maybe change these to take from the enum
 	bool IsDownThisFrame(const GamePadButton& button) const;
 	bool IsUpThisFrame(const GamePadButton& button) const;
+	//currently down, not indicated when it was originally pressed
 	bool IsPressed(const GamePadButton& button) const;
 
 	Gamepad(uint8_t index);

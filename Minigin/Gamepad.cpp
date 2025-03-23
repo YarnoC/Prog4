@@ -11,6 +11,8 @@ public:
 	bool IsUpThisFrame(const GamePadButton& button) const;
 	bool IsPressed(const GamePadButton& button) const;
 
+	void Update();
+
 	GamepadImpl(uint8_t index);
 
 	~GamepadImpl() = default;
@@ -138,6 +140,17 @@ bool Gamepad::GamepadImpl::IsUpThisFrame(const GamePadButton& button) const
 bool Gamepad::GamepadImpl::IsPressed(const GamePadButton& button) const
 {
 	return m_CurrentState.Gamepad.wButtons ^ static_cast<DWORD>(button);
+}
+
+void Gamepad::GamepadImpl::Update()
+{
+	CopyMemory(&m_PreviousState, &m_CurrentState, sizeof(XINPUT_STATE));
+	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
+	XInputGetState(m_GamepadIndex, &m_CurrentState);
+
+	auto buttonChanges = m_CurrentState.Gamepad.wButtons ^ m_PreviousState.Gamepad.wButtons;
+	m_ButtonsPressedThisFrame = buttonChanges & m_CurrentState.Gamepad.wButtons;
+	m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
 }
 
 Gamepad::GamepadImpl::GamepadImpl(uint8_t index)
