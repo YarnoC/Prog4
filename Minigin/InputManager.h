@@ -28,6 +28,7 @@ namespace dae
 	public:
 		bool ProcessInput();
 		void AddGamepad();
+		void RemoveGamepad(uint8_t gamepadIndex);
 		void BindCommand(std::unique_ptr<Command> command, GamepadButton gamepadButton, ButtonState inputAction, uint8_t gamepadIndex);
 		void BindCommand(std::unique_ptr<Command> command, SDL_Scancode key, ButtonState inputAction);
 		void UnbindCommand(GamepadButton gamepadButton, uint8_t gamepadIndex);

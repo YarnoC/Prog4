@@ -94,6 +94,16 @@ void dae::InputManager::AddGamepad()
 	++m_CurrentGamepadIndex;
 }
 
+void dae::InputManager::RemoveGamepad(uint8_t gamepadIndex)
+{
+	assert(gamepadIndex < m_CurrentGamepadIndex);
+	//remove gamepad from list
+	std::erase_if(m_Gamepads, [gamepadIndex](std::unique_ptr<Gamepad>& gamepad) { return gamepad->GetGamepadIndex() == gamepadIndex; });
+	//remove all commands associated with the removed controllers
+	std::erase_if(m_GamepadCommands, [gamepadIndex](std::unique_ptr<GamepadCommandBind>& command) { return command->gamepadIndex == gamepadIndex; });
+	--m_CurrentGamepadIndex;
+}
+
 void dae::InputManager::BindCommand(std::unique_ptr<Command> command, GamepadButton gamepadButton, ButtonState inputAction, uint8_t gamepadIndex)
 {
 	assert(gamepadIndex < m_CurrentGamepadIndex); //current idx starts at 0 and after add gamepad becomes 1 so the passed index must always be lower than current

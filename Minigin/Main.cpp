@@ -92,8 +92,6 @@ void load()
 	go->AddComponent<TextComponent>(" ", font.get());
 	go->AddComponent<FpsComponent>(go->GetComponent<TextComponent>());
 	scene.Add(go);
-
-	
 }
 
 int main(int, char*[]) {
