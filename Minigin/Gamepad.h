@@ -21,7 +21,7 @@ public:
 	~Gamepad();
 
 private:
-	uint8_t m_GamepadIndex{ 0 }; //placeholder for now (?)
+	uint8_t m_GamepadIndex{ 0 };
 
 	class GamepadImpl;
 	std::unique_ptr<GamepadImpl> m_pImpl;

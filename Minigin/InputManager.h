@@ -30,7 +30,6 @@ namespace dae
 		void AddGamepad();
 		void BindCommand(std::unique_ptr<Command> command, GamepadButton gamepadButton, ButtonState inputAction, uint8_t gamepadIndex);
 		void BindCommand(std::unique_ptr<Command> command, SDL_Scancode key, ButtonState inputAction);
-		//void RegisterCommand(const GamepadButton& button, std::unique_ptr<Command> command);
 
 		InputManager();
 		~InputManager() = default;

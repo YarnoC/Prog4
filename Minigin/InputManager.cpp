@@ -1,6 +1,7 @@
 #pragma once
 #include "InputManager.h"
 #include <SDL.h>
+#include <cassert>
 
 bool dae::InputManager::ProcessInput()
 {
@@ -95,7 +96,7 @@ void dae::InputManager::AddGamepad()
 
 void dae::InputManager::BindCommand(std::unique_ptr<Command> command, GamepadButton gamepadButton, ButtonState inputAction, uint8_t gamepadIndex)
 {
-	//m_GamepadCommands.emplace_back(std::move(command), inputAction, gamepadButton, gamepadIndex);
+	assert(gamepadIndex < m_CurrentGamepadIndex); //current idx starts at 0 and after add gamepad becomes 1 so the passed index must always be lower than current
 	auto commandUPtr = std::make_unique<GamepadCommandBind>(std::move(command), inputAction, gamepadButton, gamepadIndex);
 	m_GamepadCommands.emplace_back(std::move(commandUPtr));
 }
