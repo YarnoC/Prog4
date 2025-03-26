@@ -66,10 +66,10 @@ void load()
 
 	//gamepad binds
 	inputMan.AddGamepad();
-	inputMan.BindCommand(std::move(leftCmd), GamepadButton::DpadLeft, ButtonState::Pressed, 0);
-	inputMan.BindCommand(std::move(rightCmd), GamepadButton::DpadRight, ButtonState::Pressed, 0);
-	inputMan.BindCommand(std::move(upCmd), GamepadButton::DpadUp, ButtonState::Pressed, 0);
-	inputMan.BindCommand(std::move(downCmd), GamepadButton::DpadDown, ButtonState::Pressed, 0);
+	inputMan.BindCommand(std::move(leftCmd), GamepadButton::DpadLeft, ButtonState::Held, 0);
+	inputMan.BindCommand(std::move(rightCmd), GamepadButton::DpadRight, ButtonState::Held, 0);
+	inputMan.BindCommand(std::move(upCmd), GamepadButton::DpadUp, ButtonState::Held, 0);
+	inputMan.BindCommand(std::move(downCmd), GamepadButton::DpadDown, ButtonState::Held, 0);
 
 	//keyboard binds
 	inputMan.BindCommand(std::move(leftCmdKb), SDL_SCANCODE_LEFT, ButtonState::Held);

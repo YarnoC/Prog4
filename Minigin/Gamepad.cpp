@@ -145,7 +145,7 @@ bool Gamepad::GamepadImpl::IsUpThisFrame(const GamepadButton& button) const
 //currently down, not indicated when it was originally pressed
 bool Gamepad::GamepadImpl::IsPressed(const GamepadButton& button) const
 {
-	return m_CurrentState.Gamepad.wButtons ^ static_cast<DWORD>(button);
+	return m_CurrentState.Gamepad.wButtons & static_cast<DWORD>(button);
 }
 
 void Gamepad::GamepadImpl::Update()
