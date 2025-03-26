@@ -107,6 +107,16 @@ void dae::InputManager::BindCommand(std::unique_ptr<Command> command, SDL_Scanco
 	m_KeyboardCommands.emplace_back(std::move(commandUPtr));
 }
 
+void dae::InputManager::UnbindCommand(GamepadButton gamepadButton, uint8_t gamepadIndex)
+{
+	std::erase_if(m_GamepadCommands, [&](std::unique_ptr<GamepadCommandBind>& command) { return command->gamepadIndex == gamepadIndex && command->button == gamepadButton; });
+}
+
+void dae::InputManager::UnbindCommand(SDL_Scancode key)
+{
+	std::erase_if(m_KeyboardCommands, [&](std::unique_ptr<KeyboardCommandBind>& command) { return command->key == key; });
+}
+
 /*
 void dae::InputManager::RegisterCommand(const GamepadButton& button, std::unique_ptr<Command> command)
 {

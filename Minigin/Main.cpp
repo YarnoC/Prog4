@@ -83,8 +83,6 @@ void load()
 	inputMan.BindCommand(std::move(rightCmdKb), SDL_SCANCODE_RIGHT, ButtonState::Held);
 	inputMan.BindCommand(std::move(upCmdKb), SDL_SCANCODE_UP, ButtonState::Held);
 	inputMan.BindCommand(std::move(downCmdKb), SDL_SCANCODE_DOWN, ButtonState::Held);
-
-	
 	
 	scene.Add(qbertObj);
 	scene.Add(qbertObj2);
