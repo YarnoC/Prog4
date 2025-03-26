@@ -53,6 +53,10 @@ void load()
 	qbertObj->SetLocalPosition({ 100, 300, 0 });
 	qbertObj->AddComponent<TextureComponent>("QBert.png");
 
+	auto qbertObj2 = std::make_unique<dae::GameObject>();
+	qbertObj2->SetLocalPosition({ 100, 400, 0 });
+	qbertObj2->AddComponent<TextureComponent>("QBert.png");
+
 	//gamepad commands
 	auto leftCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{-100.f, 0.f});
 	auto rightCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{100.f, 0.f});
@@ -60,7 +64,10 @@ void load()
 	auto downCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{0.f, 100.f});
 
 	//keyboard  commands
-	auto leftCmdKb = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{-20.f, 0.f});
+	auto leftCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{-150.f, 0.f});
+	auto rightCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{150.f, 0.f});
+	auto upCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{0.f, -150.f});
+	auto downCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{0.f, 150.f});
 
 	auto& inputMan = dae::InputManager::GetInstance();
 
@@ -73,10 +80,11 @@ void load()
 
 	//keyboard binds
 	inputMan.BindCommand(std::move(leftCmdKb), SDL_SCANCODE_LEFT, ButtonState::Held);
+	inputMan.BindCommand(std::move(rightCmdKb), SDL_SCANCODE_RIGHT, ButtonState::Held);
+	inputMan.BindCommand(std::move(upCmdKb), SDL_SCANCODE_UP, ButtonState::Held);
+	inputMan.BindCommand(std::move(downCmdKb), SDL_SCANCODE_DOWN, ButtonState::Held);
 
-	auto qbertObj2 = std::make_unique<dae::GameObject>();
-	qbertObj2->SetLocalPosition({ 100, 400, 0 });
-	qbertObj2->AddComponent<TextureComponent>("QBert.png");
+	
 	
 	scene.Add(qbertObj);
 	scene.Add(qbertObj2);
