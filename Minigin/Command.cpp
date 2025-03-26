@@ -24,7 +24,7 @@ void MoveActorCommand::Execute()
     auto actor = GetGameActor();
     auto loc = actor->GetLocalPosition();
     auto dt = GameTime::GetDt();
-    glm::vec3 moveVec{ m_MoveVec.x * dt, m_MoveVec.y, 0 };
+    glm::vec3 moveVec{ m_MoveVec.x * dt, m_MoveVec.y * dt, 0 };
     loc += moveVec;
     actor->SetLocalPosition(loc);
 }
