@@ -52,15 +52,27 @@ void load()
 	auto qbertObj = std::make_unique<dae::GameObject>();
 	qbertObj->SetLocalPosition({ 100, 300, 0 });
 	qbertObj->AddComponent<TextureComponent>("QBert.png");
-	auto leftCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{-20.f, 0.f});
-	auto rightCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{20.f, 0.f});
-	auto upCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{0.f, -20.f});
-	auto downCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{0.f, 20.f});
 
-	//ran into issues binding the controls :(
+	//gamepad commands
+	auto leftCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{-100.f, 0.f});
+	auto rightCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{100.f, 0.f});
+	auto upCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{0.f, -100.f});
+	auto downCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{0.f, 100.f});
 
-	//auto& inputMan = dae::InputManager::GetInstance();
-	//inputMan.RegisterCommand(InputButton::DpadLeft, leftCmd);
+	//keyboard  commands
+	auto leftCmdKb = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{-20.f, 0.f});
+
+	auto& inputMan = dae::InputManager::GetInstance();
+
+	//gamepad binds
+	inputMan.AddGamepad();
+	inputMan.BindCommand(std::move(leftCmd), GamepadButton::DpadLeft, ButtonState::Pressed, 0);
+	inputMan.BindCommand(std::move(rightCmd), GamepadButton::DpadRight, ButtonState::Pressed, 0);
+	inputMan.BindCommand(std::move(upCmd), GamepadButton::DpadUp, ButtonState::Pressed, 0);
+	inputMan.BindCommand(std::move(downCmd), GamepadButton::DpadDown, ButtonState::Pressed, 0);
+
+	//keyboard binds
+	inputMan.BindCommand(std::move(leftCmdKb), SDL_SCANCODE_LEFT, ButtonState::Held);
 
 	auto qbertObj2 = std::make_unique<dae::GameObject>();
 	qbertObj2->SetLocalPosition({ 100, 400, 0 });

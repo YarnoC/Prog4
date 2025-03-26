@@ -2,7 +2,7 @@
 #include "SDL_events.h"
 #include "SDL_scancode.h"
 
-enum class GamePadButton
+enum class GamepadButton
 {
 	DpadUp = 0x0001,
 	DpadDown = 0x0002,

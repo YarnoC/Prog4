@@ -93,8 +93,21 @@ void dae::InputManager::AddGamepad()
 	++m_CurrentGamepadIndex;
 }
 
+void dae::InputManager::BindCommand(std::unique_ptr<Command> command, GamepadButton gamepadButton, ButtonState inputAction, uint8_t gamepadIndex)
+{
+	//m_GamepadCommands.emplace_back(std::move(command), inputAction, gamepadButton, gamepadIndex);
+	auto commandUPtr = std::make_unique<GamepadCommandBind>(std::move(command), inputAction, gamepadButton, gamepadIndex);
+	m_GamepadCommands.emplace_back(std::move(commandUPtr));
+}
+
+void dae::InputManager::BindCommand(std::unique_ptr<Command> command, SDL_Scancode key, ButtonState inputAction)
+{
+	auto commandUPtr = std::make_unique<KeyboardCommandBind>(std::move(command), inputAction, key);
+	m_KeyboardCommands.emplace_back(std::move(commandUPtr));
+}
+
 /*
-void dae::InputManager::RegisterCommand(const GamePadButton& button, std::unique_ptr<Command> command)
+void dae::InputManager::RegisterCommand(const GamepadButton& button, std::unique_ptr<Command> command)
 {
 	//m_pImpl->RegisterCommand(button, std::move(command));
 

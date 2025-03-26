@@ -7,15 +7,15 @@ class Gamepad
 {
 public:
 	//Command* HandleGamepadInput();
-	//void RegisterCommand(const GamePadButton& button, std::unique_ptr<Command> command);
+	//void RegisterCommand(const GamepadButton& button, std::unique_ptr<Command> command);
 	uint8_t GetGamepadIndex() const;
 	void Update();
 
 	//maybe change these to take from the enum
-	bool IsDownThisFrame(const GamePadButton& button) const;
-	bool IsUpThisFrame(const GamePadButton& button) const;
+	bool IsDownThisFrame(const GamepadButton& button) const;
+	bool IsUpThisFrame(const GamepadButton& button) const;
 	//currently down, not indicated when it was originally pressed
-	bool IsPressed(const GamePadButton& button) const;
+	bool IsPressed(const GamepadButton& button) const;
 
 	Gamepad(uint8_t index);
 	~Gamepad();

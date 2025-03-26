@@ -12,7 +12,7 @@ namespace dae
 	{
 		std::unique_ptr<Command> command;
 		ButtonState inputAction;
-		GamePadButton button;
+		GamepadButton button;
 		uint8_t gamepadIndex;
 	};
 
@@ -28,7 +28,9 @@ namespace dae
 	public:
 		bool ProcessInput();
 		void AddGamepad();
-		//void RegisterCommand(const GamePadButton& button, std::unique_ptr<Command> command);
+		void BindCommand(std::unique_ptr<Command> command, GamepadButton gamepadButton, ButtonState inputAction, uint8_t gamepadIndex);
+		void BindCommand(std::unique_ptr<Command> command, SDL_Scancode key, ButtonState inputAction);
+		//void RegisterCommand(const GamepadButton& button, std::unique_ptr<Command> command);
 
 		InputManager();
 		~InputManager() = default;
