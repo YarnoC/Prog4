@@ -20,8 +20,8 @@ int GetOpenGLDriverIndex()
 void dae::Renderer::Init(SDL_Window* window)
 {
 	m_window = window;
-	m_renderer = SDL_CreateRenderer(window, GetOpenGLDriverIndex(), SDL_RENDERER_ACCELERATED);
-	if (m_renderer == nullptr) 
+    m_renderer = SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED); //removed GetOpenGLDriverIndex() as it returned the wrong value and caused a runtime error
+    if (m_renderer == nullptr)
 	{
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
 	}

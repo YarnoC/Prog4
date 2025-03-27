@@ -11,9 +11,7 @@
 #include "ResourceManager.h"
 
 #include "GameTime.h"
-#include <chrono>
-
-#include <iostream>
+#include <thread>
 
 SDL_Window* g_window{};
 
@@ -94,20 +92,25 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	bool doContinue = true;
 	while (doContinue)
 	{
-        GAMETIME::UpdateDt();
+        GameTime::UpdateDt();
 
-		lag += GAMETIME::GetDt();
+		lag += GameTime::GetDt();
 
 		doContinue = input.ProcessInput();
 
-		while (lag >= GAMETIME::GetFixedDt())
-		{
-			//do fixed update here
-
-            lag -= GAMETIME::GetFixedDt();
-		}
+		//don't need this one yet so no need to cycle through it, most likely optimized out but still
+		//while (lag >= GameTime::GetFixedDt())
+		//{
+		//	//do fixed update here
+		//
+        //    lag -= GameTime::GetFixedDt();
+		//}
 
 		sceneManager.Update();
+		sceneManager.LateUpdate();
 		renderer.Render();
+
+		const auto sleepTime = GameTime::GetCurrentClockTime() + std::chrono::milliseconds(m_MsPerFrame) - std::chrono::high_resolution_clock::now();
+		std::this_thread::sleep_for(sleepTime);
 	}
 }

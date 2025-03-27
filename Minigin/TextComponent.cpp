@@ -2,17 +2,18 @@
 #include <SDL_ttf.h>
 #include <stdexcept>
 #include "Renderer.h"
+#include "GameObject.h"
 
 //using namespace dae;
 using dae::Renderer;
 
 TextComponent::TextComponent(dae::GameObject* ownerPtr, const std::string& text, dae::Font* font)
-	: Renderable(ownerPtr), m_NeedsUpdate{ true }, m_Text{ text }, m_FontPtr{ font }, m_TextTextureSPtr(nullptr)
+	: Component(ownerPtr), m_NeedsUpdate{ true }, m_Text{ text }, m_FontPtr{ font }, m_TextTextureUPtr(nullptr)
 {
-
+	UpdateText();
 }
 
-void TextComponent::Update()
+void TextComponent::UpdateText()
 {
 	if (m_NeedsUpdate)
 	{
@@ -33,18 +34,35 @@ void TextComponent::Update()
 		}
 
 		SDL_FreeSurface(surf);
-		m_TextTextureSPtr = std::make_unique<dae::Texture2D>(texture);
+		m_TextTextureUPtr = std::make_unique<dae::Texture2D>(texture);
 		m_NeedsUpdate = false;
 	}
 }
 
+void TextComponent::Update()
+{
+	UpdateText();
+}
+
 void TextComponent::Render() const
 {
-	if (m_TextTextureSPtr == nullptr) return;
-
-	const auto& pos{ m_Transform.GetPosition() };
-	Renderer::GetInstance().RenderTexture(*m_TextTextureSPtr, pos.x, pos.y);
+	const auto& pos = GetOwner()->GetWorldPosition();
+	Renderer::GetInstance().RenderTexture(*m_TextTextureUPtr, pos.x, pos.y);
 }
+
+dae::Texture2D* TextComponent::GetTexturePtr() const
+{
+	//return m_TextTextureSPtr.get();
+	return m_TextTextureUPtr.get();
+}
+
+//void TextComponent::Render() const
+//{
+//	if (m_TextTextureSPtr == nullptr) return;
+//
+//	const auto& pos{ m_OwnerPtr->GetTranform().GetPosition() };
+//	Renderer::GetInstance().RenderTexture(*m_TextTextureSPtr, pos.x, pos.y);
+//}
 
 void TextComponent::SetText(const std::string& text)
 {
@@ -52,7 +70,7 @@ void TextComponent::SetText(const std::string& text)
 	m_NeedsUpdate = true; //dirty flag pattern
 }
 
-void TextComponent::SetPosition(float x, float y)
-{
-	m_Transform.SetPosition(x, y, 0.0f);
-}
+//void TextComponent::SetPosition(float x, float y)
+//{
+//	m_OwnerPtr->SetPosition(x, y);
+//}

@@ -1,27 +1,30 @@
 #include "GameTime.h"
-#include <chrono>
+#include <algorithm>
 
-using namespace GAMETIME;
+double GameTime::m_Dt = 0.0;
+std::chrono::high_resolution_clock::time_point GameTime::m_LastTime = std::chrono::high_resolution_clock::now();
+std::chrono::high_resolution_clock::time_point GameTime::m_CurrentTime = std::chrono::high_resolution_clock::now();
 
-double g_Dt = 0.0;
-double g_FixedDt = 1 / 60.0;
-std::chrono::steady_clock::time_point g_LastTime = std::chrono::high_resolution_clock::now();
-
-[[nodiscard]] double GAMETIME::GetDt()
+[[nodiscard]] double GameTime::GetDt()
 {
-    return g_Dt;
+    return m_Dt;
 }
 
-[[nodiscard]] double GAMETIME::GetFixedDt()
+[[nodiscard]] double GameTime::GetFixedDt()
 {
-    return g_FixedDt;
+    return m_FixedDt;
+}
+
+std::chrono::steady_clock::time_point GameTime::GetCurrentClockTime()
+{
+    return m_CurrentTime;
 }
 
 //only to be used in the main loop
-void GAMETIME::UpdateDt()
+void GameTime::UpdateDt()
 {
-    const auto currentTime{ std::chrono::high_resolution_clock::now() };
-    const auto frameDuration{ std::chrono::duration<double>(currentTime - g_LastTime).count() };
-    g_Dt = std::min(frameDuration, 1.0); //prevent death spiral
-    g_LastTime = currentTime;
+    m_CurrentTime = std::chrono::high_resolution_clock::now();
+    const auto frameDuration{ std::chrono::duration<double>(m_CurrentTime - m_LastTime).count() };
+    m_Dt = std::min(frameDuration, 1.0); //prevent death spiral
+    m_LastTime = m_CurrentTime;
 }
