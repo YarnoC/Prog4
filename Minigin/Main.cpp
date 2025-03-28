@@ -1,4 +1,5 @@
 #include <SDL.h>
+#include <iostream>
 
 #if _DEBUG
 // ReSharper disable once CppUnusedIncludeDirective
@@ -94,8 +95,25 @@ void load()
 	scene.Add(go);
 }
 
+#include "windows.h"
+
 int main(int, char*[]) {
-	dae::Minigin engine("../Data/");
-	engine.Run(load);
-    return 0;
+    try
+    {
+        if (AllocConsole()) {
+                FILE* empty;
+                freopen_s(&empty, "CONOUT$", "w", stdout);
+                freopen_s(&empty, "CONOUT$", "w", stderr);
+            }
+
+        dae::Minigin engine("../Data/");
+        engine.Run(load);
+        return 0;
+    }
+    catch (const std::exception& e)
+    {
+        std::cout << e.what() << std::endl;
+        std::cin.get();
+        return -1;
+    }
 }

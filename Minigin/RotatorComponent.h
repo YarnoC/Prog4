@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-#include "vec3.hpp"
+#include "glm/vec3.hpp"
 
 namespace dae
 {

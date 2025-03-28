@@ -23,13 +23,16 @@ set(SRC_FILES
   Minigin/TextObject.cpp
   Minigin/Texture2D.cpp
   Minigin/Transform.cpp
+  Minigin/Gamepad.cpp
+  Minigin/TextureComponent.cpp
+  Minigin/FpsComponent.cpp
+  Minigin/Command.cpp
   Minigin/Component.h
   Minigin/Font.h
   Minigin/GameObject.h
   Minigin/GameTime.h
   Minigin/InputManager.h
   Minigin/Minigin.h
-  Minigin/Renderable.h
   Minigin/Renderer.h
   Minigin/ResourceManager.h
   Minigin/Scene.h
@@ -39,6 +42,10 @@ set(SRC_FILES
   Minigin/TextObject.h
   Minigin/Texture2D.h
   Minigin/Transform.h
+  Minigin/Gamepad.h
+  Minigin/TextureComponent.h
+  Minigin/FpsComponent.h
+  Minigin/Command.h
 )
 
 include(FetchContent)
@@ -72,7 +79,7 @@ FetchContent_Declare(
 
   FetchContent_Declare(
       SDL2_image
-      URL https://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-2.8.3-VC.zip
+      URL https://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-2.8.8-VC.zip
       DOWNLOAD_NO_PROGRESS ON
       DOWNLOAD_DIR ${CMAKE_BINARY_DIR}/downloads
     )
