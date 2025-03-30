@@ -12,7 +12,7 @@
 #include "TextComponent.h"
 #include "TextureComponent.h"
 #include "FpsComponent.h"
-#include "Command.h"
+#include "GameCommands.h"
 #include "InputManager.h"
 
 void load()

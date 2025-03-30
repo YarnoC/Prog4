@@ -1,5 +1,4 @@
 #pragma once
-#include "glm.hpp"
 
 namespace dae
 {
@@ -24,14 +23,3 @@ protected:
 private:
 	dae::GameObject* m_Actor;
 };
-
-class MoveActorCommand final : public GameActorCommand
-{
-public:
-	MoveActorCommand(dae::GameObject* actor, glm::vec2 moveVec);
-	void Execute();
-
-private:
-	glm::vec2 m_MoveVec;
-};
-

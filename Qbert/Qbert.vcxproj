@@ -19,7 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FpsComponent.cpp" />
+    <ClCompile Include="GameCommands.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="RotatorComponent.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FpsComponent.h" />
+    <ClInclude Include="GameCommands.h" />
+    <ClInclude Include="RotatorComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
