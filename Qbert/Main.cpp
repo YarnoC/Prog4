@@ -1,7 +1,4 @@
-#include <SDL.h>
-
 #if _DEBUG
-// ReSharper disable once CppUnusedIncludeDirective
 #if __has_include(<vld.h>)
 #include <vld.h>
 #endif
@@ -9,18 +6,13 @@
 
 #include "Minigin.h"
 #include "SceneManager.h"
-#include "ResourceManager.h"
-//#include "TextObject.h"
 #include "Scene.h"
-
+#include "ResourceManager.h"
 #include "GameObject.h"
 #include "TextComponent.h"
 #include "TextureComponent.h"
 #include "FpsComponent.h"
-#include "RotatorComponent.h"
-
 #include "Command.h"
-#include "Inputs.h"
 #include "InputManager.h"
 
 void load()
@@ -58,16 +50,16 @@ void load()
 	qbertObj2->AddComponent<TextureComponent>("QBert.png");
 
 	//gamepad commands
-	auto leftCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{-100.f, 0.f});
-	auto rightCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{100.f, 0.f});
-	auto upCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{0.f, -100.f});
-	auto downCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{0.f, 100.f});
+	auto leftCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{ -100.f, 0.f });
+	auto rightCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{ 100.f, 0.f });
+	auto upCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{ 0.f, -100.f });
+	auto downCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{ 0.f, 100.f });
 
 	//keyboard  commands
-	auto leftCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{-150.f, 0.f});
-	auto rightCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{150.f, 0.f});
-	auto upCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{0.f, -150.f});
-	auto downCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{0.f, 150.f});
+	auto leftCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{ -150.f, 0.f });
+	auto rightCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{ 150.f, 0.f });
+	auto upCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{ 0.f, -150.f });
+	auto downCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{ 0.f, 150.f });
 
 	auto& inputMan = dae::InputManager::GetInstance();
 
@@ -83,7 +75,7 @@ void load()
 	inputMan.BindCommand(std::move(rightCmdKb), SDL_SCANCODE_RIGHT, ButtonState::Held);
 	inputMan.BindCommand(std::move(upCmdKb), SDL_SCANCODE_UP, ButtonState::Held);
 	inputMan.BindCommand(std::move(downCmdKb), SDL_SCANCODE_DOWN, ButtonState::Held);
-	
+
 	scene.Add(qbertObj);
 	scene.Add(qbertObj2);
 
@@ -94,8 +86,9 @@ void load()
 	scene.Add(go);
 }
 
-int main(int, char*[]) {
+int main(int, char* [])
+{
 	dae::Minigin engine("../Data/");
 	engine.Run(load);
-    return 0;
+	return 0;
 }
