@@ -22,7 +22,7 @@ template <int length> struct SdbmHash
 		return text[length - 1];
 	}
 
-	consteval static unsigned int calculate(const char* const text text)
+	consteval static unsigned int calculate(const char* const text)
 	{
 		unsigned int value{ 0 };
 		const auto character = _calculate(text, value);
