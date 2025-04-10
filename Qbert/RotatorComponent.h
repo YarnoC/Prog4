@@ -7,7 +7,7 @@ namespace dae
 	class GameObject;
 }
 
-class RotatorComponent : public Component
+class RotatorComponent : public dae::Component
 {
 public:
 	void Update() override;

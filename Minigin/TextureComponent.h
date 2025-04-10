@@ -2,6 +2,9 @@
 #include "Component.h"
 #include "Texture2D.h"
 
+namespace dae
+{
+
 class TextureComponent final : public Component
 {
 public:
@@ -20,3 +23,4 @@ private:
 	dae::Texture2D* m_TexturePtr;
 };
 
+}

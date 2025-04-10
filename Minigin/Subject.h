@@ -4,8 +4,9 @@
 //add namespace
 namespace dae
 {
-	class Observer;
-	class Component;
+
+class Observer;
+class Component;
 
 class Subject
 {

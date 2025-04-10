@@ -1,27 +1,27 @@
 #include "GameTime.h"
 #include <algorithm>
 
-double GameTime::m_Dt = 0.0;
-std::chrono::high_resolution_clock::time_point GameTime::m_LastTime = std::chrono::high_resolution_clock::now();
-std::chrono::high_resolution_clock::time_point GameTime::m_CurrentTime = std::chrono::high_resolution_clock::now();
+double dae::GameTime::m_Dt = 0.0;
+std::chrono::high_resolution_clock::time_point dae::GameTime::m_LastTime = std::chrono::high_resolution_clock::now();
+std::chrono::high_resolution_clock::time_point dae::GameTime::m_CurrentTime = std::chrono::high_resolution_clock::now();
 
-[[nodiscard]] double GameTime::GetDt()
+[[nodiscard]] double dae::GameTime::GetDt()
 {
     return m_Dt;
 }
 
-[[nodiscard]] double GameTime::GetFixedDt()
+[[nodiscard]] double dae::GameTime::GetFixedDt()
 {
     return m_FixedDt;
 }
 
-std::chrono::steady_clock::time_point GameTime::GetCurrentClockTime()
+std::chrono::steady_clock::time_point dae::GameTime::GetCurrentClockTime()
 {
     return m_CurrentTime;
 }
 
 //only to be used in the main loop
-void GameTime::UpdateDt()
+void dae::GameTime::UpdateDt()
 {
     m_CurrentTime = std::chrono::high_resolution_clock::now();
     const auto frameDuration{ std::chrono::duration<double>(m_CurrentTime - m_LastTime).count() };

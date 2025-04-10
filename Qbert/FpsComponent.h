@@ -1,19 +1,19 @@
 #pragma once
 #include "Component.h"
 
-class TextComponent;
 
 namespace dae
 {
-
-class GameObject;
+	class GameObject;
+	class TextComponent;
 }
-class FpsComponent final : public Component
+
+class FpsComponent final : public dae::Component
 {
 public:
 	void Update() override;
 
-	FpsComponent(dae::GameObject* ownerPtr, TextComponent* textComp);
+	FpsComponent(dae::GameObject* ownerPtr, dae::TextComponent* textComp);
 
 	~FpsComponent() = default;
 	FpsComponent(const FpsComponent& other) = delete;
@@ -22,6 +22,6 @@ public:
 	FpsComponent& operator=(FpsComponent&& other) = delete;
 
 private:
-	TextComponent* m_TextComponentPtr;
+	dae::TextComponent* m_TextComponentPtr;
 };
 

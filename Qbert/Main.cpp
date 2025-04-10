@@ -21,12 +21,12 @@ void load()
 
 	//background
 	auto go = std::make_unique<dae::GameObject>();
-	go->AddComponent<TextureComponent>("background.tga");
+	go->AddComponent<dae::TextureComponent>("background.tga");
 	scene.Add(go);
 
 	//logo
 	go = std::make_unique<dae::GameObject>();
-	go->AddComponent<TextureComponent>("logo.tga");
+	go->AddComponent<dae::TextureComponent>("logo.tga");
 	go->SetLocalPosition({ 216, 180, 0 });
 	scene.Add(go);
 
@@ -34,7 +34,7 @@ void load()
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 30);
 
 	auto textObject = std::make_unique<dae::GameObject>();
-	textObject->AddComponent<TextComponent>("Programming 4 Assignment", font.get());
+	textObject->AddComponent<dae::TextComponent>("Programming 4 Assignment", font.get());
 	textObject->SetLocalPosition({ 100, 20, 0 });
 
 	scene.Add(textObject);
@@ -43,11 +43,11 @@ void load()
 
 	auto qbertObj = std::make_unique<dae::GameObject>();
 	qbertObj->SetLocalPosition({ 100, 300, 0 });
-	qbertObj->AddComponent<TextureComponent>("QBert.png");
+	qbertObj->AddComponent<dae::TextureComponent>("QBert.png");
 
 	auto qbertObj2 = std::make_unique<dae::GameObject>();
 	qbertObj2->SetLocalPosition({ 100, 400, 0 });
-	qbertObj2->AddComponent<TextureComponent>("QBert.png");
+	qbertObj2->AddComponent<dae::TextureComponent>("QBert.png");
 
 	//gamepad commands
 	auto leftCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{ -100.f, 0.f });
@@ -81,8 +81,8 @@ void load()
 
 	go = std::make_unique<dae::GameObject>();
 	go->SetPosition(20, 20);
-	go->AddComponent<TextComponent>(" ", font.get());
-	go->AddComponent<FpsComponent>(go->GetComponent<TextComponent>());
+	go->AddComponent<dae::TextComponent>(" ", font.get());
+	go->AddComponent<FpsComponent>(go->GetComponent<dae::TextComponent>());
 	scene.Add(go);
 }
 

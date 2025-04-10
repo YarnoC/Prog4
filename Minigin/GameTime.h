@@ -1,6 +1,9 @@
 #pragma once
 #include <chrono>
 
+namespace dae
+{
+
 class GameTime
 {
 public:
@@ -14,3 +17,5 @@ private:
 	static std::chrono::high_resolution_clock::time_point m_LastTime;
 	static std::chrono::high_resolution_clock::time_point m_CurrentTime;
 };
+
+}

@@ -5,7 +5,6 @@ namespace dae
 {
 class GameObject;
 class Texture2D;
-}
 
 class Component
 {
@@ -33,3 +32,4 @@ private:
     dae::GameObject* m_OwnerPtr;
 };
 
+}

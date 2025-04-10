@@ -25,6 +25,6 @@ void FpsComponent::Update()
 	m_TextComponentPtr->SetText(stream.str());
 }
 
-FpsComponent::FpsComponent(dae::GameObject* ownerPtr, TextComponent* textComp)
+FpsComponent::FpsComponent(dae::GameObject* ownerPtr, dae::TextComponent* textComp)
 	: Component(ownerPtr), m_TextComponentPtr{textComp}
 {}
