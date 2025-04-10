@@ -1,10 +1,9 @@
 #pragma once
 #include <vector>
 #include "Event.h"
-//add namespace
+
 namespace dae
 {
-
 class Observer;
 class Component;
 

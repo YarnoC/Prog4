@@ -12,7 +12,6 @@ class TextComponent final : public Component
 public:
 	void Update();
 	void Render() const override;
-	dae::Texture2D* GetTexturePtr() const override;
 
 	void SetText(const std::string& text);
 

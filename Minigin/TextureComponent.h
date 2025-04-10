@@ -9,7 +9,6 @@ class TextureComponent final : public Component
 {
 public:
 	void Render() const override;
-	dae::Texture2D* GetTexturePtr() const override;
 
 	TextureComponent(dae::GameObject* ownerPtr, const std::string& fileName);
 

@@ -44,7 +44,6 @@ dae::Gamepad::Gamepad(uint8_t index)
 	: m_GamepadIndex{ index },
 	m_pImpl{ std::make_unique<GamepadImpl>(index) }
 {
-
 }
 
 dae::Gamepad::~Gamepad()
@@ -65,70 +64,6 @@ bool dae::Gamepad::IsPressed(const GamepadButton& button) const
 {
 	return m_pImpl->IsPressed(button);
 }
-
-//TODO: put similar in gamepadImpl
-//dae::InputManager::~InputManager()
-//{
-//	//needs to be defined here else the unique_ptr complains about an incomplete type
-//}
-
-//Command* dae::InputManager::GamepadHandler::HandleGamepadInput()
-//{
-//	//polling
-//	CopyMemory(&m_PreviousState, &m_CurrentState, sizeof(XINPUT_STATE));
-//	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
-//	DWORD dwResult = XInputGetState(m_GamepadIndex, &m_CurrentState);
-//
-//	if (dwResult != ERROR_SUCCESS) return nullptr;
-//
-//	auto buttonChanges = m_CurrentState.Gamepad.wButtons ^ m_PreviousState.Gamepad.wButtons;
-//	m_ButtonsPressedThisFrame = buttonChanges ^ m_CurrentState.Gamepad.wButtons;
-//	m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
-//
-//	if (IsDownThisFrame(XINPUT_GAMEPAD_DPAD_LEFT)) return m_LeftCmd.get();
-//	if (IsDownThisFrame(XINPUT_GAMEPAD_DPAD_RIGHT)) return m_RightCmd.get();
-//	if (IsDownThisFrame(XINPUT_GAMEPAD_DPAD_UP)) return m_UpCmd.get();
-//	if (IsDownThisFrame(XINPUT_GAMEPAD_DPAD_DOWN)) return m_DownCmd.get();
-//
-//	return nullptr;
-//}
-
-//void dae::InputManager::GamepadHandler::RegisterCommand(const GamepadButton& button, std::unique_ptr<Command> command)
-//{
-//	switch (button)
-//	{
-//	case GamepadButton::DpadLeft:
-//		m_LeftCmd = std::move(command);
-//		break;
-//	case GamepadButton::DpadRight:
-//		m_RightCmd = std::move(command);
-//		break;
-//	case GamepadButton::DpadUp:
-//		m_UpCmd = std::move(command);
-//		break;
-//	case GamepadButton::DpadDown:
-//		m_DownCmd = std::move(command);
-//		break;
-//	}
-//}
-
-//TODO: change to impl
-//got pressed this frame
-//bool dae::InputManager::GamepadHandler::IsDownThisFrame(unsigned int button) const
-//{
-//	
-//}
-//
-////released this frame
-//bool dae::InputManager::GamepadHandler::IsUpThisFrame(unsigned int button) const
-//{
-//	
-//}
-//
-//bool dae::InputManager::GamepadHandler::IsPressed(unsigned int button) const
-//{
-//	
-//}
 
 //pressed this frame
 bool dae::Gamepad::GamepadImpl::IsDownThisFrame(const GamepadButton& button) const

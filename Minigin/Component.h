@@ -14,7 +14,6 @@ public:
     virtual inline void Update() {};
     virtual inline void FixedUpdate() {};
     virtual inline void Render() const {};
-    virtual dae::Texture2D* GetTexturePtr() const;
 
     //marks as terminal and will be destroyed at and of late update
     void Destroy();

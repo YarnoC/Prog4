@@ -50,11 +50,6 @@ void dae::TextComponent::Render() const
 	Renderer::GetInstance().RenderTexture(*m_TextTextureUPtr, pos.x, pos.y);
 }
 
-dae::Texture2D* dae::TextComponent::GetTexturePtr() const
-{
-	return m_TextTextureUPtr.get();
-}
-
 void dae::TextComponent::SetText(const std::string& text)
 {
 	m_Text = text;

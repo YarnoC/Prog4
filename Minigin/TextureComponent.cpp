@@ -14,8 +14,3 @@ void dae::TextureComponent::Render() const
 	const auto& pos = GetOwner()->GetWorldPosition();
 	dae::Renderer::GetInstance().RenderTexture(*m_TexturePtr, pos.x, pos.y);
 }
-
-dae::Texture2D* dae::TextureComponent::GetTexturePtr() const
-{
-	return m_TexturePtr;
-}

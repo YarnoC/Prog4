@@ -12,7 +12,6 @@ public:
 	uint8_t GetGamepadIndex() const;
 	void Update();
 
-	//maybe change these to take from the enum
 	bool IsDownThisFrame(const GamepadButton& button) const;
 	bool IsUpThisFrame(const GamepadButton& button) const;
 	//currently down, not indicated when it was originally pressed
