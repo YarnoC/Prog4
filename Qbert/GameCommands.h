@@ -2,7 +2,7 @@
 #include "Command.h"
 #include "vec2.hpp"
 
-class MoveActorCommand final : public GameActorCommand
+class MoveActorCommand final : public dae::GameActorCommand
 {
 public:
 	MoveActorCommand(dae::GameObject* actor, glm::vec2 moveVec);

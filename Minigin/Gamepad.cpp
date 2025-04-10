@@ -4,7 +4,7 @@
 #include "XInput.h"
 #pragma comment(lib, "xinput.lib")
 
-class Gamepad::GamepadImpl
+class dae::Gamepad::GamepadImpl
 {
 public:
 	bool IsDownThisFrame(const GamepadButton& button) const;
@@ -30,38 +30,38 @@ private:
 	const uint8_t m_GamepadIndex;
 };
 
-uint8_t Gamepad::GetGamepadIndex() const
+uint8_t dae::Gamepad::GetGamepadIndex() const
 {
 	return m_GamepadIndex;
 }
 
-void Gamepad::Update()
+void dae::Gamepad::Update()
 {
 	m_pImpl->Update();
 }
 
-Gamepad::Gamepad(uint8_t index)
+dae::Gamepad::Gamepad(uint8_t index)
 	: m_GamepadIndex{ index },
 	m_pImpl{ std::make_unique<GamepadImpl>(index) }
 {
 
 }
 
-Gamepad::~Gamepad()
+dae::Gamepad::~Gamepad()
 {
 }
 
-bool Gamepad::IsDownThisFrame(const GamepadButton& button) const
+bool dae::Gamepad::IsDownThisFrame(const GamepadButton& button) const
 {
 	return m_pImpl->IsDownThisFrame(button);
 }
 
-bool Gamepad::IsUpThisFrame(const GamepadButton& button) const
+bool dae::Gamepad::IsUpThisFrame(const GamepadButton& button) const
 {
 	return m_pImpl->IsUpThisFrame(button);
 }
 
-bool Gamepad::IsPressed(const GamepadButton& button) const
+bool dae::Gamepad::IsPressed(const GamepadButton& button) const
 {
 	return m_pImpl->IsPressed(button);
 }
@@ -131,24 +131,24 @@ bool Gamepad::IsPressed(const GamepadButton& button) const
 //}
 
 //pressed this frame
-bool Gamepad::GamepadImpl::IsDownThisFrame(const GamepadButton& button) const
+bool dae::Gamepad::GamepadImpl::IsDownThisFrame(const GamepadButton& button) const
 {
 	return m_ButtonsPressedThisFrame & static_cast<DWORD>(button);
 }
 
 //released this frame
-bool Gamepad::GamepadImpl::IsUpThisFrame(const GamepadButton& button) const
+bool dae::Gamepad::GamepadImpl::IsUpThisFrame(const GamepadButton& button) const
 {
 	return m_ButtonsReleasedThisFrame & static_cast<DWORD>(button);
 }
 
 //currently down, not indicated when it was originally pressed
-bool Gamepad::GamepadImpl::IsPressed(const GamepadButton& button) const
+bool dae::Gamepad::GamepadImpl::IsPressed(const GamepadButton& button) const
 {
 	return m_CurrentState.Gamepad.wButtons & static_cast<DWORD>(button);
 }
 
-void Gamepad::GamepadImpl::Update()
+void dae::Gamepad::GamepadImpl::Update()
 {
 	CopyMemory(&m_PreviousState, &m_CurrentState, sizeof(XINPUT_STATE));
 	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
@@ -159,7 +159,7 @@ void Gamepad::GamepadImpl::Update()
 	m_ButtonsReleasedThisFrame = buttonChanges & (~m_CurrentState.Gamepad.wButtons);
 }
 
-Gamepad::GamepadImpl::GamepadImpl(uint8_t index)
+dae::Gamepad::GamepadImpl::GamepadImpl(uint8_t index)
 	: m_GamepadIndex{index}
 {
 	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));

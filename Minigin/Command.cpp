@@ -3,12 +3,12 @@
 #include <cassert>
 #include "GameTime.h"
 
-GameActorCommand::GameActorCommand(dae::GameObject* actor)
+dae::GameActorCommand::GameActorCommand(dae::GameObject* actor)
     : m_Actor{actor}
 {
 }
 
-dae::GameObject* GameActorCommand::GetGameActor() const
+dae::GameObject* dae::GameActorCommand::GetGameActor() const
 {
     return m_Actor;
 }

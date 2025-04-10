@@ -3,11 +3,12 @@
 #include <memory>
 #include "Inputs.h"
 
+namespace dae
+{
+
 class Gamepad
 {
 public:
-	//Command* HandleGamepadInput();
-	//void RegisterCommand(const GamepadButton& button, std::unique_ptr<Command> command);
 	uint8_t GetGamepadIndex() const;
 	void Update();
 
@@ -27,3 +28,4 @@ private:
 	std::unique_ptr<GamepadImpl> m_pImpl;
 };
 
+}

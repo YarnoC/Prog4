@@ -12,7 +12,7 @@ const float RotatorComponent::m_2Pi = static_cast<float>(M_PI * 2);
 void RotatorComponent::Update()
 {
 	const auto& owner = GetOwner();
-	m_CurrentAngle += static_cast<float>(m_RadPerSec * GameTime::GetDt());
+	m_CurrentAngle += static_cast<float>(m_RadPerSec * dae::GameTime::GetDt());
 	if (m_CurrentAngle > m_2Pi)
 	{
 		m_CurrentAngle -= m_2Pi;

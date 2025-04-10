@@ -3,7 +3,6 @@
 namespace dae
 {
 	class GameObject;
-}
 
 class Command
 {
@@ -23,3 +22,5 @@ protected:
 private:
 	dae::GameObject* m_Actor;
 };
+
+}
