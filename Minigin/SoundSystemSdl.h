@@ -11,12 +11,14 @@ namespace dae
 class SoundSystemSdl final : public SoundSytem
 {
 public:
-	void Play(unsigned short soundId, uint8_t volume, bool looping) override;
-	[[nodiscard]] unsigned short LoadWav(const std::string& filepath) override;
+	void Play(short soundId, uint8_t volume, bool looping) override;
+	//the return value should be stored and used as the soundId value in the play value
+	[[nodiscard]] short LoadEffect(const std::string& filepath) override;
+	[[nodiscard]] short LoadMusic(const std::string& filepath) override;
 
 	SoundSystemSdl();
 
-	~SoundSystemSdl() = default;
+	~SoundSystemSdl();
 
 	SoundSystemSdl(const SoundSystemSdl&) = delete;
 	SoundSystemSdl(SoundSystemSdl&&) = delete;
@@ -24,21 +26,26 @@ public:
 	SoundSystemSdl& operator=(SoundSystemSdl&&) = delete;
 
 private:
-	class SdlImpl;
+	struct SdlImpl;
 	std::unique_ptr<SdlImpl> m_pImpl;
+
+	//positive for effects, negative for music
+	short m_CurrentEffectIndex{ 0 };
+	short m_CurrentMusicIndex{ -1 };
 
 	std::jthread m_AudioThread;
 	void HandleAudio(std::stop_token&& stopToken);
 
 	struct AudioRequest
 	{
-		const unsigned short soundId{};
-		const uint8_t volume{};
+		const short soundId{};
 		const bool looping{};
 	};
 
-	std::unique_ptr<std::queue<AudioRequest>> m_AudioQueue;
+	std::unique_ptr<std::queue<AudioRequest>> m_AudioQueue{};
 	std::mutex m_QMutex;
+	std::condition_variable m_PlayCv{};
+	std::mutex m_WaitPlayMutex;
 
 };
 
