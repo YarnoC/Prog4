@@ -63,6 +63,45 @@ short dae::SoundSystemSdl::LoadMusic(const std::string& filepath)
 	return m_CurrentMusicIndex--;
 }
 
+void dae::SoundSystemSdl::SetMasterVolume(uint8_t volume)
+{
+	SetEffectsVolume(volume);
+	SetMusicVolume(volume);
+}
+
+void dae::SoundSystemSdl::SetEffectsVolume(uint8_t volume)
+{
+	auto newVol = static_cast<uint8_t>(1.28f * volume);
+	//set vol for all channels
+	Mix_Volume(-1, newVol);
+}
+
+void dae::SoundSystemSdl::SetMusicVolume(uint8_t volume)
+{
+	auto newVol = static_cast<uint8_t>(1.28f * volume);
+	Mix_VolumeMusic(newVol);
+}
+
+void dae::SoundSystemSdl::PauseMusic()
+{
+	Mix_PauseMusic();
+}
+
+void dae::SoundSystemSdl::ResumeMusic()
+{
+	Mix_ResumeMusic();
+}
+
+void dae::SoundSystemSdl::StopAllEffects()
+{
+	Mix_HaltChannel(-1);
+}
+
+void dae::SoundSystemSdl::StopMusic()
+{
+	Mix_HaltMusic();
+}
+
 dae::SoundSystemSdl::SoundSystemSdl()
 	: SoundSytem(),
 	m_AudioThread{ [this](std::stop_token stopToken) {this->HandleAudio(std::move(stopToken)); }}
@@ -116,7 +155,8 @@ void dae::SoundSystemSdl::HandleAudio(std::stop_token&& stopToken)
 	}
 
 	//stopping all channels because freeing chunks while they are being played is a bad idea
-	Mix_HaltChannel(-1);
+	StopAllEffects();
+	StopMusic();
 
 	//clear vectors to trigger dtors of all uptrs of chunks and music
 	m_pImpl->m_AudioEffectCache.clear();

@@ -15,6 +15,13 @@ public:
 	//the return value should be stored and used as the soundId value in the play value
 	[[nodiscard]] short LoadEffect(const std::string& filepath) override;
 	[[nodiscard]] short LoadMusic(const std::string& filepath) override;
+	void SetMasterVolume(uint8_t volume) override;
+	void SetEffectsVolume(uint8_t volume) override;
+	void SetMusicVolume(uint8_t volume) override;
+	void PauseMusic() override;
+	void ResumeMusic() override;
+	void StopAllEffects() override;
+	void StopMusic() override;
 
 	SoundSystemSdl();
 
