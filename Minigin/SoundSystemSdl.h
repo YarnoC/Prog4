@@ -4,6 +4,7 @@
 #include <thread>
 #include <queue>
 #include <mutex>
+#include <unordered_map>
 
 namespace dae
 {
@@ -53,7 +54,7 @@ private:
 	std::mutex m_QMutex;
 	std::condition_variable m_PlayCv{};
 	std::mutex m_WaitPlayMutex;
-
+	std::unordered_map<std::string, short> m_LoadedSounds{};
 };
 
 }

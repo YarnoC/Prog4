@@ -55,14 +55,27 @@ void dae::SoundSystemSdl::Play(short soundId, uint8_t volume, bool looping)
 
 short dae::SoundSystemSdl::LoadEffect(const std::string& filepath)
 {
-	std::cout << std::filesystem::current_path() << std::endl;
-	std::unique_ptr<Mix_Chunk, ChunkDtor> uptr(Mix_LoadWAV(filepath.c_str()));
-	if (uptr == nullptr)
+	auto pathCheck = m_LoadedSounds.try_emplace(filepath, m_CurrentEffectIndex);
+
+	//bool whether insertion took place
+	if (pathCheck.second)
 	{
-		std::cout << Mix_GetError() << std::endl;
+
+
+		std::cout << std::filesystem::current_path() << std::endl;
+		std::unique_ptr<Mix_Chunk, ChunkDtor> uptr(Mix_LoadWAV(filepath.c_str()));
+		if (uptr == nullptr)
+		{
+			std::cout << "at index " << m_CurrentEffectIndex << " " << Mix_GetError() << std::endl;
+		}
+		m_pImpl->m_AudioEffectCache.emplace(m_CurrentEffectIndex, std::move(uptr));
+		return m_CurrentEffectIndex++; //post increment so old value gets returned and then updated
 	}
-	m_pImpl->m_AudioEffectCache.emplace(m_CurrentEffectIndex, std::move(uptr));
-	return m_CurrentEffectIndex++; //post increment so old value gets returned and then updated
+	else
+	{
+		//this syntax can go fuck itself, try_emplace, returns a std::pair<std::conditional<bool, type if true, type if false>, bool>
+		return pathCheck.first->second;
+	}
 }
 
 short dae::SoundSystemSdl::LoadMusic(const std::string& filepath)
