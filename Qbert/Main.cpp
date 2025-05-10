@@ -14,6 +14,8 @@
 #include "FpsComponent.h"
 #include "GameCommands.h"
 #include "InputManager.h"
+#include "ServiceLocator.h"
+#include "SoundSystemSdl.h"
 
 void load()
 {
@@ -38,6 +40,16 @@ void load()
 	textObject->SetLocalPosition({ 100, 20, 0 });
 
 	scene.Add(textObject);
+
+	dae::ServiceLocator::RegisterSoundSytem(std::make_unique<dae::SoundSystemSdl>());
+	auto&& ss = dae::ServiceLocator::GetSoundSystem();
+	
+	auto jumpWav = ss.LoadEffect("../Data/Sounds/QBertJump.wav");
+	//ss.Play(jumpWav, 100, true);
+	auto otherWav = ss.LoadEffect("Sounds/QBertJump.wav");
+	ss.Play(otherWav, 50, true);
+	
+	if (jumpWav) std::printf("jump");
 
 	//actual objects
 

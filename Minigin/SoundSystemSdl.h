@@ -49,7 +49,7 @@ private:
 		const bool looping{};
 	};
 
-	std::unique_ptr<std::queue<AudioRequest>> m_AudioQueue{};
+	std::unique_ptr<std::queue<AudioRequest>> m_AudioQueue;
 	std::mutex m_QMutex;
 	std::condition_variable m_PlayCv{};
 	std::mutex m_WaitPlayMutex;

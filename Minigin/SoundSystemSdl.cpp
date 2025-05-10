@@ -6,6 +6,9 @@
 #include <map>
 #include <cassert>
 #include <variant>
+#include <iostream>
+
+#include <filesystem>
 
 struct ChunkDtor
 {
@@ -47,18 +50,24 @@ void dae::SoundSystemSdl::Play(short soundId, uint8_t volume, bool looping)
 
 	std::lock_guard<std::mutex> lg(m_QMutex);
 	m_AudioQueue->emplace(AudioRequest{ soundId, looping });
+	m_PlayCv.notify_all();
 }
 
 short dae::SoundSystemSdl::LoadEffect(const std::string& filepath)
 {
+	std::cout << std::filesystem::current_path() << std::endl;
 	std::unique_ptr<Mix_Chunk, ChunkDtor> uptr(Mix_LoadWAV(filepath.c_str()));
+	if (uptr == nullptr)
+	{
+		std::cout << Mix_GetError() << std::endl;
+	}
 	m_pImpl->m_AudioEffectCache.emplace(m_CurrentEffectIndex, std::move(uptr));
 	return m_CurrentEffectIndex++; //post increment so old value gets returned and then updated
 }
 
 short dae::SoundSystemSdl::LoadMusic(const std::string& filepath)
 {
-	std::unique_ptr<Mix_Music, ChunkDtor> uptr(Mix_LoadMUS(filepath.c_str()));
+	std::unique_ptr<Mix_Music, MusicDtor> uptr(Mix_LoadMUS(filepath.c_str()));
 	m_pImpl->m_MusicCache.emplace(m_CurrentMusicIndex, std::move(uptr));
 	return m_CurrentMusicIndex--;
 }
@@ -104,26 +113,35 @@ void dae::SoundSystemSdl::StopMusic()
 
 dae::SoundSystemSdl::SoundSystemSdl()
 	: SoundSytem(),
-	m_AudioThread{ [this](std::stop_token stopToken) {this->HandleAudio(std::move(stopToken)); }}
+	m_pImpl{ std::make_unique<dae::SoundSystemSdl::SdlImpl>() },
+	m_AudioThread{ [this](std::stop_token stopToken) { this->HandleAudio(std::move(stopToken)); }},
+	m_AudioQueue{ std::make_unique<std::queue<AudioRequest>>() }
 {
-
+	//sdl mixer init
+	auto flags = MIX_INIT_MP3;
+	auto result = Mix_Init(flags); //returns 0 if fails
+	assert(result == flags); //check if all flags were succesfully set //assert fails
+	result = Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096); //returns 0 for succes, -1 for failure
+	assert(result == 0);
 }
 
 dae::SoundSystemSdl::~SoundSystemSdl()
 {
-	//maybe not needed
+	m_AudioThread.request_stop();
+	m_PlayCv.notify_all();
+	m_AudioThread.join();
 }
 
 void dae::SoundSystemSdl::HandleAudio(std::stop_token&& stopToken)
 {
-	m_pImpl = std::make_unique<dae::SoundSystemSdl::SdlImpl>();
+	//m_pImpl = std::make_unique<dae::SoundSystemSdl::SdlImpl>();
 
 	//sdl mixer init
-	auto flags = MIX_INIT_WAVPACK | MIX_INIT_MP3;
-	auto result = Mix_Init(flags); //returns 0 if fails
-	assert(result == flags); //check if all flags were succesfully set
-	result = Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096); //returns 0 for succes, -1 for failure
-	assert(result == 0);
+	//auto flags = MIX_INIT_MP3;
+	//auto result = Mix_Init(flags); //returns 0 if fails
+	//assert(result == flags); //check if all flags were succesfully set //assert fails
+	//result = Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096); //returns 0 for succes, -1 for failure
+	//assert(result == 0);
 
 	while (!stopToken.stop_requested())
 	{
@@ -143,13 +161,18 @@ void dae::SoundSystemSdl::HandleAudio(std::stop_token&& stopToken)
 
 		m_QMutex.unlock();
 
+		//sdl mixer allows for a certain amount of loops or a (not really) infinite loop by inputting -1, here we're only exposing infinite loop or no loop to the users
+		//so true (1) * -1 = -1 and false (0) * -1 = 0
+		//constexpr int loopLogic{ -1 };
+		int loops{ request.looping * -1 };
+
 		if (request.soundId >= 0)
 		{
-			Mix_PlayChannel(-1, m_pImpl->m_AudioEffectCache[request.soundId].get(), request.looping);
+			Mix_PlayChannel(-1, m_pImpl->m_AudioEffectCache[request.soundId].get(), loops);
 		}
 		else
 		{
-			Mix_PlayMusic(m_pImpl->m_MusicCache[request.soundId].get(), request.looping);
+			Mix_PlayMusic(m_pImpl->m_MusicCache[request.soundId].get(), loops);
 		}
 
 	}
