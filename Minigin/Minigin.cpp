@@ -9,6 +9,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "ServiceLocator.h"
 
 #include "GameTime.h"
 #include <thread>

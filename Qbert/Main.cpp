@@ -43,8 +43,9 @@ void load()
 
 	dae::ServiceLocator::RegisterSoundSytem(std::make_unique<dae::SoundSystemSdl>());
 	auto&& ss = dae::ServiceLocator::GetSoundSystem();
+	ss.SetDataPath("../Data");
 	
-	auto jumpWav = ss.LoadEffect("../Data/Sounds/QBertJump.wav");
+	auto jumpWav = ss.LoadEffect("Sounds/QBertJump.wav");
 	ss.Play(jumpWav, 10, true);
 
 	//actual objects

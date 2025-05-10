@@ -18,6 +18,8 @@ public:
 	virtual void StopAllEffects() = 0;
 	virtual void StopMusic() = 0;
 
+	virtual void SetDataPath(const std::string& dataPath) = 0;
+
 	SoundSytem() = default;
 	virtual ~SoundSytem() = default;
 
@@ -40,6 +42,8 @@ public:
 	void ResumeMusic() override {};
 	void StopAllEffects() override {};
 	void StopMusic() override {};
+
+	void SetDataPath(const std::string&) override {};
 
 	NullSoundSystem() = default;
 	~NullSoundSystem() = default;

@@ -55,15 +55,15 @@ void dae::SoundSystemSdl::Play(short soundId, uint8_t volume, bool looping)
 
 short dae::SoundSystemSdl::LoadEffect(const std::string& filepath)
 {
-	auto pathCheck = m_LoadedSounds.try_emplace(filepath, m_CurrentEffectIndex);
+	auto fullPath = m_SoundsDir +  "/" + filepath;
+
+	auto pathCheck = m_LoadedSounds.try_emplace(fullPath, m_CurrentEffectIndex);
 
 	//bool whether insertion took place
 	if (pathCheck.second)
 	{
-
-
 		std::cout << std::filesystem::current_path() << std::endl;
-		std::unique_ptr<Mix_Chunk, ChunkDtor> uptr(Mix_LoadWAV(filepath.c_str()));
+		std::unique_ptr<Mix_Chunk, ChunkDtor> uptr(Mix_LoadWAV(fullPath.c_str()));
 		if (uptr == nullptr)
 		{
 			std::cout << "at index " << m_CurrentEffectIndex << " " << Mix_GetError() << std::endl;
@@ -122,6 +122,11 @@ void dae::SoundSystemSdl::StopAllEffects()
 void dae::SoundSystemSdl::StopMusic()
 {
 	Mix_HaltMusic();
+}
+
+void dae::SoundSystemSdl::SetDataPath(const std::string& dataPath)
+{
+	m_SoundsDir = dataPath;
 }
 
 dae::SoundSystemSdl::SoundSystemSdl()
