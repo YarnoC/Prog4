@@ -74,15 +74,28 @@ short dae::SoundSystemSdl::LoadEffect(const std::string& filepath)
 	else
 	{
 		//this syntax can go fuck itself, try_emplace, returns a std::pair<std::conditional<bool, type if true, type if false>, bool>
+		//of which the return value of the conditional is automatically selected
 		return pathCheck.first->second;
 	}
 }
 
 short dae::SoundSystemSdl::LoadMusic(const std::string& filepath)
 {
-	std::unique_ptr<Mix_Music, MusicDtor> uptr(Mix_LoadMUS(filepath.c_str()));
-	m_pImpl->m_MusicCache.emplace(m_CurrentMusicIndex, std::move(uptr));
-	return m_CurrentMusicIndex--;
+	auto fullPath = m_SoundsDir + "/" + filepath;
+
+	auto pathCheck = m_LoadedSounds.try_emplace(fullPath, m_CurrentEffectIndex);
+
+	if (pathCheck.second)
+	{
+		std::unique_ptr<Mix_Music, MusicDtor> uptr(Mix_LoadMUS(fullPath.c_str()));
+		m_pImpl->m_MusicCache.emplace(m_CurrentMusicIndex, std::move(uptr));
+		return m_CurrentMusicIndex--;
+	}
+	else
+	{
+		return pathCheck.first->second;
+	}
+
 }
 
 void dae::SoundSystemSdl::SetMasterVolume(uint8_t volume)
