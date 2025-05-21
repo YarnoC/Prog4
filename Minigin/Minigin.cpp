@@ -69,6 +69,7 @@ dae::Minigin::Minigin(const std::string &dataPath)
 	Renderer::GetInstance().Init(g_window);
 
 	ResourceManager::GetInstance().Init(dataPath);
+	ServiceLocator::GetSoundSystem().SetDataPath("../Data");
 }
 
 dae::Minigin::~Minigin()

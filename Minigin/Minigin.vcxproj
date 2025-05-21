@@ -229,6 +229,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
+    <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="SoundSystemSdl.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TextComponent.cpp" />

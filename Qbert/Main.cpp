@@ -32,7 +32,6 @@ void load()
 	go->SetLocalPosition({ 216, 180, 0 });
 	scene.Add(go);
 
-	//TODO: this returns a shared_ptr, change this to raw, maybe not need to ask about something here
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 30);
 
 	auto textObject = std::make_unique<dae::GameObject>();
@@ -43,7 +42,6 @@ void load()
 
 	dae::ServiceLocator::RegisterSoundSytem(std::make_unique<dae::SoundSystemSdl>());
 	auto&& ss = dae::ServiceLocator::GetSoundSystem();
-	ss.SetDataPath("../Data");
 	
 	auto jumpWav = ss.LoadEffect("Sounds/QBertJump.ogg");
 	ss.Play(jumpWav, 10, true);

@@ -62,7 +62,6 @@ short dae::SoundSystemSdl::LoadEffect(const std::string& filepath)
 	//bool whether insertion took place
 	if (pathCheck.second)
 	{
-		std::cout << std::filesystem::current_path() << std::endl;
 		std::unique_ptr<Mix_Chunk, ChunkDtor> uptr(Mix_LoadWAV(fullPath.c_str()));
 		if (uptr == nullptr)
 		{
@@ -137,10 +136,10 @@ void dae::SoundSystemSdl::StopMusic()
 	Mix_HaltMusic();
 }
 
-void dae::SoundSystemSdl::SetDataPath(const std::string& dataPath)
-{
-	m_SoundsDir = dataPath;
-}
+//void dae::SoundSystemSdl::SetDataPath(const std::string& dataPath)
+//{
+//	m_SoundsDir = dataPath;
+//}
 
 dae::SoundSystemSdl::SoundSystemSdl()
 	: SoundSytem(),

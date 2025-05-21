@@ -18,7 +18,12 @@ public:
 	virtual void StopAllEffects() = 0;
 	virtual void StopMusic() = 0;
 
-	virtual void SetDataPath(const std::string& dataPath) = 0;
+	/*set the path to the starting directory where you want to look for sounds
+	DO NOT end the directory name with a / */
+	virtual void SetDataPath(const std::string& dataPath)
+	{
+		m_SoundsDir = dataPath;
+	}
 
 	SoundSytem() = default;
 	virtual ~SoundSytem() = default;
@@ -27,6 +32,9 @@ public:
 	SoundSytem(SoundSytem&&) = delete;
 	SoundSytem& operator=(const SoundSytem&) = delete;
 	SoundSytem& operator=(SoundSytem&&) = delete;
+
+protected:
+	static std::string m_SoundsDir;
 };
 
 class NullSoundSystem final : public SoundSytem
@@ -42,8 +50,6 @@ public:
 	void ResumeMusic() override {};
 	void StopAllEffects() override {};
 	void StopMusic() override {};
-
-	void SetDataPath(const std::string&) override {};
 
 	NullSoundSystem() = default;
 	~NullSoundSystem() = default;

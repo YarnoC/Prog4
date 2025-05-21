@@ -25,10 +25,6 @@ public:
 	void StopAllEffects() override;
 	void StopMusic() override;
 
-	/*set the path to the starting directory where you want to look for sounds
-	DO NOT end the directory name with a / */
-	void SetDataPath(const std::string& dataPath) override;
-
 	SoundSystemSdl();
 
 	~SoundSystemSdl();
@@ -60,8 +56,6 @@ private:
 	std::condition_variable m_PlayCv{};
 	std::mutex m_WaitPlayMutex;
 	std::unordered_map<std::string, short> m_LoadedSounds{};
-
-	std::string m_SoundsDir{"."};
 };
 
 }
