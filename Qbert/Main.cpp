@@ -45,7 +45,7 @@ void load()
 	auto&& ss = dae::ServiceLocator::GetSoundSystem();
 	ss.SetDataPath("../Data");
 	
-	auto jumpWav = ss.LoadEffect("Sounds/QBertJump.wav");
+	auto jumpWav = ss.LoadEffect("Sounds/QBertJump.ogg");
 	ss.Play(jumpWav, 10, true);
 
 	//actual objects

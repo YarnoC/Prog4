@@ -149,7 +149,7 @@ dae::SoundSystemSdl::SoundSystemSdl()
 	m_AudioQueue{ std::make_unique<std::queue<AudioRequest>>() }
 {
 	//sdl mixer init
-	auto flags = MIX_INIT_MP3;
+	int flags = MIX_INIT_MP3 || MIX_INIT_OGG;
 	auto result = Mix_Init(flags); //returns 0 if fails
 	assert(result == flags); //check if all flags were succesfully set //assert fails
 	result = Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096); //returns 0 for succes, -1 for failure
