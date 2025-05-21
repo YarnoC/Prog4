@@ -20,7 +20,7 @@ public:
 
 	/*set the path to the starting directory where you want to look for sounds
 	DO NOT end the directory name with a / */
-	virtual void SetDataPath(const std::string& dataPath)
+	virtual void SetDataPath(const std::string& dataPath) final
 	{
 		m_SoundsDir = dataPath;
 	}
