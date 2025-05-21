@@ -25,9 +25,15 @@ void dae::SceneManager::Render()
 	}
 }
 
+//need to be declared here because else the unique pointer complains that it can't delete imcomplete type
+dae::SceneManager::SceneManager() = default;
+
+dae::SceneManager::~SceneManager() = default;
+
 dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
 {
-	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
-	m_scenes.push_back(scene);
-	return *scene;
+	//can't use make_unique here as that function doesn't have access to the private ctor of scene
+	auto scene = std::move(std::unique_ptr<Scene>(new Scene(name)));
+	m_scenes.push_back(std::move(scene));
+	return *m_scenes.back();
 }

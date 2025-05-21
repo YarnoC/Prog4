@@ -17,7 +17,8 @@ namespace dae
 		void Render();
 	private:
 		friend class Singleton<SceneManager>;
-		SceneManager() = default;
-		std::vector<std::shared_ptr<Scene>> m_scenes;
+		SceneManager();
+		~SceneManager();
+		std::vector<std::unique_ptr<Scene>> m_scenes;
 	};
 }
