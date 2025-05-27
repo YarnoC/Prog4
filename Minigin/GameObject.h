@@ -89,6 +89,7 @@ namespace dae
 		std::vector<GameObject*> m_ChildrenVec;
 		Transform m_Transform{};
 		bool m_PositionIsDirty{ true };
+		bool m_IsTerminal{ false };
 		glm::vec3 m_WorldPosition{};
 		glm::vec3 m_LocalPosition{};
 
@@ -99,7 +100,6 @@ namespace dae
 		void UpdateWorldPosition();
 		bool IsChild(GameObject* child) const;
 
-		bool m_IsTerminal{ false };
 
 		template<IsComponentType ComponentType>
 		const Component* InternalGetComponent() const //DO NOT USE ANYWHERE EXCEPT IN IMPL OF HASCOMPONENT()
