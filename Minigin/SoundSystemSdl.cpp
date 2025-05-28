@@ -80,7 +80,7 @@ short dae::SoundSystemSdl::LoadMusic(const std::string& filepath)
 {
 	auto fullPath = m_SoundsDir + "/" + filepath;
 
-	auto [valPair, emplaceSuccess] = m_LoadedSounds.try_emplace(fullPath, m_CurrentEffectIndex);
+	auto [valPair, emplaceSuccess] = m_LoadedSounds.try_emplace(fullPath, m_CurrentMusicIndex);
 
 	if (emplaceSuccess)
 	{
