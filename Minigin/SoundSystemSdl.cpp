@@ -57,10 +57,9 @@ short dae::SoundSystemSdl::LoadEffect(const std::string& filepath)
 {
 	auto fullPath = m_SoundsDir +  "/" + filepath;
 
-	auto pathCheck = m_LoadedSounds.try_emplace(fullPath, m_CurrentEffectIndex);
+	auto [valPair, emplaceSuccess] = m_LoadedSounds.try_emplace(fullPath, m_CurrentEffectIndex);
 
-	//bool whether insertion took place
-	if (pathCheck.second)
+	if (emplaceSuccess)
 	{
 		std::unique_ptr<Mix_Chunk, ChunkDtor> uptr(Mix_LoadWAV(fullPath.c_str()));
 		if (uptr == nullptr)
@@ -72,9 +71,8 @@ short dae::SoundSystemSdl::LoadEffect(const std::string& filepath)
 	}
 	else
 	{
-		//this syntax can go fuck itself, try_emplace, returns a std::pair<std::conditional<bool, type if true, type if false>, bool>
-		//of which the return value of the conditional is automatically selected
-		return pathCheck.first->second;
+		//if emplace fails (sound already exists), the value of the existing entry is returned in valPair, ->second here is used to retrieve the soundId
+		return valPair->second;
 	}
 }
 
@@ -82,9 +80,9 @@ short dae::SoundSystemSdl::LoadMusic(const std::string& filepath)
 {
 	auto fullPath = m_SoundsDir + "/" + filepath;
 
-	auto pathCheck = m_LoadedSounds.try_emplace(fullPath, m_CurrentEffectIndex);
+	auto [valPair, emplaceSuccess] = m_LoadedSounds.try_emplace(fullPath, m_CurrentEffectIndex);
 
-	if (pathCheck.second)
+	if (emplaceSuccess)
 	{
 		std::unique_ptr<Mix_Music, MusicDtor> uptr(Mix_LoadMUS(fullPath.c_str()));
 		m_pImpl->m_MusicCache.emplace(m_CurrentMusicIndex, std::move(uptr));
@@ -92,7 +90,7 @@ short dae::SoundSystemSdl::LoadMusic(const std::string& filepath)
 	}
 	else
 	{
-		return pathCheck.first->second;
+		return valPair->second;
 	}
 
 }
