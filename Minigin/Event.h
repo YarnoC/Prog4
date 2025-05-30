@@ -10,7 +10,11 @@ struct Event
 	explicit Event(unsigned int eventId) : id{ eventId } {};
 };
 
+}
 //surely this can be abstracted
+
+namespace
+{
 
 //INTERNAL USE ONLY
 template <int length> struct SdbmHash
