@@ -11,7 +11,6 @@ struct Event
 };
 
 }
-//surely this can be abstracted
 
 namespace
 {
@@ -39,6 +38,11 @@ template <> struct SdbmHash<1>
 {
 	consteval static int _calculate(const char* const text, unsigned int&) { return text[0]; }
 };
+
+}
+
+namespace dae
+{
 
 template <size_t N> consteval unsigned int MakeSdbmHash(const char(&text)[N])
 {
