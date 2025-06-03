@@ -28,7 +28,6 @@ struct MusicDtor
 
 struct dae::SoundSystemSdl::SdlImpl
 {
-	//std::map<short, std::variant<std::unique_ptr<Mix_Chunk>, std::unique_ptr<Mix_Music>>> m_AudioCache;
 	std::map<short, std::unique_ptr<Mix_Chunk, ChunkDtor>> m_AudioEffectCache;
 	std::map<short, std::unique_ptr<Mix_Music, MusicDtor>> m_MusicCache;
 	std::mutex m_CacheMutex;
@@ -134,11 +133,6 @@ void dae::SoundSystemSdl::StopMusic()
 	Mix_HaltMusic();
 }
 
-//void dae::SoundSystemSdl::SetDataPath(const std::string& dataPath)
-//{
-//	m_SoundsDir = dataPath;
-//}
-
 dae::SoundSystemSdl::SoundSystemSdl()
 	: SoundSytem(),
 	m_pImpl{ std::make_unique<dae::SoundSystemSdl::SdlImpl>() },
@@ -162,15 +156,6 @@ dae::SoundSystemSdl::~SoundSystemSdl()
 
 void dae::SoundSystemSdl::HandleAudio(std::stop_token&& stopToken)
 {
-	//m_pImpl = std::make_unique<dae::SoundSystemSdl::SdlImpl>();
-
-	//sdl mixer init
-	//auto flags = MIX_INIT_MP3;
-	//auto result = Mix_Init(flags); //returns 0 if fails
-	//assert(result == flags); //check if all flags were succesfully set //assert fails
-	//result = Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096); //returns 0 for succes, -1 for failure
-	//assert(result == 0);
-
 	while (!stopToken.stop_requested())
 	{
 		std::unique_lock<std::mutex> playLock{m_WaitPlayMutex};
@@ -191,7 +176,6 @@ void dae::SoundSystemSdl::HandleAudio(std::stop_token&& stopToken)
 
 		//sdl mixer allows for a certain amount of loops or a (not really) infinite loop by inputting -1, here we're only exposing infinite loop or no loop to the users
 		//so true (1) * -1 = -1 and false (0) * -1 = 0
-		//constexpr int loopLogic{ -1 };
 		int loops{ request.looping * -1 };
 
 		if (request.soundId >= 0)
