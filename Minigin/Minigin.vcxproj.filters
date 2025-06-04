@@ -99,6 +99,9 @@
     <ClInclude Include="SoundSystemSdl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MultiSpriteComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -169,6 +172,9 @@
     </ClCompile>
     <ClCompile Include="SoundSystem.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiSpriteComponent.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

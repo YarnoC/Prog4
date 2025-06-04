@@ -198,6 +198,7 @@
     <ClInclude Include="Gamepad.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Minigin.h" />
+    <ClInclude Include="MultiSpriteComponent.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Inputs.h" />
     <ClCompile Include="Minigin.cpp" />
+    <ClCompile Include="MultiSpriteComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />

@@ -16,6 +16,7 @@
 #include "InputManager.h"
 #include "ServiceLocator.h"
 #include "SoundSystemSdl.h"
+#include "MultiSpriteComponent.h"
 
 void load()
 {
@@ -55,6 +56,14 @@ void load()
 	auto qbertObj2 = std::make_unique<dae::GameObject>();
 	qbertObj2->SetLocalPosition({ 100, 400, 0 });
 	qbertObj2->AddComponent<dae::TextureComponent>("QBert.png");
+
+	auto testBoob = std::make_unique<dae::GameObject>();
+	testBoob->SetLocalPosition({ 100, 200, 0 });
+	testBoob->AddComponent<dae::MultiSpriteComponent>("QbertP1Spritesheet.png", 1, 4);
+	auto spriteComp = testBoob->GetComponent<dae::MultiSpriteComponent>();
+	spriteComp->NextCollumn();
+
+	scene.Add(testBoob);
 
 	//gamepad commands
 	auto leftCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{ -100.f, 0.f });
