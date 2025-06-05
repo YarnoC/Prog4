@@ -19,12 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CubeComponent.cpp" />
     <ClCompile Include="FpsComponent.cpp" />
     <ClCompile Include="GameCommands.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="RotatorComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CubeComponent.h" />
     <ClInclude Include="FpsComponent.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="RotatorComponent.h" />
