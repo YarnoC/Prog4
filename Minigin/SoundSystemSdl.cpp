@@ -113,6 +113,11 @@ void dae::SoundSystemSdl::SetMusicVolume(uint8_t volume)
 	Mix_VolumeMusic(newVol);
 }
 
+std::pair<int, int> dae::SoundSystemSdl::GetMasterVolume()
+{
+	return std::pair<int, int>(Mix_Volume(-1, -1), Mix_VolumeMusic(-1));
+}
+
 void dae::SoundSystemSdl::PauseMusic()
 {
 	Mix_PauseMusic();

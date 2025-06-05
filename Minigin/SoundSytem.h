@@ -13,6 +13,7 @@ public:
 	virtual void SetMasterVolume(uint8_t volume) = 0;
 	virtual void SetEffectsVolume(uint8_t volume) = 0;
 	virtual void SetMusicVolume(uint8_t volume) = 0;
+	virtual std::pair<int, int> GetMasterVolume() = 0;
 	virtual void PauseMusic() = 0;
 	virtual void ResumeMusic() = 0;
 	virtual void StopAllEffects() = 0;
@@ -46,6 +47,7 @@ public:
 	void SetMasterVolume(uint8_t) override {};
 	void SetEffectsVolume(uint8_t) override {};
 	void SetMusicVolume(uint8_t) override {};
+	std::pair<int, int> GetMasterVolume() { return std::pair{ 0, 0 }; };
 	void PauseMusic() override {};
 	void ResumeMusic() override {};
 	void StopAllEffects() override {};
