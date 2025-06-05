@@ -5,13 +5,22 @@
 
 void dae::MultiSpriteComponent::NextRow(bool reverse)
 {
-	m_CurrentRow = (m_Rows + m_CurrentRow + (1 + -2 * reverse)) % m_Rows;
+	//doens't use if but is most likely premature optimization
+	//m_CurrentRow = (m_Rows + m_CurrentRow + (1 + -2 * reverse)) % m_Rows;
+
+	int direction{ reverse ? -1 : 1 };
+	m_CurrentRow = (m_CurrentRow + direction + m_Rows) % m_Rows;
+
 	m_SrcRect->y = m_CurrentRow * m_SrcRect->height;
 }
 
 void dae::MultiSpriteComponent::NextCollumn(bool reverse)
 {
-	m_CurrentCollumn = (m_Collumns + m_CurrentCollumn + (1 + -2 * reverse)) % m_Collumns;
+	//m_CurrentCollumn = (m_Collumns + m_CurrentCollumn + (1 + -2 * reverse)) % m_Collumns;
+
+	int direction{ reverse ? -1 : 1 };
+	m_CurrentCollumn = (m_CurrentCollumn + direction + m_Collumns) % m_Collumns;
+
 	m_SrcRect->x = m_CurrentCollumn * m_SrcRect->width;
 }
 
