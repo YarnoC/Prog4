@@ -65,6 +65,8 @@ void load()
 
 	scene.Add(testBoob);
 
+	
+
 	//gamepad commands
 	auto leftCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{ -100.f, 0.f });
 	auto rightCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{ 100.f, 0.f });
@@ -91,6 +93,10 @@ void load()
 	inputMan.BindCommand(std::move(rightCmdKb), SDL_SCANCODE_RIGHT, ButtonState::Held);
 	inputMan.BindCommand(std::move(upCmdKb), SDL_SCANCODE_UP, ButtonState::Held);
 	inputMan.BindCommand(std::move(downCmdKb), SDL_SCANCODE_DOWN, ButtonState::Held);
+
+	//mute command and bind
+	auto toggleMuteCmd = std::make_unique<ToggleMuteCommand>();
+	inputMan.BindCommand(std::move(toggleMuteCmd), SDL_SCANCODE_F2, ButtonState::Pressed);
 
 	scene.Add(qbertObj);
 	scene.Add(qbertObj2);

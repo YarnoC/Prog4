@@ -11,3 +11,13 @@ public:
 private:
 	glm::vec2 m_MoveVec;
 };
+
+class ToggleMuteCommand final : public dae::Command
+{
+public:
+	ToggleMuteCommand() = default;
+	void Execute();
+private:
+	uint8_t m_PrevEffectVol{ 128 };
+	uint8_t m_PrevMusicVol{ 128 };
+};
