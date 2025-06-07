@@ -102,7 +102,7 @@ void load()
 	scene.Add(qbertObj2);
 
 	go = std::make_unique<dae::GameObject>();
-	go->SetPosition(20, 20);
+	go->SetLocalPosition({ 20, 20, 0 });
 	go->AddComponent<dae::TextComponent>(" ", font.get());
 	go->AddComponent<FpsComponent>(go->GetComponent<dae::TextComponent>());
 	scene.Add(go);

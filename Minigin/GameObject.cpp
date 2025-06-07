@@ -6,10 +6,10 @@
 
 #include <functional>
 
-dae::Transform dae::GameObject::GetTranform() const
-{
-	return m_Transform;
-}
+//dae::Transform dae::GameObject::GetTranform() const
+//{
+//	return m_Transform;
+//}
 
 bool dae::GameObject::IsTerminal() const
 {
@@ -174,9 +174,4 @@ void dae::GameObject::Render()
 	{
 		comp->Render();
 	}
-}
-
-void dae::GameObject::SetPosition(float x, float y)
-{
-	m_Transform.SetPosition(x, y, 0.0f);
 }

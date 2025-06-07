@@ -87,11 +87,10 @@ namespace dae
 
 		GameObject* m_ParentPtr = nullptr;
 		std::vector<GameObject*> m_ChildrenVec;
-		Transform m_Transform{};
-		bool m_PositionIsDirty{ true };
-		bool m_IsTerminal{ false };
 		glm::vec3 m_WorldPosition{};
 		glm::vec3 m_LocalPosition{};
+		bool m_PositionIsDirty{ true };
+		bool m_IsTerminal{ false };
 
 		//functions
 
