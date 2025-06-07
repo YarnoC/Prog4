@@ -14,6 +14,7 @@ class MultiSpriteComponent final : public Component
 public:
 	void NextRow(bool reverse = false);
 	void NextCollumn(bool reverse = false);
+	void SetToRowCollumn(int row, int collumn);
 	void Render() const override;
 
 	MultiSpriteComponent(GameObject* owner, const std::string& fileName, int rows, int collumns);

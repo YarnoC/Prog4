@@ -2,6 +2,7 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include "GameObject.h"
+#include <cassert>
 
 void dae::MultiSpriteComponent::NextRow(bool reverse)
 {
@@ -22,6 +23,23 @@ void dae::MultiSpriteComponent::NextCollumn(bool reverse)
 	m_CurrentCollumn = (m_CurrentCollumn + direction + m_Collumns) % m_Collumns;
 
 	m_SrcRect->x = m_CurrentCollumn * m_SrcRect->width;
+}
+
+//-1 leaves the item unchanged
+void dae::MultiSpriteComponent::SetToRowCollumn(int row, int collumn)
+{
+	assert(row < m_Rows && row >= -1);
+	assert(collumn < m_Collumns && collumn >= -1);
+
+	if (row != -1)
+	{
+		m_CurrentRow = row;
+	}
+
+	if (collumn != -1)
+	{
+		m_CurrentCollumn = collumn;
+	}
 }
 
 void dae::MultiSpriteComponent::Render() const
