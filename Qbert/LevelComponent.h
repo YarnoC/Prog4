@@ -27,6 +27,5 @@ public:
 
 private:
 	std::vector<std::vector<CubeComponent*>> m_Level;
-	//std::unique_ptr<dae::Texture2D> m_CubeSpriteSheet;
-	dae::Texture2D* m_CubeSpriteSheet;
+	dae::Texture2D* m_CubeSpriteSheet; //lifetime managed by resource manager
 };

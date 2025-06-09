@@ -22,6 +22,8 @@ LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene* scene, int le
 {
 	m_Level.resize(7);
 	m_CubeSpriteSheet = dae::ResourceManager::GetInstance().LoadTexture("CubeSprite.png").get();
+	const int cubeDimensions{ m_CubeSpriteSheet->GetSize().x };
+
 	//m_CubeSpriteSheet = std::make_unique<dae::Texture2D>("CubeSprite.png");
 
 	for (int col{}; col < 7; ++col)
@@ -32,8 +34,7 @@ LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene* scene, int le
 		{
 			auto cubeObj = std::make_unique<dae::GameObject>();
 			cubeObj->SetParent(GetOwner(), false);
-			constexpr int cubeDimensions{ 32 };
-			glm::vec3 pos{ cubeDimensions / 2 * (col + i), cubeDimensions * 2 / 3 * (col - i), 0 }; //if this doesn't make sense to you, i'd recommend drawing out the first 6 squares (from bottom left) and checking
+			glm::vec3 pos{ cubeDimensions / 2 * (col + i), -cubeDimensions * 3 / 4 * (col - i), 0 }; //if this doesn't make sense to you, i'd recommend drawing out the first 6 squares (from bottom left) and checking
 			cubeObj->SetLocalPosition(pos);
 			auto multiSpriteComp = cubeObj->AddComponent<dae::MultiSpriteComponent>(m_CubeSpriteSheet, 3, 1);
 			auto cubeComp = cubeObj->AddComponent<CubeComponent>(multiSpriteComp, level);
