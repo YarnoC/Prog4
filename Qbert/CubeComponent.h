@@ -9,7 +9,8 @@ class GameObject;
 class CubeComponent final : public dae::Component
 {
 public:
-	void OnLandOn();
+	void NextCubeColor();
+	void PrevCubeColor();
 	void SetToLevel(int level);
 
 	CubeComponent(dae::GameObject* owner, dae::MultiSpriteComponent* spriteComp, int level);

@@ -1,6 +1,6 @@
 #include "CubeComponent.h"
 
-void CubeComponent::OnLandOn()
+void CubeComponent::NextCubeColor()
 {
 	const int threshold{ m_Level + 1 };
 	switch (m_Level)
@@ -20,6 +20,11 @@ void CubeComponent::OnLandOn()
 		break;
 	}
 	}
+}
+
+void CubeComponent::PrevCubeColor()
+{
+	m_Stage = std::max(0, m_Stage - 1);
 }
 
 void CubeComponent::SetToLevel(int level)
