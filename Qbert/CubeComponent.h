@@ -3,15 +3,16 @@
 
 namespace dae
 {
-
 class GameObject;
+}
 
-class CubeComponent final : public Component
+class CubeComponent final : public dae::Component
 {
 public:
-	void NextStage();
+	void OnLandOn();
+	void SetToLevel(int level);
 
-	CubeComponent(GameObject*, MultiSpriteComponent* spriteComp, int level);
+	CubeComponent(dae::GameObject* owner, dae::MultiSpriteComponent* spriteComp, int level);
 	~CubeComponent() = default;
 
 	CubeComponent(const CubeComponent&) = delete;
@@ -19,9 +20,8 @@ public:
 	CubeComponent& operator=(const CubeComponent&) = delete;
 	CubeComponent& operator=(CubeComponent&) = delete;
 private:
-	MultiSpriteComponent* m_Sprite;
+	dae::MultiSpriteComponent* m_Sprite;
 	int m_Level{};
 	int m_Stage{};
 };
 
-}
