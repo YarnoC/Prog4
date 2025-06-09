@@ -1,18 +1,21 @@
-# Minigin
+# Engine Specifications
 
-Minigin is a very small project using [SDL2](https://www.libsdl.org/) and [glm](https://github.com/g-truc/glm) for 2D c++ game projects. It is in no way a game engine, only a barebone start project where everything sdl related has been set up. It contains glm for vector math, to aleviate the need to write custom vector and matrix classes.
+## Github Repo
+[The public git repository can be found here.](https://github.com/YarnoC/Prog4)
 
-[![Build Status](https://github.com/avadae/minigin/actions/workflows/msbuild.yml/badge.svg)](https://github.com/avadae/msbuild/actions)
-[![GitHub Release](https://img.shields.io/github/v/release/avadae/minigin?logo=github&sort=semver)](https://github.com/avadae/minigin/releases/latest)
+## About the engine
+### Intro
+Patterns such as the "Component pattern", "Game loop" and "update method" are naturally present in the project but also don't need a lot of justification. So i'll skip right over them to the more interesting bits.
 
-# Goal
+### Flyweight
+I employed the flyweight pattern in SDL sound system implementation. Upon load, the sound system stores the sound file along with the file name and returns a pointer to that instance to any location trying to load that sound. This way the sound is only loaded once but can still be used in multiple places.
 
-Minigin can/may be used as a start project for the exam assignment in the course [Programming 4](https://youtu.be/j96Oh6vzhmg) at DAE. In that assignment students need to recreate a popular 80's arcade game with a game engine they need to program themselves. During the course we discuss several game programming patterns, using the book '[Game Programming Patterns](https://gameprogrammingpatterns.com/)' by [Robert Nystrom](https://github.com/munificent) as reading material. 
+### Command pattern
+I used the command pattern as an interface between (virtual) input and the entities in the game. As any system can issue and execute commands, it makes it very simple to have an enemy, here Coily, be controlled by either the second player via the input manager or by an AI system giving out commands.
 
-# Disclaimer
+### State
 
-Minigin is, despite perhaps the suggestion in its name, **not** a game engine. It is just a very simple sdl2 ready project with some of the scaffolding in place to get started. None of the patterns discussed in the course are used yet (except singleton which use we challenge during the course). It is up to the students to implement their own vision for their engine, apply patterns as they see fit, create their game as efficient as possible.
+### Type object
 
-# Use
-
-Either download the latest release of this project and compile/run in visual studio or, since students need to have their work on github too, they can use this repository as a template (see the "Use this template" button at the top right corner). There is no point in forking this project.
+### Scenegraph
+Despite not actually being a game design pattern, I'd like to talk about the scenegraph and how I used in my collision detection system for Q\*Bert. From all sources that I could find, it seems that Q\*Bert can only collide with enemies whilst they are both standing still on the same block. So I decided to make every entity on the map a child object of the block they were standing on. This way when landing on a new block, you only have to check whether that object has a child. This method only works for Q*Bert of course, so it's implemented as game logic instead of in the engine itself.
