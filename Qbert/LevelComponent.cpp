@@ -30,7 +30,11 @@ LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene& scene, int le
 		{
 			auto cubeObj = std::make_unique<dae::GameObject>();
 			cubeObj->SetParent(GetOwner(), false);
-			auto cubeComp = cubeObj->AddComponent<CubeComponent>(m_CubeSpriteSheet.get(), level);
+			constexpr int cubeDimensions{ 32 };
+			glm::vec3 pos{ cubeDimensions / 2 * (col + i), cubeDimensions * 2 / 3 * (col - i), 0 }; //if this doesn't make sense to you, i'd recommend drawing out the first 6 squares (from bottom left) and checking
+			cubeObj->SetLocalPosition(pos);
+			auto multiSpriteComp = cubeObj->AddComponent<dae::MultiSpriteComponent>(m_CubeSpriteSheet.get(), 3, 1);
+			auto cubeComp = cubeObj->AddComponent<CubeComponent>(multiSpriteComp, level);
 			m_Level[col][i] = cubeComp;
 			scene.Add(cubeObj);
 		}
