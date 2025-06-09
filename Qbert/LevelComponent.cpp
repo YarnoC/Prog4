@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "CubeComponent.h"
 #include "GameObject.h"
+#include "ResourceManager.h"
 
 void LevelComponent::InitLevel(int level)
 {
@@ -16,15 +17,16 @@ void LevelComponent::InitLevel(int level)
 	//move the discs around based on the file stuff
 }
 
-LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene& scene, int level) :
+LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene* scene, int level) :
 	dae::Component(owner)
 {
-	m_Level.reserve(7);
-	m_CubeSpriteSheet = std::make_unique<dae::Texture2D>("CubeSprite.png");
+	m_Level.resize(7);
+	m_CubeSpriteSheet = dae::ResourceManager::GetInstance().LoadTexture("CubeSprite.png").get();
+	//m_CubeSpriteSheet = std::make_unique<dae::Texture2D>("CubeSprite.png");
 
 	for (int col{}; col < 7; ++col)
 	{
-		m_Level[col].reserve(col + 1);
+		m_Level[col].resize(col + 1);
 
 		for (int i{}; i < col + 1; ++i)
 		{
@@ -33,10 +35,10 @@ LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene& scene, int le
 			constexpr int cubeDimensions{ 32 };
 			glm::vec3 pos{ cubeDimensions / 2 * (col + i), cubeDimensions * 2 / 3 * (col - i), 0 }; //if this doesn't make sense to you, i'd recommend drawing out the first 6 squares (from bottom left) and checking
 			cubeObj->SetLocalPosition(pos);
-			auto multiSpriteComp = cubeObj->AddComponent<dae::MultiSpriteComponent>(m_CubeSpriteSheet.get(), 3, 1);
+			auto multiSpriteComp = cubeObj->AddComponent<dae::MultiSpriteComponent>(m_CubeSpriteSheet, 3, 1);
 			auto cubeComp = cubeObj->AddComponent<CubeComponent>(multiSpriteComp, level);
 			m_Level[col][i] = cubeComp;
-			scene.Add(cubeObj);
+			scene->Add(cubeObj);
 		}
 	}
 

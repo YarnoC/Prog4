@@ -17,21 +17,27 @@
 #include "ServiceLocator.h"
 #include "SoundSystemSdl.h"
 #include "MultiSpriteComponent.h"
+#include "LevelComponent.h"
 
 void load()
 {
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
 
+	auto levelObj = std::make_unique<dae::GameObject>();
+	levelObj->AddComponent<LevelComponent>(&scene, 0);
+	levelObj->SetLocalPosition({ 208, 177, 0 });
+	scene.Add(levelObj);
+
 	//background
 	auto go = std::make_unique<dae::GameObject>();
-	go->AddComponent<dae::TextureComponent>("background.tga");
-	scene.Add(go);
+	//go->AddComponent<dae::TextureComponent>("background.tga");
+	//scene.Add(go);
 
 	//logo
-	go = std::make_unique<dae::GameObject>();
-	go->AddComponent<dae::TextureComponent>("logo.tga");
-	go->SetLocalPosition({ 216, 180, 0 });
-	scene.Add(go);
+	//go = std::make_unique<dae::GameObject>();
+	//go->AddComponent<dae::TextureComponent>("logo.tga");
+	//go->SetLocalPosition({ 216, 180, 0 });
+	//scene.Add(go);
 
 	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 30);
 
@@ -101,7 +107,7 @@ void load()
 	scene.Add(qbertObj);
 	scene.Add(qbertObj2);
 
-	go = std::make_unique<dae::GameObject>();
+	//go = std::make_unique<dae::GameObject>();
 	go->SetLocalPosition({ 20, 20, 0 });
 	go->AddComponent<dae::TextComponent>(" ", font.get());
 	go->AddComponent<FpsComponent>(go->GetComponent<dae::TextComponent>());

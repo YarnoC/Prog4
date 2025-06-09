@@ -16,7 +16,7 @@ class LevelComponent final : public dae::Component
 {
 public:
 	void InitLevel(int level);
-	LevelComponent(dae::GameObject* owner, dae::Scene& scene, int level);
+	LevelComponent(dae::GameObject* owner, dae::Scene* scene, int level);
 
 	~LevelComponent() = default;
 
@@ -27,5 +27,6 @@ public:
 
 private:
 	std::vector<std::vector<CubeComponent*>> m_Level;
-	std::unique_ptr<dae::Texture2D> m_CubeSpriteSheet;
+	//std::unique_ptr<dae::Texture2D> m_CubeSpriteSheet;
+	dae::Texture2D* m_CubeSpriteSheet;
 };
