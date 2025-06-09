@@ -28,6 +28,7 @@ public:
 private:
 	Texture2D* m_TextureSheet;
 	std::unique_ptr<utils::SrcDstRect> m_SrcRect;
+	glm::ivec2 m_DrawOffset{};
 	int m_Rows{ 1 };
 	int m_Collumns{ 1 };
 	int m_CurrentRow{};

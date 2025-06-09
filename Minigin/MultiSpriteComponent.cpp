@@ -45,7 +45,19 @@ void dae::MultiSpriteComponent::SetToRowCollumn(int row, int collumn)
 void dae::MultiSpriteComponent::Render() const
 {
 	const auto& pos = GetOwner()->GetWorldPosition();
-	dae::Renderer::GetInstance().RenderTexture(*m_TextureSheet, pos.x, pos.y, *m_SrcRect);
+	dae::Renderer::GetInstance().RenderTexture(*m_TextureSheet, pos.x + m_DrawOffset.x, pos.y + m_DrawOffset.y, *m_SrcRect);
+}
+
+void dae::MultiSpriteComponent::ResetOffset()
+{
+	m_DrawOffset.x = 0;
+	m_DrawOffset.y = 0;
+}
+
+void dae::MultiSpriteComponent::SetOffset(int x, int y)
+{
+	m_DrawOffset.x = x;
+	m_DrawOffset.y = y;
 }
 
 dae::MultiSpriteComponent::MultiSpriteComponent(GameObject* owner, const std::string& fileName, int rows, int collumns) :
