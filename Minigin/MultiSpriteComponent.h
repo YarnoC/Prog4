@@ -16,6 +16,8 @@ public:
 	void NextCollumn(bool reverse = false);
 	void SetToRowCollumn(int row, int collumn);
 	void Render() const override;
+	void ResetOffset();
+	void SetOffset(int x, int y);
 
 	MultiSpriteComponent(GameObject* owner, const std::string& fileName, int rows, int collumns);
 	MultiSpriteComponent(GameObject* owner, Texture2D* texture, int rows, int collumns);
