@@ -26,17 +26,18 @@ namespace dae
 		void SetPosition(float x, float y);
 
 		template<IsComponentType ComponentType, typename... TArgs>
-		void AddComponent(TArgs... tArgs)
+		ComponentType* AddComponent(TArgs... tArgs)
 		{
-			if (HasComponent<ComponentType>() == true) return; //only allow one (1) instance of a component type on a game object
+			if (HasComponent<ComponentType>() == true) return nullptr; //only allow one (1) instance of a component type on a game object
 
-			m_ComponentVec.emplace_back(std::make_unique<ComponentType>(this, std::move(tArgs)...));
+			//credits to Matias Devred for showing me this way of returning the component immediately instead of this being a void function
+			auto& newComp = m_ComponentVec.emplace_back(std::make_unique<ComponentType>(this, std::move(tArgs)...));
+
+			return reinterpret_cast<ComponentType*>(newComp.get());
 		}
 
 		//TODO: make RemoveComponent
 		//use std::erase_if for the remove func
-
-		dae::Transform GetTranform() const;
 
 		template<IsComponentType ComponentType>
 		ComponentType* GetComponent()
