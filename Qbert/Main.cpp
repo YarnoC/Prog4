@@ -25,7 +25,7 @@ void load()
 
 	auto levelObj = std::make_unique<dae::GameObject>();
 	levelObj->AddComponent<LevelComponent>(&scene, 0);
-	levelObj->SetLocalPosition({ 208, 177, 0 });
+	levelObj->SetLocalPosition({ 96, 450, 0 });
 	scene.Add(levelObj);
 
 	//background
