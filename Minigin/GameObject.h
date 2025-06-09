@@ -23,8 +23,6 @@ namespace dae
 		void LateUpdate();
 		void Render();
 
-		void SetPosition(float x, float y);
-
 		template<IsComponentType ComponentType, typename... TArgs>
 		ComponentType* AddComponent(TArgs... tArgs)
 		{
