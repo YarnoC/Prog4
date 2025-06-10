@@ -42,6 +42,9 @@
     <ClCompile Include="QBertStates.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QBertComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsComponent.h">
@@ -61,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="QBertStates.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QBertComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

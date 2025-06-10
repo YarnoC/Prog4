@@ -1,16 +1,20 @@
 #pragma once
 #include <vec2.hpp>
 #include <memory>
+#include <vec3.hpp>
+
+class LevelComponent;
+class QBertComponent;
 
 class QbertState
 {
 public:
-	virtual void Update() {};
+	virtual std::unique_ptr<QbertState> Update() { return nullptr; };
 	virtual std::unique_ptr<QbertState> HandleState() = 0;
-	virtual std::unique_ptr<QbertState> MoveSquare(glm::ivec2) { return nullptr; };
+	virtual std::unique_ptr<QbertState> MoveSquare(QBertComponent*, glm::ivec2) { return nullptr; };
 
-	virtual void OnEnter() {};
-	virtual void OnExit() {};
+	virtual void OnEnter(QBertComponent*) {};
+	virtual void OnExit(QBertComponent*) {};
 
 	virtual ~QbertState() = default;
 
@@ -21,7 +25,9 @@ public:
 
 protected:
 	//maybe get ref to player here?
-	QbertState() = default;
+	QbertState(QBertComponent* qbertComp);
+	QBertComponent* m_QBertComp{ nullptr };
+
 
 private:
 
@@ -32,10 +38,9 @@ class QIdleState final : public QbertState
 public:
 	//void Update() override;
 	std::unique_ptr<QbertState> HandleState() override;
-	//also needs a ref to the player
-	std::unique_ptr<QbertState> MoveSquare(glm::ivec2 moveVec);
+	std::unique_ptr<QbertState> MoveSquare(QBertComponent* qbertComp, glm::ivec2 moveVec);
 
-	QIdleState();
+	QIdleState(QBertComponent* qbertComp);
 	~QIdleState() = default;
 
 	QIdleState(const QIdleState&) = delete;
@@ -49,7 +54,21 @@ private:
 class QJumpingState final : public QbertState
 {
 public:
+	std::unique_ptr<QbertState> Update() override;
+	std::unique_ptr<QbertState> HandleState() override { return nullptr; };
+
+	QJumpingState(QBertComponent* qbertComp, const glm::vec3& targetPos);
+
+	~QJumpingState() = default;
+
+	QJumpingState(const QJumpingState&) = delete;
+	QJumpingState(QJumpingState&&) = delete;
+	QJumpingState operator=(const QJumpingState&) = delete;
+	QJumpingState operator=(QJumpingState&&) = delete;
 
 private:
-
+	glm::vec3 m_TargetPos{};
+	glm::vec3 m_OrignalPos{};
+	float m_Distance{};
+	const static float m_JumpTime;
 };
