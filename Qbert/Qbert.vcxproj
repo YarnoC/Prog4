@@ -24,6 +24,7 @@
     <ClCompile Include="GameCommands.cpp" />
     <ClCompile Include="LevelComponent.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="QBertStates.cpp" />
     <ClCompile Include="RotatorComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +32,7 @@
     <ClInclude Include="FpsComponent.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="LevelComponent.h" />
+    <ClInclude Include="QBertStates.h" />
     <ClInclude Include="RotatorComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
