@@ -5,8 +5,6 @@
 #include "ResourceManager.h"
 #include "QBertComponent.h"
 
-#include <iostream>
-
 void LevelComponent::InitLevel(int level)
 {
 	for (auto&& collumn : m_Level)
@@ -99,9 +97,6 @@ void LevelComponent::SetupPlayer(QBertComponent* qbertComp, SpawnPos spawnPos)
 	}
 
 	glm::ivec2 coords{ qbertComp->GetMapCoords() };
-
-	//DEBUG
-	std::cout << "Spawn: " << coords.x << " " << coords.y << std::endl;
 
 	glm::vec3 pos{ m_CubeSize / 2 * (coords.x + coords.y), -m_CubeSize * 3 / 4 * (coords.x - coords.y), 0};
 	qbertObj->SetLocalPosition(pos + offset);
