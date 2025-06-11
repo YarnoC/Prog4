@@ -67,7 +67,7 @@ public:
 
 private:
 	glm::vec2 m_TargetPos{};
-	glm::vec2 m_OrignalPos{};
+	glm::vec2 m_OriginalPos{};
 	//glm::vec2 m_CurrentPos{};
 	float m_Distance{ 58 };
 	const static float m_JumpTime;
