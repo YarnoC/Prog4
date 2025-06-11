@@ -3,8 +3,6 @@
 #include "MultiSpriteComponent.h"
 #include "ServiceLocator.h"
 
-#include <iostream>
-
 void QBertComponent::Move(glm::ivec2 moveVec)
 {
 	auto newState = m_State->MoveSquare(this, moveVec);
@@ -64,8 +62,6 @@ QBertComponent::QBertComponent(dae::GameObject* owner, LevelComponent* levelComp
 
 void QBertComponent::EnterNewState(std::unique_ptr<QbertState> newState)
 {
-	std::cout << "new state\n";
-
 	m_State->OnExit(this);
 	m_State = std::move(newState);
 	m_State->OnEnter(this);

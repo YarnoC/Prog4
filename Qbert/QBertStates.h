@@ -63,14 +63,32 @@ public:
 
 	QJumpingState(const QJumpingState&) = delete;
 	QJumpingState(QJumpingState&&) = delete;
-	QJumpingState operator=(const QJumpingState&) = delete;
-	QJumpingState operator=(QJumpingState&&) = delete;
+	QJumpingState& operator=(const QJumpingState&) = delete;
+	QJumpingState& operator=(QJumpingState&&) = delete;
 
 private:
 	glm::vec2 m_TargetPos{};
 	glm::vec2 m_OriginalPos{};
 	//glm::vec2 m_CurrentPos{};
-	float m_Distance{ 58 };
 	const static float m_JumpTime;
 	short m_SoundToPlay{};
+};
+
+class QDeadState final : public QbertState
+{
+public:
+	std::unique_ptr<QbertState> Update() override;
+	void OnEnter(QBertComponent* qbertComp) override;
+
+	QDeadState(QBertComponent* qbertComp);
+
+	~QDeadState() = default;
+
+	QDeadState(const QDeadState&) = delete;
+	QDeadState(QDeadState&&) = delete;
+	QDeadState& operator=(const QDeadState&) = delete;
+	QDeadState& operator=(QDeadState&&) = delete;
+
+private:
+	double m_DeadTimer{ 2 };
 };

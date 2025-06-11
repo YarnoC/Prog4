@@ -3,6 +3,7 @@
 #include "QBertComponent.h"
 #include "GameTime.h"
 #include "ServiceLocator.h"
+#include <algorithm>
 
 #include <iostream>
 
@@ -72,7 +73,7 @@ std::unique_ptr<QbertState> QJumpingState::Update()
 	if (coords.x < 0 || coords.x > 6 || coords.y < 0 || coords.y > 6)
 	{
 		m_SoundToPlay = m_QBertComp->GetQBertSounds().fall;
-		//return death state
+		return std::make_unique<QDeadState>(m_QBertComp);
 	}
 
 	m_SoundToPlay = m_QBertComp->GetQBertSounds().jump;
@@ -89,8 +90,38 @@ QJumpingState::QJumpingState(QBertComponent* qbertComp, const glm::vec2& targetP
 {
 	auto oldPos = qbertComp->GetOwner()->GetLocalPosition();
 	m_OriginalPos = { oldPos.x, oldPos.y };
-	//m_Distance = glm::length(targetPos - m_OriginalPos);
-	//m_Distance = 64;
 }
 
 const float QJumpingState::m_JumpTime = 0.4f;
+
+QDeadState::QDeadState(QBertComponent* qbertComp) :
+	QbertState(qbertComp)
+{
+}
+
+void QDeadState::OnEnter(QBertComponent* qbertComp)
+{
+	dae::ServiceLocator::GetSoundSystem().Play(qbertComp->GetQBertSounds().curse, 32, false);
+}
+
+std::unique_ptr<QbertState> QDeadState::Update()
+{
+	m_DeadTimer -= dae::GameTime::GetDt();
+
+	if (m_DeadTimer < 0)
+	{
+		glm::ivec2 coords = m_QBertComp->GetMapCoords();
+		coords.x = std::clamp(coords.x, 0, 6);
+		coords.y = std::clamp(coords.y, 0, 6);
+		m_QBertComp->SetMapCoords(coords);
+
+		auto cubeSize = m_QBertComp->GetCubeSize();
+
+		glm::vec3 pos{ cubeSize / 2 * (coords.x + coords.y) + m_QBertComp->GetPlayerOffset().x, -cubeSize * 3 / 4 * (coords.x - coords.y) + m_QBertComp->GetPlayerOffset().y, 0 };
+		m_QBertComp->GetOwner()->SetLocalPosition(pos);
+
+		return std::make_unique<QIdleState>(m_QBertComp);
+	}
+
+	return std::unique_ptr<QbertState>();
+}
