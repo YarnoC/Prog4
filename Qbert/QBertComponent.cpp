@@ -1,5 +1,6 @@
 #include "QBertComponent.h"
 #include "LevelComponent.h"
+#include "MultiSpriteComponent.h"
 
 #include <iostream>
 
@@ -30,6 +31,11 @@ int QBertComponent::GetCubeSize() const
 glm::ivec2 QBertComponent::GetPlayerOffset() const
 {
 	return m_PlayerOffset;
+}
+
+void QBertComponent::SetSpriteRowCol(int row, int col)
+{
+	m_SpriteComp->SetToRowCollumn(row, col);
 }
 
 void QBertComponent::Update()

@@ -20,6 +20,7 @@ public:
 	void SetMapCoords(glm::ivec2 newCoords);
 	int GetCubeSize() const;
 	glm::ivec2 GetPlayerOffset() const;
+	void SetSpriteRowCol(int row, int col);
 
 	void Update() override;
 
