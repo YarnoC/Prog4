@@ -33,25 +33,29 @@ QbertState::QbertState(QBertComponent* qbertComp) :
 
 std::unique_ptr<QbertState> QJumpingState::Update()
 {
-	//do some movement shit here, if reaches destination: return idle state (or death if out of bounds)
 	constexpr float epsilon{ 25 };
 
 	auto qObj = m_QBertComp->GetOwner();
 	glm::vec2 currentPos{ qObj->GetLocalPosition().x, qObj->GetLocalPosition().y };
 
-	//int xDif{ -32 };
-	//int yDif{ 48 };
-
 	int xDif{ static_cast<int>(m_TargetPos.x - m_OriginalPos.x) };
 	int yDif{ static_cast<int>(m_TargetPos.y - m_OriginalPos.y) };
 
-	//const float speed{ m_Distance * m_JumpTime / 10 };
+	bool left = xDif < 0 ? true : false;
+	bool down = yDif > 0 ? true : false;
+
+	int col = left + down * 2;
+	m_QBertComp->SetSpriteRowCol(0, col);
+
 	auto moveVec{ m_TargetPos - m_OriginalPos };
+	const float moveTime{ 0.2f };
+	const float xSpeed{ xDif / moveTime };
+	const float ySpeed{ yDif / moveTime };
 	//currentPos.x += moveVec.x * static_cast<float>(speed * dae::GameTime::GetDt());
 	//currentPos.y += moveVec.y * static_cast<float>(speed * dae::GameTime::GetDt());
 
-	currentPos.x += xDif;
-	currentPos.y += yDif;
+	currentPos.x += xSpeed * static_cast<float>(dae::GameTime::GetDt());
+	currentPos.y += ySpeed * static_cast<float>(dae::GameTime::GetDt());
 
 	qObj->SetLocalPosition({ currentPos.x, currentPos.y, 0 });
 
