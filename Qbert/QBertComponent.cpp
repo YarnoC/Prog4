@@ -56,7 +56,10 @@ void QBertComponent::Update()
 QBertComponent::QBertComponent(dae::GameObject* owner, LevelComponent* levelComp, dae::MultiSpriteComponent* multiSpriteComp) :
 	Component(owner), m_LevelComp{levelComp}, m_SpriteComp{multiSpriteComp}, m_State{std::make_unique<QIdleState>(this)}
 {
-	m_Sounds.jump = dae::ServiceLocator::GetSoundSystem().LoadEffect("Sounds/QBertJump.ogg");
+	auto& ss = dae::ServiceLocator::GetSoundSystem();
+	m_Sounds.jump = ss.LoadEffect("Sounds/QBertJump.ogg");
+	m_Sounds.fall = ss.LoadEffect("Sounds/QBertFall.ogg");
+	m_Sounds.curse = ss.LoadEffect("Sounds/QBertCurse.ogg");
 }
 
 void QBertComponent::EnterNewState(std::unique_ptr<QbertState> newState)
