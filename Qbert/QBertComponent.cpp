@@ -1,6 +1,7 @@
 #include "QBertComponent.h"
 #include "LevelComponent.h"
 #include "MultiSpriteComponent.h"
+#include "ServiceLocator.h"
 
 #include <iostream>
 
@@ -38,6 +39,11 @@ void QBertComponent::SetSpriteRowCol(int row, int col)
 	m_SpriteComp->SetToRowCollumn(row, col);
 }
 
+const QBertComponent::Sounds& QBertComponent::GetQBertSounds() const
+{
+	return m_Sounds;
+}
+
 void QBertComponent::Update()
 {
 	auto newState = m_State->Update();
@@ -50,9 +56,7 @@ void QBertComponent::Update()
 QBertComponent::QBertComponent(dae::GameObject* owner, LevelComponent* levelComp, dae::MultiSpriteComponent* multiSpriteComp) :
 	Component(owner), m_LevelComp{levelComp}, m_SpriteComp{multiSpriteComp}, m_State{std::make_unique<QIdleState>(this)}
 {
-	//int cubeSize = m_LevelComp->GetCubeSize();
-	//m_PlayerOffset.x = cubeSize / 4;
-	//m_PlayerOffset.y = -cubeSize / 16 * 3;
+	m_Sounds.jump = dae::ServiceLocator::GetSoundSystem().LoadEffect("Sounds/QBertJump.ogg");
 }
 
 void QBertComponent::EnterNewState(std::unique_ptr<QbertState> newState)

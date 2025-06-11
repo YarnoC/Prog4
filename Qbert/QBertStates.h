@@ -27,7 +27,6 @@ protected:
 	QbertState(QBertComponent* qbertComp);
 	QBertComponent* m_QBertComp{ nullptr };
 
-
 private:
 
 };
@@ -56,6 +55,8 @@ public:
 	std::unique_ptr<QbertState> Update() override;
 	//std::unique_ptr<QbertState> HandleState() override { return nullptr; };
 
+	void OnExit(QBertComponent* qbertComp) override;
+
 	QJumpingState(QBertComponent* qbertComp, const glm::vec2& targetPos);
 
 	~QJumpingState() = default;
@@ -71,4 +72,5 @@ private:
 	//glm::vec2 m_CurrentPos{};
 	float m_Distance{ 58 };
 	const static float m_JumpTime;
+	short m_SoundToPlay{};
 };

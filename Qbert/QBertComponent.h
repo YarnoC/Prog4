@@ -22,6 +22,15 @@ public:
 	glm::ivec2 GetPlayerOffset() const;
 	void SetSpriteRowCol(int row, int col);
 
+	struct Sounds
+	{
+		short jump;
+		short fall;
+		short curse;
+	};
+
+	const Sounds& GetQBertSounds() const;
+
 	void Update() override;
 
 	QBertComponent(dae::GameObject* owner, LevelComponent* levelComp, dae::MultiSpriteComponent* multiSpriteComp);
@@ -39,5 +48,7 @@ private:
 	std::unique_ptr<QbertState> m_State{ nullptr };
 	glm::ivec2 m_LevelCoords{ 7, 0 };
 	glm::ivec2 m_PlayerOffset{ 16, -12 };
+	Sounds m_Sounds{};
 	int m_Lives{ 3 };
+	
 };

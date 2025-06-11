@@ -2,6 +2,7 @@
 //#include "LevelComponent.h"
 #include "QBertComponent.h"
 #include "GameTime.h"
+#include "ServiceLocator.h"
 
 #include <iostream>
 
@@ -47,12 +48,9 @@ std::unique_ptr<QbertState> QJumpingState::Update()
 	int col = left + down * 2;
 	m_QBertComp->SetSpriteRowCol(0, col);
 
-	auto moveVec{ m_TargetPos - m_OriginalPos };
 	const float moveTime{ 0.2f };
 	const float xSpeed{ xDif / moveTime };
 	const float ySpeed{ yDif / moveTime };
-	//currentPos.x += moveVec.x * static_cast<float>(speed * dae::GameTime::GetDt());
-	//currentPos.y += moveVec.y * static_cast<float>(speed * dae::GameTime::GetDt());
 
 	currentPos.x += xSpeed * static_cast<float>(dae::GameTime::GetDt());
 	currentPos.y += ySpeed * static_cast<float>(dae::GameTime::GetDt());
@@ -60,8 +58,6 @@ std::unique_ptr<QbertState> QJumpingState::Update()
 	qObj->SetLocalPosition({ currentPos.x, currentPos.y, 0 });
 
 	float sqDistRemaining{ std::powf(m_TargetPos.x - currentPos.x, 2) + std::powf(m_TargetPos.y - currentPos.y, 2) };
-
-	std::cout << sqDistRemaining << std::endl;
 
 	if (sqDistRemaining > epsilon)
 	{
@@ -75,10 +71,17 @@ std::unique_ptr<QbertState> QJumpingState::Update()
 	auto coords = m_QBertComp->GetMapCoords();
 	if (coords.x < 0 || coords.x > 6 || coords.y < 0 || coords.y > 6)
 	{
+		m_SoundToPlay = m_QBertComp->GetQBertSounds().fall;
 		//return death state
 	}
 
+	m_SoundToPlay = m_QBertComp->GetQBertSounds().jump;
 	return std::make_unique<QIdleState>(m_QBertComp);
+}
+
+void QJumpingState::OnExit(QBertComponent*)
+{
+	dae::ServiceLocator::GetSoundSystem().Play(m_SoundToPlay, 32, false);
 }
 
 QJumpingState::QJumpingState(QBertComponent* qbertComp, const glm::vec2& targetPos) :

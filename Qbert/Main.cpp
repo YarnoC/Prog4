@@ -49,16 +49,14 @@ void load()
 	scene.Add(textObject);
 
 	dae::ServiceLocator::RegisterSoundSytem(std::make_unique<dae::SoundSystemSdl>());
-	auto&& ss = dae::ServiceLocator::GetSoundSystem();
+	//auto&& ss = dae::ServiceLocator::GetSoundSystem();
 	
-	auto jumpWav = ss.LoadEffect("Sounds/QBertJump.ogg");
-	ss.Play(jumpWav, 10, true);
+	//auto jumpWav = ss.LoadEffect("Sounds/QBertJump.ogg");
+	//ss.Play(jumpWav, 10, true);
 
 	//actual objects
 
 	auto qbertObj = std::make_unique<dae::GameObject>();
-	//qbertObj->SetLocalPosition({ 100, 300, 0 });
-	//qbertObj->AddComponent<dae::TextureComponent>("QBert.png");
 	auto spriteComp = qbertObj->AddComponent<dae::MultiSpriteComponent>("QBertSpritesheet.png", 1, 4);
 	auto qbertComp = qbertObj->AddComponent<QBertComponent>(levelComp, spriteComp);
 	levelComp->SetupPlayer(qbertComp, LevelComponent::SpawnPos::Top);
