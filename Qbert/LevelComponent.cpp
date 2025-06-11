@@ -5,6 +5,8 @@
 #include "ResourceManager.h"
 #include "QBertComponent.h"
 
+#include <iostream>
+
 void LevelComponent::InitLevel(int level)
 {
 	for (auto&& collumn : m_Level)
@@ -58,6 +60,52 @@ int LevelComponent::GetCubeSize() const
 //	if (newPos.x < 0 || newPos.x > 6) return;
 //	if (newPos.y < 0 || newPos.y > 6) return;
 //}
+
+void LevelComponent::SetupPlayer(QBertComponent* qbertComp, SpawnPos spawnPos)
+{
+	auto levelObj = GetOwner();
+	auto qbertObj = qbertComp->GetOwner();
+	qbertObj->SetParent(levelObj, false);
+
+	glm::vec3 offset{ m_PlayerCubeOffset.x, m_PlayerCubeOffset.y, 0 };
+
+	switch (spawnPos)
+	{
+	case SpawnPos::BottomLeft:
+	{
+		qbertComp->SetMapCoords({ 0, 0 });
+
+		//qbertObj->SetLocalPosition(offset);
+		break;
+	}
+	case SpawnPos::Top:
+	{
+		qbertComp->SetMapCoords({ 6, 0 });
+
+		//glm::vec3 pos{ m_CubeSize / 2 * (col + row), -m_CubeSize * 3 / 4 * (col - row), 0 }; //reference formula
+		//glm::vec3 pos{ m_CubeSize / 2 * 7, -m_CubeSize * 3 / 4 * 7, 0 };
+		//qbertObj->SetLocalPosition(pos + offset);
+		break;
+	}
+	case SpawnPos::BottomRight:
+	{
+		qbertComp->SetMapCoords({ 6, 6 });
+
+
+		//glm::vec3 pos{ m_CubeSize / 2 * 7, -m_CubeSize * 3 / 4 * 7, 0 };
+		//qbertObj->SetLocalPosition(pos + offset);
+		break;
+	}
+	}
+
+	glm::ivec2 coords{ qbertComp->GetMapCoords() };
+
+	//DEBUG
+	std::cout << "Spawn: " << coords.x << " " << coords.y << std::endl;
+
+	glm::vec3 pos{ m_CubeSize / 2 * (coords.x + coords.y), -m_CubeSize * 3 / 4 * (coords.x - coords.y), 0};
+	qbertObj->SetLocalPosition(pos + offset);
+}
 
 LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene* scene, int level) :
 	dae::Component(owner)

@@ -18,14 +18,14 @@ class LevelComponent final : public dae::Component
 public:
 	void InitLevel(int level);
 	int GetCubeSize() const;
-	//enum class SpawnPos
-	//{
-	//	BottomLeft,
-	//	Top,
-	//	BottomRight
-	//};
+	enum class SpawnPos
+	{
+		BottomLeft,
+		Top,
+		BottomRight
+	};
 
-	//void SetupPlayer(QBertComponent* qbert, SpawnPos spawnPos);
+	void SetupPlayer(QBertComponent* qbertComp, SpawnPos spawnPos);
 	//void Move(QBertComponent* qbertComp, glm::ivec2 moveVec);
 
 	LevelComponent(dae::GameObject* owner, dae::Scene* scene, int level);

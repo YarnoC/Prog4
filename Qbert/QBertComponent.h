@@ -7,6 +7,11 @@
 
 class LevelComponent;
 
+namespace dae
+{
+	class MultiSpriteComponent;
+}
+
 class QBertComponent final : public dae::Component
 {
 public:
@@ -15,7 +20,7 @@ public:
 	void SetMapCoords(glm::ivec2 newCoords);
 	int GetCubeSize() const;
 
-	QBertComponent(dae::GameObject* owner, LevelComponent* levelComp);
+	QBertComponent(dae::GameObject* owner, LevelComponent* levelComp, dae::MultiSpriteComponent* multiSpriteComp);
 
 	~QBertComponent() = default;
 	QBertComponent(const QBertComponent&) = delete;
@@ -24,7 +29,9 @@ public:
 	QBertComponent operator=(QBertComponent&&) = delete;
 
 private:
+	void EnterNewState(std::unique_ptr<QbertState> newState);
 	LevelComponent* m_LevelComp{ nullptr };
+	dae::MultiSpriteComponent* m_SpriteComp{ nullptr };
 	std::unique_ptr<QbertState> m_State{ nullptr };
 	glm::ivec2 m_LevelCoords{ 7, 0 };
 	int m_Lives{ 3 };
