@@ -3,6 +3,8 @@
 #include "QBertComponent.h"
 #include "GameTime.h"
 
+#include <iostream>
+
 //does nothing atm, might do something with death later
 //std::unique_ptr<QbertState> QIdleState::HandleState()
 //{
@@ -14,7 +16,7 @@ std::unique_ptr<QbertState> QIdleState::MoveSquare(QBertComponent* qbertComp, gl
 	auto newCoords = qbertComp->GetMapCoords() + moveVec;
 	qbertComp->SetMapCoords(newCoords);
 	int cubeSize{ qbertComp->GetCubeSize() };
-	glm::vec2 targetPos{ cubeSize / 2 * (newCoords.x + newCoords.y), -cubeSize * 3 / 4 * (newCoords.x - newCoords.y) };
+	glm::vec2 targetPos{ cubeSize / 2 * (newCoords.x + newCoords.y) + qbertComp->GetPlayerOffset().x, -cubeSize * 3 / 4 * (newCoords.x - newCoords.y) + qbertComp->GetPlayerOffset().y };
 	return std::make_unique<QJumpingState>(qbertComp, targetPos);
 }
 
@@ -37,23 +39,31 @@ std::unique_ptr<QbertState> QJumpingState::Update()
 	auto qObj = m_QBertComp->GetOwner();
 	glm::vec2 currentPos{ qObj->GetLocalPosition().x, qObj->GetLocalPosition().y };
 
-	const float speed{ m_Distance / m_JumpTime };
+	int xDif{ -32 };
+	int yDif{ 48 };
+
+	//const float speed{ m_Distance * m_JumpTime / 10 };
 	auto moveVec{ m_TargetPos - m_OrignalPos };
-	currentPos.x += moveVec.x * static_cast<float>(speed * dae::GameTime::GetDt());
-	currentPos.y += moveVec.y * static_cast<float>(speed * dae::GameTime::GetDt());
+	//currentPos.x += moveVec.x * static_cast<float>(speed * dae::GameTime::GetDt());
+	//currentPos.y += moveVec.y * static_cast<float>(speed * dae::GameTime::GetDt());
+
+	currentPos.x += xDif;
+	currentPos.y += yDif;
 
 	qObj->SetLocalPosition({ currentPos.x, currentPos.y, 0 });
 
-	float sqLength{ std::powf(m_TargetPos.x - currentPos.x, 2) + std::powf(m_TargetPos.y - currentPos.y, 2) };
+	float sqDistRemaining{ std::powf(m_TargetPos.x - currentPos.x, 2) + std::powf(m_TargetPos.y - currentPos.y, 2) };
 
-	if (sqLength > epsilon)
+	std::cout << sqDistRemaining << std::endl;
+
+	if (sqDistRemaining > epsilon)
 	{
 		return nullptr;
 	}
 	
 	currentPos = m_TargetPos;
 
-	qObj->SetLocalPosition({ m_TargetPos.x, m_TargetPos.y, 0 });
+	qObj->SetLocalPosition({ currentPos.x, currentPos.y, 0 });
 
 	auto coords = m_QBertComp->GetMapCoords();
 	if (coords.x < 0 || coords.x > 6 || coords.y < 0 || coords.y > 6)
@@ -69,7 +79,8 @@ QJumpingState::QJumpingState(QBertComponent* qbertComp, const glm::vec2& targetP
 {
 	auto oldPos = qbertComp->GetOwner()->GetLocalPosition();
 	m_OrignalPos = { oldPos.x, oldPos.y };
-	m_Distance = glm::length(targetPos - m_OrignalPos);
+	//m_Distance = glm::length(targetPos - m_OrignalPos);
+	//m_Distance = 64;
 }
 
 const float QJumpingState::m_JumpTime = 0.4f;

@@ -65,7 +65,7 @@ void load()
 
 	auto qbertObj2 = std::make_unique<dae::GameObject>();
 	qbertObj2->SetLocalPosition({ 100, 400, 0 });
-	qbertObj2->AddComponent<dae::TextureComponent>("QBertSpritessheet.png");
+	qbertObj2->AddComponent<dae::TextureComponent>("QBertSpritesheet.png");
 
 	auto testBoob = std::make_unique<dae::GameObject>();
 	testBoob->SetLocalPosition({ 100, 200, 0 });

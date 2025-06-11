@@ -27,9 +27,26 @@ int QBertComponent::GetCubeSize() const
 	return m_LevelComp->GetCubeSize();
 }
 
+glm::ivec2 QBertComponent::GetPlayerOffset() const
+{
+	return m_PlayerOffset;
+}
+
+void QBertComponent::Update()
+{
+	auto newState = m_State->Update();
+	if (newState != nullptr)
+	{
+		EnterNewState(std::move(newState));
+	}
+}
+
 QBertComponent::QBertComponent(dae::GameObject* owner, LevelComponent* levelComp, dae::MultiSpriteComponent* multiSpriteComp) :
 	Component(owner), m_LevelComp{levelComp}, m_SpriteComp{multiSpriteComp}, m_State{std::make_unique<QIdleState>(this)}
 {
+	//int cubeSize = m_LevelComp->GetCubeSize();
+	//m_PlayerOffset.x = cubeSize / 4;
+	//m_PlayerOffset.y = -cubeSize / 16 * 3;
 }
 
 void QBertComponent::EnterNewState(std::unique_ptr<QbertState> newState)
