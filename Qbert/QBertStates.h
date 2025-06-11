@@ -13,8 +13,8 @@ public:
 	//virtual std::unique_ptr<QbertState> HandleState() = 0;
 	virtual std::unique_ptr<QbertState> MoveSquare(QBertComponent*, glm::ivec2) { return nullptr; };
 
-	virtual void OnEnter(QBertComponent*) {};
-	virtual void OnExit(QBertComponent*) {};
+	virtual void OnEnter() {};
+	virtual void OnExit() {};
 
 	virtual ~QbertState() = default;
 
@@ -55,7 +55,7 @@ public:
 	std::unique_ptr<QbertState> Update() override;
 	//std::unique_ptr<QbertState> HandleState() override { return nullptr; };
 
-	void OnExit(QBertComponent* qbertComp) override;
+	void OnExit() override;
 
 	QJumpingState(QBertComponent* qbertComp, const glm::vec2& targetPos);
 
@@ -78,7 +78,7 @@ class QDeadState final : public QbertState
 {
 public:
 	std::unique_ptr<QbertState> Update() override;
-	void OnEnter(QBertComponent* qbertComp) override;
+	void OnEnter() override;
 
 	QDeadState(QBertComponent* qbertComp);
 

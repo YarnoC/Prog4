@@ -58,11 +58,12 @@ QBertComponent::QBertComponent(dae::GameObject* owner, LevelComponent* levelComp
 	m_Sounds.jump = ss.LoadEffect("Sounds/QBertJump.ogg");
 	m_Sounds.fall = ss.LoadEffect("Sounds/QBertFall.ogg");
 	m_Sounds.curse = ss.LoadEffect("Sounds/QBertCurse.ogg");
+	SetSpriteRowCol(-1, 3);
 }
 
 void QBertComponent::EnterNewState(std::unique_ptr<QbertState> newState)
 {
-	m_State->OnExit(this);
+	m_State->OnExit();
 	m_State = std::move(newState);
-	m_State->OnEnter(this);
+	m_State->OnEnter();
 }

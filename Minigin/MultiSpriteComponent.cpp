@@ -42,8 +42,6 @@ void dae::MultiSpriteComponent::SetToRowCollumn(int row, int collumn)
 		m_CurrentCollumn = collumn;
 		m_SrcRect->x = m_CurrentCollumn * m_SrcRect->width;
 	}
-
-
 }
 
 void dae::MultiSpriteComponent::Render() const

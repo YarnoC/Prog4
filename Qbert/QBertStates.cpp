@@ -80,7 +80,7 @@ std::unique_ptr<QbertState> QJumpingState::Update()
 	return std::make_unique<QIdleState>(m_QBertComp);
 }
 
-void QJumpingState::OnExit(QBertComponent*)
+void QJumpingState::OnExit()
 {
 	dae::ServiceLocator::GetSoundSystem().Play(m_SoundToPlay, 32, false);
 }
@@ -99,9 +99,9 @@ QDeadState::QDeadState(QBertComponent* qbertComp) :
 {
 }
 
-void QDeadState::OnEnter(QBertComponent* qbertComp)
+void QDeadState::OnEnter()
 {
-	dae::ServiceLocator::GetSoundSystem().Play(qbertComp->GetQBertSounds().curse, 32, false);
+	dae::ServiceLocator::GetSoundSystem().Play(m_QBertComp->GetQBertSounds().curse, 32, false);
 }
 
 std::unique_ptr<QbertState> QDeadState::Update()
