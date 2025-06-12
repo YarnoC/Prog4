@@ -98,8 +98,15 @@ void LevelComponent::SetupPlayer(QBertComponent* qbertComp, SpawnPos spawnPos)
 
 	glm::ivec2 coords{ qbertComp->GetMapCoords() };
 
-	glm::vec3 pos{ m_CubeSize / 2 * (coords.x + coords.y), -m_CubeSize * 3 / 4 * (coords.x - coords.y), 0};
+	//glm::vec3 pos{ m_CubeSize / 2 * (coords.x + coords.y), -m_CubeSize * 3 / 4 * (coords.x - coords.y), 0};
+	glm::vec3 pos{ GetCubePos(coords.y, coords.x).x, GetCubePos(coords.y, coords.x).y, 0 };
+
 	qbertObj->SetLocalPosition(pos + offset);
+}
+
+glm::vec2 LevelComponent::GetCubePos(int row, int col) const
+{
+	return glm::vec2{ m_CubeSize / 2 * (col + row), -m_CubeSize * 3 / 4 * (col - row) };
 }
 
 LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene* scene, int level) :

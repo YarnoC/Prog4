@@ -17,9 +17,7 @@ std::unique_ptr<QbertState> QIdleState::MoveSquare(QBertComponent* qbertComp, gl
 {
 	auto newCoords = qbertComp->GetMapCoords() + moveVec;
 	qbertComp->SetMapCoords(newCoords);
-	int cubeSize{ qbertComp->GetCubeSize() };
-	glm::vec2 targetPos{ cubeSize / 2 * (newCoords.x + newCoords.y) + qbertComp->GetPlayerOffset().x, -cubeSize * 3 / 4 * (newCoords.x - newCoords.y) + qbertComp->GetPlayerOffset().y };
-	return std::make_unique<QJumpingState>(qbertComp, targetPos);
+	return std::make_unique<QJumpingState>(qbertComp, m_QBertComp->CalcPlayerPos(newCoords.y, newCoords.x));
 }
 
 QIdleState::QIdleState(QBertComponent* qbertComp) :
@@ -115,10 +113,8 @@ std::unique_ptr<QbertState> QDeadState::Update()
 		coords.y = std::clamp(coords.y, 0, 6);
 		m_QBertComp->SetMapCoords(coords);
 
-		auto cubeSize = m_QBertComp->GetCubeSize();
-
-		glm::vec3 pos{ cubeSize / 2 * (coords.x + coords.y) + m_QBertComp->GetPlayerOffset().x, -cubeSize * 3 / 4 * (coords.x - coords.y) + m_QBertComp->GetPlayerOffset().y, 0 };
-		m_QBertComp->GetOwner()->SetLocalPosition(pos);
+		auto newPos = m_QBertComp->CalcPlayerPos(coords.y, coords.x);
+		m_QBertComp->GetOwner()->SetLocalPosition(glm::vec3{ newPos.x, newPos.y, 0 });
 
 		return std::make_unique<QIdleState>(m_QBertComp);
 	}

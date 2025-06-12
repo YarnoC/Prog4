@@ -37,6 +37,12 @@ void QBertComponent::SetSpriteRowCol(int row, int col)
 	m_SpriteComp->SetToRowCollumn(row, col);
 }
 
+glm::vec2 QBertComponent::CalcPlayerPos(int row, int col) const
+{
+	glm::vec2 cubePos = m_LevelComp->GetCubePos(row, col);
+	return { cubePos.x + m_PlayerOffset.x, cubePos.y + m_PlayerOffset.y };
+}
+
 const QBertComponent::Sounds& QBertComponent::GetQBertSounds() const
 {
 	return m_Sounds;

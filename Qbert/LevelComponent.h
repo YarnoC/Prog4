@@ -3,6 +3,7 @@
 #include "Texture2D.h"
 #include <memory>
 #include "Component.h"
+#include "vec2.hpp"
 
 namespace dae
 {
@@ -27,6 +28,7 @@ public:
 
 	void SetupPlayer(QBertComponent* qbertComp, SpawnPos spawnPos);
 	//void Move(QBertComponent* qbertComp, glm::ivec2 moveVec);
+	glm::vec2 GetCubePos(int row, int col) const;
 
 	LevelComponent(dae::GameObject* owner, dae::Scene* scene, int level);
 

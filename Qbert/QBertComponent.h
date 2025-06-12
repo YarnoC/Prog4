@@ -21,6 +21,7 @@ public:
 	int GetCubeSize() const;
 	glm::ivec2 GetPlayerOffset() const;
 	void SetSpriteRowCol(int row, int col);
+	glm::vec2 CalcPlayerPos(int row, int col) const;
 
 	struct Sounds
 	{
