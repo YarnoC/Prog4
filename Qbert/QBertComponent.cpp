@@ -43,6 +43,14 @@ glm::vec2 QBertComponent::CalcPlayerPos(int row, int col) const
 	return { cubePos.x + m_PlayerOffset.x, cubePos.y + m_PlayerOffset.y };
 }
 
+void QBertComponent::TryChangeTile()
+{
+	if (m_LevelCoords.x < 0 || m_LevelCoords.x > 6) return;
+	if (m_LevelCoords.y < 0 || m_LevelCoords.y > m_LevelCoords.x) return;
+
+	m_LevelComp->ChangeTile(m_LevelCoords.y, m_LevelCoords.x);
+}
+
 const QBertComponent::Sounds& QBertComponent::GetQBertSounds() const
 {
 	return m_Sounds;

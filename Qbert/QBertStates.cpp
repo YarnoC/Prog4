@@ -68,7 +68,9 @@ std::unique_ptr<QbertState> QJumpingState::Update()
 	qObj->SetLocalPosition({ currentPos.x, currentPos.y, 0 });
 
 	auto coords = m_QBertComp->GetMapCoords();
-	if (coords.x < 0 || coords.x > 6 || coords.y < 0 || coords.y > 6)
+
+	//do an if check to see if the pos is that of a disc, make the if below an else if
+	if (coords.x < 0 || coords.y < 0 || coords.y > coords.x || coords.x > 6)
 	{
 		m_SoundToPlay = m_QBertComp->GetQBertSounds().fall;
 		return std::make_unique<QDeadState>(m_QBertComp);
@@ -81,6 +83,7 @@ std::unique_ptr<QbertState> QJumpingState::Update()
 void QJumpingState::OnExit()
 {
 	dae::ServiceLocator::GetSoundSystem().Play(m_SoundToPlay, 32, false);
+	m_QBertComp->TryChangeTile();
 }
 
 QJumpingState::QJumpingState(QBertComponent* qbertComp, const glm::vec2& targetPos) :
@@ -110,7 +113,7 @@ std::unique_ptr<QbertState> QDeadState::Update()
 	{
 		glm::ivec2 coords = m_QBertComp->GetMapCoords();
 		coords.x = std::clamp(coords.x, 0, 6);
-		coords.y = std::clamp(coords.y, 0, 6);
+		coords.y = std::clamp(coords.y, 0, coords.x);
 		m_QBertComp->SetMapCoords(coords);
 
 		auto newPos = m_QBertComp->CalcPlayerPos(coords.y, coords.x);

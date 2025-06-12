@@ -12,6 +12,7 @@ public:
 	void NextCubeColor();
 	void PrevCubeColor();
 	void SetToLevel(int level);
+	bool IsInCorrectState() const;
 
 	CubeComponent(dae::GameObject* owner, dae::MultiSpriteComponent* spriteComp, int level);
 	~CubeComponent() = default;

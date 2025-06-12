@@ -59,6 +59,19 @@ int LevelComponent::GetCubeSize() const
 //	if (newPos.y < 0 || newPos.y > 6) return;
 //}
 
+void LevelComponent::ChangeTile(int row, int col, bool forward)
+{
+	if (forward)
+	{
+		m_Level[col][row]->NextCubeColor();
+		return;
+	}
+
+	m_Level[col][row]->PrevCubeColor();
+
+
+}
+
 void LevelComponent::SetupPlayer(QBertComponent* qbertComp, SpawnPos spawnPos)
 {
 	auto levelObj = GetOwner();

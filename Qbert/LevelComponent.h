@@ -26,6 +26,8 @@ public:
 		BottomRight
 	};
 
+	void ChangeTile(int row, int col, bool forward = true);
+
 	void SetupPlayer(QBertComponent* qbertComp, SpawnPos spawnPos);
 	//void Move(QBertComponent* qbertComp, glm::ivec2 moveVec);
 	glm::vec2 GetCubePos(int row, int col) const;
