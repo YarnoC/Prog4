@@ -5,7 +5,12 @@ using namespace dae;
 
 unsigned int Scene::m_idCounter = 0;
 
-Scene::Scene(const std::string& name) : m_name(name) {}
+Scene::Scene(const std::string& name) :
+	m_name(name)
+{
+	m_SceneIndex = m_idCounter;
+	++m_idCounter;
+}
 
 Scene::~Scene() = default;
 
@@ -38,6 +43,21 @@ void Scene::Render() const
 	{
 		object->Render();
 	}
+}
+
+void dae::Scene::SetActive(bool active)
+{
+	m_IsActive = active;
+}
+
+bool dae::Scene::IsActive() const
+{
+	return m_IsActive;
+}
+
+int dae::Scene::GetIndex() const
+{
+	return m_SceneIndex;
 }
 
 void dae::Scene::RemoveTerminalObjects()

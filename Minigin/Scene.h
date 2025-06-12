@@ -16,6 +16,10 @@ namespace dae
 		void Update();
 		void Render() const;
 
+		void SetActive(bool active);
+		bool IsActive() const;
+		int GetIndex() const;
+
 		void RemoveTerminalObjects();
 
 		~Scene();
@@ -28,9 +32,12 @@ namespace dae
 		explicit Scene(const std::string& name);
 
 		std::string m_name;
-		std::vector < std::unique_ptr<GameObject>> m_objects{};
+		std::vector <std::unique_ptr<GameObject>> m_objects{};
 
-		static unsigned int m_idCounter; 
+		static unsigned int m_idCounter;
+
+		int m_SceneIndex{};
+		bool m_IsActive{ true };
 	};
 
 }

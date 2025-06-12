@@ -11,6 +11,8 @@ namespace dae
 	{
 	public:
 		Scene& CreateScene(const std::string& name);
+		void RemoveScene(int index);
+		void SetSceneActive(int index, bool active = true);
 
 		void Update();
 		void LateUpdate();
