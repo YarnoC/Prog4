@@ -30,6 +30,8 @@ public:
 	};
 
 	void ChangeTile(int row, int col, bool forward = true);
+	int GetCurrentLevel() const;
+	void SetCurrentLevel(int newLevel);
 
 	void SetupPlayer(QBertComponent* qbertComp, SpawnPos spawnPos);
 	//void Move(QBertComponent* qbertComp, glm::ivec2 moveVec);
@@ -50,4 +52,5 @@ private:
 	const glm::ivec2 m_PlayerCubeOffset{ 16, -12 };
 	dae::Texture2D* m_CubeSpriteSheet; //lifetime managed by resource manager
 	int m_CubeSize{ 64 };
+	int m_LevelNumber{};
 };

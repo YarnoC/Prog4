@@ -10,6 +10,7 @@ class LevelState
 public:
 	virtual std::unique_ptr<LevelState> Update() { return nullptr; };
 	virtual std::unique_ptr<LevelState> CheckTiles(std::vector<std::vector<CubeComponent*>>) { return nullptr; };
+	virtual void OnEnter() {};
 
 	~LevelState() = default;
 
@@ -30,6 +31,8 @@ class LevelPlayingState final : public LevelState
 {
 public:
 	std::unique_ptr<LevelState> CheckTiles(std::vector<std::vector<CubeComponent*>> levelVec) override;
+
+	void OnEnter() override;
 
 	LevelPlayingState(LevelComponent* levelComp);
 

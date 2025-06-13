@@ -12,6 +12,7 @@ void LevelComponent::Update()
 	if (newState != nullptr)
 	{
 		m_LevelState = std::move(newState);
+		m_LevelState->OnEnter();
 	}
 }
 
@@ -87,6 +88,16 @@ void LevelComponent::ChangeTile(int row, int col, bool forward)
 	m_Level[col][row]->PrevCubeColor();
 
 
+}
+
+int LevelComponent::GetCurrentLevel() const
+{
+	return m_LevelNumber;
+}
+
+void LevelComponent::SetCurrentLevel(int newLevel)
+{
+	m_LevelNumber = newLevel;
 }
 
 void LevelComponent::SetupPlayer(QBertComponent* qbertComp, SpawnPos spawnPos)
