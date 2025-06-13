@@ -4,6 +4,16 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "QBertComponent.h"
+#include "LevelStates.h"
+
+void LevelComponent::Update()
+{
+	auto newState = m_LevelState->Update();
+	if (newState != nullptr)
+	{
+		m_LevelState = std::move(newState);
+	}
+}
 
 void LevelComponent::InitLevel(int level)
 {
@@ -64,6 +74,13 @@ void LevelComponent::ChangeTile(int row, int col, bool forward)
 	if (forward)
 	{
 		m_Level[col][row]->NextCubeColor();
+		
+		auto newState = m_LevelState->CheckTiles(m_Level);
+		if (newState)
+		{
+			m_LevelState = std::move(newState);
+		}
+
 		return;
 	}
 
@@ -146,5 +163,9 @@ LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene* scene, int le
 		}
 	}
 
+	m_LevelState = std::make_unique<LevelPlayingState>(this);
+
 	InitLevel(level);
 }
+
+LevelComponent::~LevelComponent() = default;

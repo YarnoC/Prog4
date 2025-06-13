@@ -23,6 +23,7 @@
     <ClCompile Include="FpsComponent.cpp" />
     <ClCompile Include="GameCommands.cpp" />
     <ClCompile Include="LevelComponent.cpp" />
+    <ClCompile Include="LevelStates.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="QBertComponent.cpp" />
     <ClCompile Include="QBertStates.cpp" />
@@ -32,7 +33,9 @@
     <ClInclude Include="CubeComponent.h" />
     <ClInclude Include="FpsComponent.h" />
     <ClInclude Include="GameCommands.h" />
+    <ClInclude Include="GameLoaderUtils.h" />
     <ClInclude Include="LevelComponent.h" />
+    <ClInclude Include="LevelStates.h" />
     <ClInclude Include="QBertComponent.h" />
     <ClInclude Include="QBertStates.h" />
     <ClInclude Include="RotatorComponent.h" />

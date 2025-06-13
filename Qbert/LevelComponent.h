@@ -13,10 +13,13 @@ class Scene;
 
 class CubeComponent;
 class QBertComponent;
+class LevelState;
 
 class LevelComponent final : public dae::Component
 {
 public:
+	void Update() override;
+
 	void InitLevel(int level);
 	int GetCubeSize() const;
 	enum class SpawnPos
@@ -34,7 +37,7 @@ public:
 
 	LevelComponent(dae::GameObject* owner, dae::Scene* scene, int level);
 
-	~LevelComponent() = default;
+	~LevelComponent();
 
 	LevelComponent(const LevelComponent&) = delete;
 	LevelComponent(LevelComponent&&) = delete;
@@ -42,8 +45,9 @@ public:
 	LevelComponent& operator=(LevelComponent&&) = delete;
 
 private:
-	const glm::ivec2 m_PlayerCubeOffset{ 16, -12 };
 	std::vector<std::vector<CubeComponent*>> m_Level;
+	std::unique_ptr<LevelState> m_LevelState{ nullptr };
+	const glm::ivec2 m_PlayerCubeOffset{ 16, -12 };
 	dae::Texture2D* m_CubeSpriteSheet; //lifetime managed by resource manager
 	int m_CubeSize{ 64 };
 };

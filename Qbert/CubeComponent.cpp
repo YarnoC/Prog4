@@ -34,6 +34,7 @@ void CubeComponent::SetToLevel(int level)
 {
 	m_Level = level;
 	m_Stage = 0;
+	m_Sprite->SetToRowCollumn(m_Stage, -1);
 }
 
 bool CubeComponent::IsInCorrectState() const
