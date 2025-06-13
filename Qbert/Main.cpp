@@ -22,15 +22,18 @@
 
 void load()
 {
+	dae::ServiceLocator::RegisterSoundSytem(std::make_unique<dae::SoundSystemSdl>());
+
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
 
-	auto levelObj = std::make_unique<dae::GameObject>();
+	//moved
+	//auto levelObj = std::make_unique<dae::GameObject>();
+	auto levelObj = scene.CreateGameObject();
 	auto levelComp = levelObj->AddComponent<LevelComponent>(&scene, 0);
 	levelObj->SetLocalPosition({ 96, 450, 0 });
-	scene.Add(levelObj);
+	//scene.Add(levelObj);
 
 	//background
-	auto go = std::make_unique<dae::GameObject>();
 	//go->AddComponent<dae::TextureComponent>("background.tga");
 	//scene.Add(go);
 
@@ -40,15 +43,14 @@ void load()
 	//go->SetLocalPosition({ 216, 180, 0 });
 	//scene.Add(go);
 
-	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 30);
 
-	auto textObject = std::make_unique<dae::GameObject>();
-	textObject->AddComponent<dae::TextComponent>("Programming 4 Assignment", font.get());
-	textObject->SetLocalPosition({ 100, 20, 0 });
+	//auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 30);
+	//auto textObject = std::make_unique<dae::GameObject>();
+	//textObject->AddComponent<dae::TextComponent>("Programming 4 Assignment", font.get());
+	//textObject->SetLocalPosition({ 100, 20, 0 });
+	//scene.Add(textObject);
 
-	scene.Add(textObject);
 
-	dae::ServiceLocator::RegisterSoundSytem(std::make_unique<dae::SoundSystemSdl>());
 	//auto&& ss = dae::ServiceLocator::GetSoundSystem();
 	
 	//auto jumpWav = ss.LoadEffect("Sounds/QBertJump.ogg");
@@ -56,23 +58,14 @@ void load()
 
 	//actual objects
 
-	auto qbertObj = std::make_unique<dae::GameObject>();
+	auto qbertObj = scene.CreateGameObject();
 	auto spriteComp = qbertObj->AddComponent<dae::MultiSpriteComponent>("QBertSpritesheet.png", 1, 4);
 	auto qbertComp = qbertObj->AddComponent<QBertComponent>(levelComp, spriteComp);
 	levelComp->SetupPlayer(qbertComp, LevelComponent::SpawnPos::Top);
 
-	auto qbertObj2 = std::make_unique<dae::GameObject>();
-	qbertObj2->SetLocalPosition({ 100, 400, 0 });
-	qbertObj2->AddComponent<dae::TextureComponent>("QBertSpritesheet.png");
-
-	auto testBoob = std::make_unique<dae::GameObject>();
-	testBoob->SetLocalPosition({ 100, 200, 0 });
-	auto testSpriteComp = testBoob->AddComponent<dae::MultiSpriteComponent>("QBertSpritesheet.png", 1, 4);
-	testSpriteComp->NextCollumn();
-
-	scene.Add(testBoob);
-
-	
+	//auto qbertObj2 = scene.CreateGameObject();
+	//qbertObj2->SetLocalPosition({ 100, 400, 0 });
+	//qbertObj2->AddComponent<dae::TextureComponent>("QBertSpritesheet.png");
 
 	//gamepad commands
 	//auto leftCmd = std::make_unique<MoveActorCommand>(qbertObj.get(), glm::vec2{ -100.f, 0.f });
@@ -86,10 +79,10 @@ void load()
 	auto rightDownCmd = std::make_unique<MoveQBertCommand>(qbertComp, glm::ivec2{ 0, 1 });
 
 	//keyboard  commands
-	auto leftCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{ -150.f, 0.f });
-	auto rightCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{ 150.f, 0.f });
-	auto upCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{ 0.f, -150.f });
-	auto downCmdKb = std::make_unique<MoveActorCommand>(qbertObj2.get(), glm::vec2{ 0.f, 150.f });
+	//auto leftCmdKb = std::make_unique<MoveActorCommand>(qbertObj2, glm::vec2{ -150.f, 0.f });
+	//auto rightCmdKb = std::make_unique<MoveActorCommand>(qbertObj2, glm::vec2{ 150.f, 0.f });
+	//auto upCmdKb = std::make_unique<MoveActorCommand>(qbertObj2, glm::vec2{ 0.f, -150.f });
+	//auto downCmdKb = std::make_unique<MoveActorCommand>(qbertObj2, glm::vec2{ 0.f, 150.f });
 
 	auto& inputMan = dae::InputManager::GetInstance();
 
@@ -106,23 +99,24 @@ void load()
 	inputMan.BindCommand(std::move(rightDownCmd), GamepadButton::DpadRight, ButtonState::Pressed, 0);
 
 	//keyboard binds
-	inputMan.BindCommand(std::move(leftCmdKb), SDL_SCANCODE_LEFT, ButtonState::Held);
-	inputMan.BindCommand(std::move(rightCmdKb), SDL_SCANCODE_RIGHT, ButtonState::Held);
-	inputMan.BindCommand(std::move(upCmdKb), SDL_SCANCODE_UP, ButtonState::Held);
-	inputMan.BindCommand(std::move(downCmdKb), SDL_SCANCODE_DOWN, ButtonState::Held);
+	//inputMan.BindCommand(std::move(leftCmdKb), SDL_SCANCODE_LEFT, ButtonState::Held);
+	//inputMan.BindCommand(std::move(rightCmdKb), SDL_SCANCODE_RIGHT, ButtonState::Held);
+	//inputMan.BindCommand(std::move(upCmdKb), SDL_SCANCODE_UP, ButtonState::Held);
+	//inputMan.BindCommand(std::move(downCmdKb), SDL_SCANCODE_DOWN, ButtonState::Held);
 
 	//mute command and bind
 	auto toggleMuteCmd = std::make_unique<ToggleMuteCommand>();
 	inputMan.BindCommand(std::move(toggleMuteCmd), SDL_SCANCODE_F2, ButtonState::Pressed);
 
-	scene.Add(qbertObj);
-	scene.Add(qbertObj2);
+	auto skipLevelCmd = std::make_unique<SkipLevelCommand>(levelComp, qbertComp);
+	inputMan.BindCommand(std::move(skipLevelCmd), SDL_SCANCODE_F4, ButtonState::Pressed);
 
+	//auto go = std::make_unique<dae::GameObject>();
 	//go = std::make_unique<dae::GameObject>();
-	go->SetLocalPosition({ 20, 20, 0 });
-	go->AddComponent<dae::TextComponent>(" ", font.get());
-	go->AddComponent<FpsComponent>(go->GetComponent<dae::TextComponent>());
-	scene.Add(go);
+	//go->SetLocalPosition({ 20, 20, 0 });
+	//go->AddComponent<dae::TextComponent>(" ", font.get());
+	//go->AddComponent<FpsComponent>(go->GetComponent<dae::TextComponent>());
+	//scene.Add(go);
 }
 
 int main(int, char* [])

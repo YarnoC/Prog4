@@ -4,6 +4,7 @@
 #include <cassert>
 #include "ServiceLocator.h"
 #include "QBertComponent.h"
+#include "LevelComponent.h"
 
 MoveActorCommand::MoveActorCommand(dae::GameObject* actor, glm::vec2 moveVec)
     : dae::GameActorCommand(actor), m_MoveVec{ moveVec }
@@ -48,4 +49,26 @@ MoveQBertCommand::MoveQBertCommand(QBertComponent* qbertComp, glm::ivec2 moveVec
 void MoveQBertCommand::Execute()
 {
     m_QBertComp->Move(m_MoveVec);
+}
+
+SkipLevelCommand::SkipLevelCommand(LevelComponent* levelComp, QBertComponent* qbertComp, QBertComponent* qbertCompP2) :
+    Command(), m_LevelComp{levelComp}, m_QBertComp{qbertComp}, m_QBertComp2{qbertCompP2}
+{
+}
+
+void SkipLevelCommand::Execute()
+{
+    auto newLevel = m_LevelComp->GetCurrentLevel() + 1;
+    m_LevelComp->SetCurrentLevel(newLevel);
+    m_LevelComp->InitLevel(newLevel);
+
+    if (!m_QBertComp2)
+    {
+        m_LevelComp->SetupPlayer(m_QBertComp, LevelComponent::SpawnPos::Top);
+    }
+    else
+    {
+        m_LevelComp->SetupPlayer(m_QBertComp, LevelComponent::SpawnPos::BottomLeft);
+        m_LevelComp->SetupPlayer(m_QBertComp2, LevelComponent::SpawnPos::BottomRight);
+    }
 }

@@ -3,6 +3,7 @@
 #include "vec2.hpp"
 
 class QBertComponent;
+class LevelComponent;
 
 class MoveActorCommand final : public dae::GameActorCommand
 {
@@ -55,4 +56,23 @@ public:
 private:
 	QBertComponent* m_QBertComp{ nullptr };
 	glm::ivec2 m_MoveVec{};
+};
+
+class SkipLevelCommand final : public dae::Command
+{
+public:
+	SkipLevelCommand(LevelComponent* levelComp, QBertComponent* qbertComp, QBertComponent* qbertCompP2 = nullptr);
+	void Execute();
+
+	~SkipLevelCommand() = default;
+
+	SkipLevelCommand(const SkipLevelCommand&) = delete;
+	SkipLevelCommand(SkipLevelCommand&&) = delete;
+	SkipLevelCommand& operator=(const SkipLevelCommand&) = delete;
+	SkipLevelCommand& operator=(SkipLevelCommand&&) = delete;
+
+private:
+	LevelComponent* m_LevelComp{ nullptr };
+	QBertComponent* m_QBertComp{ nullptr };
+	QBertComponent* m_QBertComp2{ nullptr };
 };

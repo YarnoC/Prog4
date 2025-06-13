@@ -29,6 +29,11 @@ void Scene::RemoveAll()
 	m_objects.clear();
 }
 
+GameObject* dae::Scene::CreateGameObject()
+{
+	return m_objects.emplace_back(std::make_unique<dae::GameObject>()).get();
+}
+
 void Scene::Update()
 {
 	for(auto& object : m_objects)
