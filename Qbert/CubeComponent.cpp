@@ -2,7 +2,7 @@
 
 void CubeComponent::NextCubeColor()
 {
-	const int threshold{ m_Level + 1 };
+	int threshold{ m_Level + 1 };
 	switch (m_Level)
 	{
 	case 0:
@@ -17,7 +17,8 @@ void CubeComponent::NextCubeColor()
 	}
 	case 2:
 	{
-		m_Stage = m_Stage + 1 % threshold;
+		threshold = 2;
+		m_Stage = (m_Stage + 1) % threshold;
 		m_Sprite->SetToRowCollumn(m_Stage, -1);
 		break;
 	}

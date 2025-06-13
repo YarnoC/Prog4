@@ -34,42 +34,6 @@ int LevelComponent::GetCubeSize() const
 	return m_CubeSize;
 }
 
-//void LevelComponent::SetupPlayer(QBertComponent* qbert, SpawnPos spawnPos)
-//{
-//	auto qObj = qbert->GetOwner();
-//	qObj->SetLocalPosition({ m_PlayerCubeOffset.x, m_PlayerCubeOffset.y, 0 });
-//
-//	switch (spawnPos)
-//	{
-//	case SpawnPos::BottomLeft:
-//	{
-//		auto parent = m_Level[0][0]->GetOwner();
-//		qObj->SetParent(parent, false);
-//		break;
-//	}
-//	case SpawnPos::Top:
-//	{
-//		auto parent = m_Level[0].back()->GetOwner();
-//		qObj->SetParent(parent, false);
-//		break;
-//	}
-//	case SpawnPos::BottomRight:
-//	{
-//		auto parent = m_Level.back().back()->GetOwner();
-//		qObj->SetParent(parent, false);
-//		break;
-//	}
-//	}
-//}
-
-//void LevelComponent::Move(QBertComponent* qbertComp, glm::ivec2 moveVec)
-//{
-//	auto newPos = qbertComp->GetMapCoords() + moveVec;
-//
-//	if (newPos.x < 0 || newPos.x > 6) return;
-//	if (newPos.y < 0 || newPos.y > 6) return;
-//}
-
 void LevelComponent::ChangeTile(int row, int col, bool forward)
 {
 	if (forward)
