@@ -4,6 +4,7 @@
 #include <vec2.hpp>
 #include "QBertStates.h"
 #include <memory>
+#include "Observer.h"
 
 class LevelComponent;
 
@@ -12,7 +13,7 @@ namespace dae
 	class MultiSpriteComponent;
 }
 
-class QBertComponent final : public dae::Component
+class QBertComponent final : public dae::Component/*, public dae::Observer*/
 {
 public:
 	void Move(glm::ivec2 moveVec);
@@ -23,6 +24,8 @@ public:
 	void SetSpriteRowCol(int row, int col);
 	glm::vec2 CalcPlayerPos(int row, int col) const;
 	void TryChangeTile();
+
+	//void OnNotify(const dae::Event& event, )
 
 	struct Sounds
 	{

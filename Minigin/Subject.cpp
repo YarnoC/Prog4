@@ -16,6 +16,6 @@ void dae::Subject::NotifyObservers(Event event, Component* subject)
 {
 	for (auto&& obs : m_Observers)
 	{
-		obs->Notify(event, subject);
+		obs->OnNotify(event, subject);
 	}
 }

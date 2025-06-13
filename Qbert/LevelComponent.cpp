@@ -5,6 +5,7 @@
 #include "ResourceManager.h"
 #include "QBertComponent.h"
 #include "LevelStates.h"
+#include "ServiceLocator.h"
 
 void LevelComponent::Update()
 {
@@ -114,6 +115,11 @@ glm::vec2 LevelComponent::GetCubePos(int row, int col) const
 	return glm::vec2{ m_CubeSize / 2 * (col + row), -m_CubeSize * 3 / 4 * (col - row) };
 }
 
+short LevelComponent::GetLevelCompleteSoundId() const
+{
+	return m_LevelCompleteSoundId;
+}
+
 LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene* scene, int level) :
 	dae::Component(owner)
 {
@@ -141,6 +147,8 @@ LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene* scene, int le
 	m_LevelState = std::make_unique<LevelPlayingState>(this);
 
 	InitLevel(level);
+
+	m_LevelCompleteSoundId = dae::ServiceLocator::GetSoundSystem().LoadEffect("Sounds/LevelComplete.ogg");
 }
 
 LevelComponent::~LevelComponent() = default;

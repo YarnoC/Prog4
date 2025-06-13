@@ -37,6 +37,8 @@ public:
 	//void Move(QBertComponent* qbertComp, glm::ivec2 moveVec);
 	glm::vec2 GetCubePos(int row, int col) const;
 
+	short GetLevelCompleteSoundId() const;
+
 	LevelComponent(dae::GameObject* owner, dae::Scene* scene, int level);
 
 	~LevelComponent();
@@ -53,4 +55,5 @@ private:
 	dae::Texture2D* m_CubeSpriteSheet; //lifetime managed by resource manager
 	int m_CubeSize{ 64 };
 	int m_LevelNumber{};
+	short m_LevelCompleteSoundId{};
 };

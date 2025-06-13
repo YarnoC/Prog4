@@ -7,13 +7,12 @@ namespace dae
 class Observer;
 class Component;
 
-class Subject
+class Subject final
 {
 public:
 	void AddObserver(Observer* observer);
 	void RemoveObserver(Observer* observer);
 
-protected:
 	void NotifyObservers(Event event, Component* subject);
 
 private:

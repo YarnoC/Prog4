@@ -9,7 +9,7 @@ class Component;
 class Observer
 {
 public:
-	virtual void Notify(const Event& event, Component* subject) = 0;
+	virtual void OnNotify(const Event& event, Component* subject) = 0;
 	virtual ~Observer() = default;
 
 	Observer(const Observer&) = delete;

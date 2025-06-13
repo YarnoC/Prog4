@@ -2,6 +2,7 @@
 #include "LevelComponent.h"
 #include "CubeComponent.h"
 #include "GameTime.h"
+#include "ServiceLocator.h"
 
 #include <iostream>
 
@@ -43,6 +44,12 @@ std::unique_ptr<LevelState> LevelFinishedState::Update()
 	if (m_TransitionTimeLeft > 0) return nullptr;
 
 	return std::make_unique<LevelPlayingState>(m_LevelComp);
+}
+
+void LevelFinishedState::OnEnter()
+{
+	auto soundId = m_LevelComp->GetLevelCompleteSoundId();
+	dae::ServiceLocator::GetSoundSystem().Play(soundId, 32, false);
 }
 
 LevelFinishedState::LevelFinishedState(LevelComponent* levelComp) :

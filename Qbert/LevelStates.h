@@ -11,6 +11,7 @@ public:
 	virtual std::unique_ptr<LevelState> Update() { return nullptr; };
 	virtual std::unique_ptr<LevelState> CheckTiles(std::vector<std::vector<CubeComponent*>>) { return nullptr; };
 	virtual void OnEnter() {};
+	virtual void OnExit() {};
 
 	~LevelState() = default;
 
@@ -51,6 +52,7 @@ class LevelFinishedState final : public LevelState
 {
 public:
 	std::unique_ptr<LevelState> Update() override;
+	void OnEnter() override;
 
 	LevelFinishedState(LevelComponent* levelComp);
 
