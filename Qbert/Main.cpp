@@ -19,6 +19,7 @@
 #include "MultiSpriteComponent.h"
 #include "LevelComponent.h"
 #include "QBertComponent.h"
+#include "ScoreComponent.h"
 
 void load()
 {
@@ -26,15 +27,18 @@ void load()
 
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
 
-	auto levelObj = scene.CreateGameObject();
-	auto levelComp = levelObj->AddComponent<LevelComponent>(&scene, 0);
+	auto* levelObj = scene.CreateGameObject();
+	auto* levelComp = levelObj->AddComponent<LevelComponent>(&scene, 0);
 	levelObj->SetLocalPosition({ 96, 450, 0 });
+
+	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 30);
+
+	auto* scoreObj = scene.CreateGameObject();
+	auto* scoreComp = scoreObj->AddComponent<ScoreComponent>(scoreObj->AddComponent<dae::TextComponent>("Score: 0", font.get()));
 
 	//go->AddComponent<dae::TextureComponent>("background.tga");
 
 	//textObject->AddComponent<dae::TextComponent>("Programming 4 Assignment", font.get());
-
-	//actual objects
 
 	auto qbertObj = scene.CreateGameObject();
 	auto spriteComp = qbertObj->AddComponent<dae::MultiSpriteComponent>("QBertSpritesheet.png", 1, 4);
@@ -42,8 +46,7 @@ void load()
 	levelComp->SetupPlayer(qbertComp, LevelComponent::SpawnPos::Top);
 
 	levelComp->AddObserver(qbertComp);
-
-	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 30);
+	levelComp->AddObserver(scoreComp);
 
 	//gamepad commands
 	auto leftUpCmd = std::make_unique<MoveQBertCommand>(qbertComp, glm::ivec2{ 0, -1 });

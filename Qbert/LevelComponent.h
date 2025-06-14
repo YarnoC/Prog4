@@ -57,7 +57,7 @@ public:
 private:
 	std::vector<std::vector<CubeComponent*>> m_Level;
 	std::unique_ptr<LevelState> m_LevelState{ nullptr };
-	std::unique_ptr<dae::Subject> m_OnLvlCompleteEvent{ nullptr };
+	std::unique_ptr<dae::Subject> m_Subject{ nullptr };
 	const glm::ivec2 m_PlayerCubeOffset{ 16, -12 };
 	dae::Texture2D* m_CubeSpriteSheet; //lifetime managed by resource manager
 	int m_CubeSize{ 64 };

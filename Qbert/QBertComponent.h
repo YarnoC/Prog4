@@ -25,6 +25,7 @@ public:
 	void SetSpriteRowCol(int row, int col);
 	glm::vec2 CalcPlayerPos(int row, int col) const;
 	void TryChangeTile();
+	void AddObserver(dae::Observer* observer);
 
 	void OnNotify(const dae::Event& event, Component* comp) override;
 

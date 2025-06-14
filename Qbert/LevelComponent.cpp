@@ -38,19 +38,22 @@ int LevelComponent::GetCubeSize() const
 
 void LevelComponent::AddObserver(dae::Observer* observer)
 {
-	m_OnLvlCompleteEvent->AddObserver(observer);
+	m_Subject->AddObserver(observer);
 }
 
 void LevelComponent::NotifyObservers(dae::Event e)
 {
-	m_OnLvlCompleteEvent->NotifyObservers(e, this);
+	m_Subject->NotifyObservers(e, this);
 }
 
 void LevelComponent::ChangeTile(int row, int col, bool forward)
 {
 	if (forward)
 	{
-		m_Level[col][row]->NextCubeColor();
+		if (m_Level[col][row]->NextCubeColor())
+		{
+			m_Subject->NotifyObservers(dae::Event{ dae::utils::MakeSdbmHash("ChangedTileColor") }, this);
+		}
 		
 		auto newState = m_LevelState->CheckTiles(m_Level);
 		if (newState)
@@ -167,7 +170,7 @@ LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene* scene, int le
 	}
 
 	m_LevelState = std::make_unique<LevelPlayingState>(this);
-	m_OnLvlCompleteEvent = std::make_unique<dae::Subject>();
+	m_Subject = std::make_unique<dae::Subject>();
 
 	InitLevel(level);
 

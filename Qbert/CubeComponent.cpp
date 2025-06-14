@@ -1,6 +1,6 @@
 #include "CubeComponent.h"
 
-void CubeComponent::NextCubeColor(bool endOfLevel)
+bool CubeComponent::NextCubeColor(bool endOfLevel)
 {
 	int threshold{ m_Level + 1 };
 
@@ -9,6 +9,7 @@ void CubeComponent::NextCubeColor(bool endOfLevel)
 		threshold = 3;
 		m_Stage = (m_Stage + 1) % threshold;
 		m_Sprite->SetToRowCollumn(m_Stage, -1);
+		return false;
 	}
 
 	switch (m_Level)
@@ -20,6 +21,7 @@ void CubeComponent::NextCubeColor(bool endOfLevel)
 		{
 			++m_Stage;
 			m_Sprite->NextRow();
+			return true;
 		}
 		break;
 	}
@@ -28,10 +30,12 @@ void CubeComponent::NextCubeColor(bool endOfLevel)
 		threshold = 2;
 		m_Stage = (m_Stage + 1) % threshold;
 		m_Sprite->SetToRowCollumn(m_Stage, -1);
+		return true;
 		break;
 	}
 	}
 
+	return false;
 }
 
 void CubeComponent::PrevCubeColor()

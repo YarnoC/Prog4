@@ -28,6 +28,7 @@
     <ClCompile Include="QBertComponent.cpp" />
     <ClCompile Include="QBertStates.cpp" />
     <ClCompile Include="RotatorComponent.cpp" />
+    <ClCompile Include="ScoreComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CubeComponent.h" />
@@ -39,6 +40,7 @@
     <ClInclude Include="QBertComponent.h" />
     <ClInclude Include="QBertStates.h" />
     <ClInclude Include="RotatorComponent.h" />
+    <ClInclude Include="ScoreComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
