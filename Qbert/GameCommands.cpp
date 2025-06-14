@@ -93,6 +93,7 @@ SelectMenuCmd::SelectMenuCmd(GameStateComponent* gameStateComp, dae::GameObject*
 void SelectMenuCmd::Execute()
 {
     m_GameStateComp->NextMenuOption(m_Reverse);
+    m_GameStateComp->UpdateCursorPos(m_Obj);
 }
 
 ConfirmChoice::ConfirmChoice(GameStateComponent* gameStateComp) :

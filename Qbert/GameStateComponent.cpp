@@ -60,7 +60,7 @@ void GameStateComponent::NextMenuOption(bool reverse)
 
 void GameStateComponent::UpdateCursorPos(dae::GameObject* obj)
 {
-	glm::vec3 pos{ 250, 0, 0 };
+	glm::vec3 pos{ 240, 0, 0 };
 	switch (m_MenuChoice)
 	{
 	case 0:
@@ -128,6 +128,7 @@ void GameStateComponent::LoadMainMenu()
 
 	auto* cursor = m_WorkingScene->CreateGameObject();
 	cursor->AddComponent<dae::TextureComponent>("QbertCurse.png");
+	cursor->SetLocalPosition({ 240, 200, 0 });
 
 	auto moveFwdCmd = std::make_unique<SelectMenuCmd>(this, cursor, false);
 	auto moveBckCmd = std::make_unique<SelectMenuCmd>(this, cursor, true);
@@ -140,7 +141,7 @@ void GameStateComponent::LoadMainMenu()
 	inputMan.AddGamepad();
 	inputMan.BindCommand(std::move(moveFwdCmd), GamepadButton::DpadDown, ButtonState::Pressed, 0);
 	inputMan.BindCommand(std::move(moveBckCmd), GamepadButton::DpadUp, ButtonState::Pressed, 0);
-	inputMan.BindCommand(std::move(confirmCmd), GamepadButton::XButton, ButtonState::Pressed, 0);
+	inputMan.BindCommand(std::move(confirmCmd), GamepadButton::AButton, ButtonState::Pressed, 0);
 	
 	inputMan.BindCommand(std::move(moveFwdCmdKb), SDL_SCANCODE_DOWN, ButtonState::Pressed);
 	inputMan.BindCommand(std::move(moveBckCmdKb), SDL_SCANCODE_UP, ButtonState::Pressed);
