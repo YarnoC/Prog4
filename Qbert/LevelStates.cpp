@@ -41,6 +41,13 @@ std::unique_ptr<LevelState> LevelFinishedState::Update()
 {
 	m_TransitionTimeLeft -= dae::GameTime::GetDt();
 
+	m_BlinkTimer += static_cast<float>(dae::GameTime::GetDt());
+	if (m_BlinkTimer > 0.1f)
+	{
+		m_BlinkTimer = 0.f;
+		m_LevelComp->flickerTiles();
+	}
+
 	if (m_TransitionTimeLeft > 0) return nullptr;
 
 	return std::make_unique<LevelPlayingState>(m_LevelComp);

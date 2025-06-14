@@ -34,10 +34,10 @@ public:
 	void SetCurrentLevel(int newLevel);
 
 	void SetupPlayer(QBertComponent* qbertComp, SpawnPos spawnPos);
-	//void Move(QBertComponent* qbertComp, glm::ivec2 moveVec);
 	glm::vec2 GetCubePos(int row, int col) const;
 
 	short GetLevelCompleteSoundId() const;
+	void flickerTiles();
 
 	LevelComponent(dae::GameObject* owner, dae::Scene* scene, int level);
 
@@ -56,4 +56,6 @@ private:
 	int m_CubeSize{ 64 };
 	int m_LevelNumber{};
 	short m_LevelCompleteSoundId{};
+
+	void EnterNewState(std::unique_ptr<LevelState> newState);
 };

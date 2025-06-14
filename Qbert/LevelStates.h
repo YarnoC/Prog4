@@ -64,5 +64,6 @@ public:
 	LevelFinishedState& operator=(LevelFinishedState&&) = delete;
 
 private:
-	double m_TransitionTimeLeft{ 2.0 };
+	double m_TransitionTimeLeft{ 3.0 };
+	float m_BlinkTimer{};
 };

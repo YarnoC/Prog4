@@ -9,7 +9,7 @@ class GameObject;
 class CubeComponent final : public dae::Component
 {
 public:
-	void NextCubeColor();
+	void NextCubeColor(bool endOfLevel = false);
 	void PrevCubeColor();
 	void SetToLevel(int level);
 	bool IsInCorrectState() const;

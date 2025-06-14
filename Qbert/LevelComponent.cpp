@@ -12,8 +12,7 @@ void LevelComponent::Update()
 	auto newState = m_LevelState->Update();
 	if (newState != nullptr)
 	{
-		m_LevelState = std::move(newState);
-		m_LevelState->OnEnter();
+		EnterNewState(std::move(newState));
 	}
 }
 
@@ -44,7 +43,7 @@ void LevelComponent::ChangeTile(int row, int col, bool forward)
 		auto newState = m_LevelState->CheckTiles(m_Level);
 		if (newState)
 		{
-			m_LevelState = std::move(newState);
+			EnterNewState(std::move(newState));
 		}
 
 		return;
@@ -120,6 +119,17 @@ short LevelComponent::GetLevelCompleteSoundId() const
 	return m_LevelCompleteSoundId;
 }
 
+void LevelComponent::flickerTiles()
+{
+	for (auto&& col : m_Level)
+	{
+		for (auto&& cube : col)
+		{
+			cube->NextCubeColor(true);
+		}
+	}
+}
+
 LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene* scene, int level) :
 	dae::Component(owner)
 {
@@ -152,3 +162,10 @@ LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene* scene, int le
 }
 
 LevelComponent::~LevelComponent() = default;
+
+void LevelComponent::EnterNewState(std::unique_ptr<LevelState> newState)
+{
+	m_LevelState->OnExit();
+	m_LevelState = std::move(newState);
+	m_LevelState->OnEnter();
+}
