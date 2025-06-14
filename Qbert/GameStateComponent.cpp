@@ -80,6 +80,7 @@ void GameStateComponent::UpdateCursorPos(dae::GameObject* obj)
 GameStateComponent::GameStateComponent(dae::GameObject* owner) :
 	dae::Component(owner)
 {
+	m_WorkingScene = &dae::SceneManager::GetInstance().CreateScene("workScene");
 	LoadMainMenu();
 }
 

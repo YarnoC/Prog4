@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CubeComponent.cpp" />
+    <ClCompile Include="EnemyComponent.cpp" />
     <ClCompile Include="FpsComponent.cpp" />
     <ClCompile Include="GameCommands.cpp" />
     <ClCompile Include="GameStateComponent.cpp" />
@@ -34,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CubeComponent.h" />
+    <ClInclude Include="EnemyComponent.h" />
     <ClInclude Include="FpsComponent.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="GameLoaderUtils.h" />
