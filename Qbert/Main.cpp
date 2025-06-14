@@ -63,6 +63,8 @@ void load()
 	auto qbertComp = qbertObj->AddComponent<QBertComponent>(levelComp, spriteComp);
 	levelComp->SetupPlayer(qbertComp, LevelComponent::SpawnPos::Top);
 
+	levelComp->AddObserver(qbertComp);
+
 	//auto qbertObj2 = scene.CreateGameObject();
 	//qbertObj2->SetLocalPosition({ 100, 400, 0 });
 	//qbertObj2->AddComponent<dae::TextureComponent>("QBertSpritesheet.png");

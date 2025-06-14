@@ -6,6 +6,8 @@
 #include "QBertComponent.h"
 #include "LevelStates.h"
 #include "ServiceLocator.h"
+#include "Subject.h"
+#include "Observer.h"
 
 void LevelComponent::Update()
 {
@@ -32,6 +34,16 @@ void LevelComponent::InitLevel(int level)
 int LevelComponent::GetCubeSize() const
 {
 	return m_CubeSize;
+}
+
+void LevelComponent::AddObserver(dae::Observer* observer)
+{
+	m_OnLvlCompleteEvent->AddObserver(observer);
+}
+
+void LevelComponent::NotifyObservers(dae::Event e)
+{
+	m_OnLvlCompleteEvent->NotifyObservers(e, this);
 }
 
 void LevelComponent::ChangeTile(int row, int col, bool forward)
@@ -155,6 +167,7 @@ LevelComponent::LevelComponent(dae::GameObject* owner, dae::Scene* scene, int le
 	}
 
 	m_LevelState = std::make_unique<LevelPlayingState>(this);
+	m_OnLvlCompleteEvent = std::make_unique<dae::Subject>();
 
 	InitLevel(level);
 

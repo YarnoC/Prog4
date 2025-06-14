@@ -29,6 +29,7 @@ void LevelPlayingState::OnEnter()
 	auto newLevel = m_LevelComp->GetCurrentLevel() + 1;
 	m_LevelComp->SetCurrentLevel(newLevel);
 	m_LevelComp->InitLevel(newLevel);
+	m_LevelComp->NotifyObservers(dae::Event{ dae::utils::MakeSdbmHash("LevelComplete") });
 }
 
 LevelPlayingState::LevelPlayingState(LevelComponent* levelComp) :

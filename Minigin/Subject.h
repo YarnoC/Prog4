@@ -15,14 +15,16 @@ public:
 
 	void NotifyObservers(Event event, Component* subject);
 
-private:
-	std::vector<Observer*> m_Observers{};
+	Subject() = default;
 
 	virtual ~Subject() = default;
 	Subject(const Subject&) = delete;
 	Subject(Subject&&) = delete;
 	Subject& operator=(const Subject&) = delete;
 	Subject& operator=(Subject&&) = delete;
+
+private:
+	std::vector<Observer*> m_Observers{};
 };
 
 }

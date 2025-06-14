@@ -4,11 +4,14 @@
 #include <memory>
 #include "Component.h"
 #include "vec2.hpp"
+#include"Event.h"
 
 namespace dae
 {
 class GameObject;
 class Scene;
+class Subject;
+class Observer;
 }
 
 class CubeComponent;
@@ -28,6 +31,9 @@ public:
 		Top,
 		BottomRight
 	};
+
+	void AddObserver(dae::Observer* observer);
+	void NotifyObservers(dae::Event e);
 
 	void ChangeTile(int row, int col, bool forward = true);
 	int GetCurrentLevel() const;
@@ -51,11 +57,13 @@ public:
 private:
 	std::vector<std::vector<CubeComponent*>> m_Level;
 	std::unique_ptr<LevelState> m_LevelState{ nullptr };
+	std::unique_ptr<dae::Subject> m_OnLvlCompleteEvent{ nullptr };
 	const glm::ivec2 m_PlayerCubeOffset{ 16, -12 };
 	dae::Texture2D* m_CubeSpriteSheet; //lifetime managed by resource manager
 	int m_CubeSize{ 64 };
 	int m_LevelNumber{};
 	short m_LevelCompleteSoundId{};
+	
 
 	void EnterNewState(std::unique_ptr<LevelState> newState);
 };

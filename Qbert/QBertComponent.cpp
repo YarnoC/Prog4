@@ -2,6 +2,7 @@
 #include "LevelComponent.h"
 #include "MultiSpriteComponent.h"
 #include "ServiceLocator.h"
+#include "Utils.h"
 
 void QBertComponent::Move(glm::ivec2 moveVec)
 {
@@ -49,6 +50,16 @@ void QBertComponent::TryChangeTile()
 	if (m_LevelCoords.y < 0 || m_LevelCoords.y > m_LevelCoords.x) return;
 
 	m_LevelComp->ChangeTile(m_LevelCoords.y, m_LevelCoords.x);
+}
+
+void QBertComponent::OnNotify(const dae::Event& event, Component*)
+{
+	if (event.id == dae::utils::MakeSdbmHash("LevelComplete"))
+	{
+		//probs do check based on gamemode
+		m_LevelComp->SetupPlayer(this, LevelComponent::SpawnPos::Top);
+		SetSpriteRowCol(-1, 3);
+	}
 }
 
 const QBertComponent::Sounds& QBertComponent::GetQBertSounds() const
