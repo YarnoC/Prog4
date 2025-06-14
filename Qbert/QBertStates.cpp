@@ -131,6 +131,7 @@ void QDeadState::OnExit()
 	if (m_QBertComp->IsDead())
 	{
 		std::cout << "dead innit?\n";
+		m_QBertComp->NotifyObservers(dae::Event{ dae::utils::MakeSdbmHash("OutOfLives") });
 		//send a message to the gamemode ig
 	}
 }

@@ -120,6 +120,17 @@ void dae::InputManager::UnbindCommand(SDL_Scancode key)
 	std::erase_if(m_KeyboardCommands, [&](std::unique_ptr<KeyboardCommandBind>& command) { return command->key == key; });
 }
 
+void dae::InputManager::UnbindAll()
+{
+	m_GamepadCommands.clear();
+	m_KeyboardCommands.clear();
+}
+
+void dae::InputManager::RemoveAllGamepads()
+{
+	m_Gamepads.clear();
+}
+
 dae::InputManager::InputManager()
 {
 	int keyAmount{};

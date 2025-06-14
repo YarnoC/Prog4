@@ -5,6 +5,7 @@
 #include "ServiceLocator.h"
 #include "QBertComponent.h"
 #include "LevelComponent.h"
+#include "GameStateComponent.h"
 
 MoveActorCommand::MoveActorCommand(dae::GameObject* actor, glm::vec2 moveVec)
     : dae::GameActorCommand(actor), m_MoveVec{ moveVec }
@@ -71,4 +72,35 @@ void SkipLevelCommand::Execute()
         m_LevelComp->SetupPlayer(m_QBertComp, LevelComponent::SpawnPos::BottomLeft);
         m_LevelComp->SetupPlayer(m_QBertComp2, LevelComponent::SpawnPos::BottomRight);
     }
+}
+
+ReturnToMenuCmd::ReturnToMenuCmd(GameStateComponent* gameStateComp) :
+    dae::Command(), m_GameStateComp{gameStateComp}
+{
+}
+
+void ReturnToMenuCmd::Execute()
+{
+    //a bit of a hack but i'm not making a subject for this
+    m_GameStateComp->OnNotify(dae::Event{ dae::utils::MakeSdbmHash("ToMainMenu") }, m_GameStateComp);
+}
+
+SelectMenuCmd::SelectMenuCmd(GameStateComponent* gameStateComp, dae::GameObject* obj, bool reverse) :
+    dae::Command(), m_GameStateComp{ gameStateComp }, m_Obj{ obj }, m_Reverse{ reverse }
+{
+}
+
+void SelectMenuCmd::Execute()
+{
+    m_GameStateComp->NextMenuOption(m_Reverse);
+}
+
+ConfirmChoice::ConfirmChoice(GameStateComponent* gameStateComp) :
+    dae::Command(), m_GameStateComp{gameStateComp}
+{
+}
+
+void ConfirmChoice::Execute()
+{
+    m_GameStateComp->OnNotify(dae::Event{ dae::utils::MakeSdbmHash("MenuConfirm") }, m_GameStateComp);
 }

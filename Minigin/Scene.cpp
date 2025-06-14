@@ -26,6 +26,7 @@ void Scene::Remove(std::unique_ptr<GameObject>& object)
 
 void Scene::RemoveAll()
 {
+	if (m_objects.empty()) return;
 	m_objects.clear();
 }
 

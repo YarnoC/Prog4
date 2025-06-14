@@ -54,6 +54,9 @@
     <ClCompile Include="HealthComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="GameStateComponent.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsComponent.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>

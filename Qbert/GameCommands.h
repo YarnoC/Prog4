@@ -4,6 +4,7 @@
 
 class QBertComponent;
 class LevelComponent;
+class GameStateComponent;
 
 class MoveActorCommand final : public dae::GameActorCommand
 {
@@ -75,4 +76,48 @@ private:
 	LevelComponent* m_LevelComp{ nullptr };
 	QBertComponent* m_QBertComp{ nullptr };
 	QBertComponent* m_QBertComp2{ nullptr };
+};
+
+class ReturnToMenuCmd final : public dae::Command
+{
+public:
+	ReturnToMenuCmd(GameStateComponent* gameStateComp);
+	void Execute();
+
+	ReturnToMenuCmd(const ReturnToMenuCmd&) = delete;
+	ReturnToMenuCmd(ReturnToMenuCmd&&) = delete;
+	ReturnToMenuCmd& operator=(const ReturnToMenuCmd&) = delete;
+	ReturnToMenuCmd& operator=(ReturnToMenuCmd&&) = delete;
+
+private:
+	GameStateComponent* m_GameStateComp{ nullptr };
+};
+
+class SelectMenuCmd final : public dae::Command
+{
+public:
+	SelectMenuCmd(GameStateComponent* gameStateComp, dae::GameObject* obj, bool reverse = false);
+	void Execute();
+
+	~SelectMenuCmd() = default;
+
+	SelectMenuCmd(const SelectMenuCmd&) = delete;
+	SelectMenuCmd(SelectMenuCmd&&) = delete;
+	SelectMenuCmd& operator=(const SelectMenuCmd&) = delete;
+	SelectMenuCmd& operator=(SelectMenuCmd&&) = delete;
+
+private:
+	GameStateComponent* m_GameStateComp{ nullptr };
+	dae::GameObject* m_Obj;
+	bool m_Reverse{ false };
+};
+
+class ConfirmChoice final : public dae::Command
+{
+public:
+	ConfirmChoice(GameStateComponent* gameStateComp);
+	void Execute();
+
+private:
+	GameStateComponent* m_GameStateComp{ nullptr };
 };

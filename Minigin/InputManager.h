@@ -33,6 +33,8 @@ namespace dae
 		void BindCommand(std::unique_ptr<Command> command, SDL_Scancode key, ButtonState inputAction);
 		void UnbindCommand(GamepadButton gamepadButton, uint8_t gamepadIndex);
 		void UnbindCommand(SDL_Scancode key);
+		void UnbindAll();
+		void RemoveAllGamepads();
 
 		InputManager();
 		~InputManager() = default;

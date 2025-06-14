@@ -22,6 +22,7 @@
     <ClCompile Include="CubeComponent.cpp" />
     <ClCompile Include="FpsComponent.cpp" />
     <ClCompile Include="GameCommands.cpp" />
+    <ClCompile Include="GameStateComponent.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="LevelComponent.cpp" />
     <ClCompile Include="LevelStates.cpp" />
@@ -36,6 +37,7 @@
     <ClInclude Include="FpsComponent.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="GameLoaderUtils.h" />
+    <ClInclude Include="GameStateComponent.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="LevelComponent.h" />
     <ClInclude Include="LevelStates.h" />
