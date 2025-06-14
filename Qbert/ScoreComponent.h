@@ -1,8 +1,13 @@
 #pragma once
-#include "TextComponent.h"
 #include "Observer.h"
-#include "GameObject.h"
 #include "Event.h"
+#include "Component.h"
+
+namespace dae
+{
+	class GameObject;
+	class TextComponent;
+}
 
 class ScoreComponent final : public dae::Component, public dae::Observer
 {

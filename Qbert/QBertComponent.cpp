@@ -52,6 +52,26 @@ void QBertComponent::TryChangeTile()
 	m_LevelComp->ChangeTile(m_LevelCoords.y, m_LevelCoords.x);
 }
 
+void QBertComponent::AddObserver(dae::Observer* observer)
+{
+	m_Subject->AddObserver(observer);
+}
+
+void QBertComponent::NotifyObservers(dae::Event e)
+{
+	m_Subject->NotifyObservers(e, this);
+}
+
+void QBertComponent::SetDead(bool dead)
+{
+	m_OutOfLives = dead;
+}
+
+bool QBertComponent::IsDead() const
+{
+	return m_OutOfLives;
+}
+
 void QBertComponent::OnNotify(const dae::Event& event, Component*)
 {
 	if (event.id == dae::utils::MakeSdbmHash("LevelComplete"))
@@ -77,7 +97,7 @@ void QBertComponent::Update()
 }
 
 QBertComponent::QBertComponent(dae::GameObject* owner, LevelComponent* levelComp, dae::MultiSpriteComponent* multiSpriteComp) :
-	Component(owner), m_LevelComp{levelComp}, m_SpriteComp{multiSpriteComp}, m_State{std::make_unique<QIdleState>(this)}
+	Component(owner), m_LevelComp{levelComp}, m_SpriteComp{multiSpriteComp}, m_State{std::make_unique<QIdleState>(this)}, m_Subject{std::make_unique<dae::Subject>()}
 {
 	auto& ss = dae::ServiceLocator::GetSoundSystem();
 	m_Sounds.jump = ss.LoadEffect("Sounds/QBertJump.ogg");

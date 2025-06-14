@@ -20,6 +20,7 @@
 #include "LevelComponent.h"
 #include "QBertComponent.h"
 #include "ScoreComponent.h"
+#include "HealthComponent.h"
 
 void load()
 {
@@ -36,9 +37,13 @@ void load()
 	auto* scoreObj = scene.CreateGameObject();
 	auto* scoreComp = scoreObj->AddComponent<ScoreComponent>(scoreObj->AddComponent<dae::TextComponent>("Score: 0", font.get()));
 
-	//go->AddComponent<dae::TextureComponent>("background.tga");
+	auto* livesObj = scene.CreateGameObject();
+	auto* healthComp = livesObj->AddComponent<HealthComponent>(livesObj->AddComponent<dae::TextComponent>("Lives: 3", font.get()));
 
-	//textObject->AddComponent<dae::TextComponent>("Programming 4 Assignment", font.get());
+	auto* uiObj = scene.CreateGameObject();
+	scoreObj->SetParent(uiObj, false);
+	livesObj->SetParent(uiObj, false);
+	livesObj->SetLocalPosition({ 0.f, 30.f, 0 });
 
 	auto qbertObj = scene.CreateGameObject();
 	auto spriteComp = qbertObj->AddComponent<dae::MultiSpriteComponent>("QBertSpritesheet.png", 1, 4);
@@ -47,6 +52,7 @@ void load()
 
 	levelComp->AddObserver(qbertComp);
 	levelComp->AddObserver(scoreComp);
+	qbertComp->AddObserver(healthComp);
 
 	//gamepad commands
 	auto leftUpCmd = std::make_unique<MoveQBertCommand>(qbertComp, glm::ivec2{ 0, -1 });

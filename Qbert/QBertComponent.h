@@ -6,6 +6,7 @@
 #include <memory>
 #include "Observer.h"
 #include "Component.h"
+#include "Subject.h"
 
 class LevelComponent;
 
@@ -26,6 +27,9 @@ public:
 	glm::vec2 CalcPlayerPos(int row, int col) const;
 	void TryChangeTile();
 	void AddObserver(dae::Observer* observer);
+	void NotifyObservers(dae::Event e);
+	void SetDead(bool dead);
+	bool IsDead() const;
 
 	void OnNotify(const dae::Event& event, Component* comp) override;
 
@@ -53,9 +57,9 @@ private:
 	LevelComponent* m_LevelComp{ nullptr };
 	dae::MultiSpriteComponent* m_SpriteComp{ nullptr };
 	std::unique_ptr<QbertState> m_State{ nullptr };
+	std::unique_ptr<dae::Subject> m_Subject{ nullptr };
 	glm::ivec2 m_LevelCoords{ 7, 0 };
 	glm::ivec2 m_PlayerOffset{ 16, -12 };
 	Sounds m_Sounds{};
-	int m_Lives{ 3 };
-	
+	bool m_OutOfLives{ false };
 };

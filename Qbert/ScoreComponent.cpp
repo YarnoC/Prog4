@@ -1,5 +1,7 @@
 #include "ScoreComponent.h"
 #include <sstream>
+#include "GameObject.h"
+#include "TextComponent.h"
 
 int ScoreComponent::GetScore() const
 {

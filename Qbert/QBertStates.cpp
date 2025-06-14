@@ -103,6 +103,7 @@ QDeadState::QDeadState(QBertComponent* qbertComp) :
 void QDeadState::OnEnter()
 {
 	dae::ServiceLocator::GetSoundSystem().Play(m_QBertComp->GetQBertSounds().curse, 32, false);
+	m_QBertComp->NotifyObservers(dae::Event{ dae::utils::MakeSdbmHash("PlayerDied") });
 }
 
 std::unique_ptr<QbertState> QDeadState::Update()
@@ -123,4 +124,13 @@ std::unique_ptr<QbertState> QDeadState::Update()
 	}
 
 	return std::unique_ptr<QbertState>();
+}
+
+void QDeadState::OnExit()
+{
+	if (m_QBertComp->IsDead())
+	{
+		std::cout << "dead innit?\n";
+		//send a message to the gamemode ig
+	}
 }
