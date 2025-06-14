@@ -21,9 +21,14 @@ bool dae::InputManager::ProcessInput()
 
 	for (auto&& command : m_GamepadCommands)
 	{
+		if (m_IsDirty) break;
+
 		for (auto&& gamepad : m_Gamepads)
 		{
+			if (m_IsDirty) break;
+
 			if (gamepad->GetGamepadIndex() != command->gamepadIndex) continue;
+
 
 			switch (command->inputAction)
 			{
@@ -53,6 +58,8 @@ bool dae::InputManager::ProcessInput()
 
 	for (auto&& command : m_KeyboardCommands)
 	{
+		if (m_IsDirty) break;
+
 		switch (command->inputAction)
 		{
 		case ButtonState::Pressed:
@@ -76,6 +83,8 @@ bool dae::InputManager::ProcessInput()
 		}
 	}
 
+	m_IsDirty = false;
+
 	return true;
 }
 
@@ -85,6 +94,7 @@ void dae::InputManager::AddGamepad()
 
 	m_Gamepads.emplace_back(std::make_unique<Gamepad>(m_CurrentGamepadIndex));
 	++m_CurrentGamepadIndex;
+	m_IsDirty = true;
 }
 
 void dae::InputManager::RemoveGamepad(uint8_t gamepadIndex)
@@ -95,6 +105,7 @@ void dae::InputManager::RemoveGamepad(uint8_t gamepadIndex)
 	//remove all commands associated with the removed controllers
 	std::erase_if(m_GamepadCommands, [gamepadIndex](std::unique_ptr<GamepadCommandBind>& command) { return command->gamepadIndex == gamepadIndex; });
 	--m_CurrentGamepadIndex;
+	m_IsDirty = true;
 }
 
 void dae::InputManager::BindCommand(std::unique_ptr<Command> command, GamepadButton gamepadButton, ButtonState inputAction, uint8_t gamepadIndex)
@@ -108,27 +119,33 @@ void dae::InputManager::BindCommand(std::unique_ptr<Command> command, SDL_Scanco
 {
 	auto commandUPtr = std::make_unique<KeyboardCommandBind>(std::move(command), inputAction, key);
 	m_KeyboardCommands.emplace_back(std::move(commandUPtr));
+	m_IsDirty = true;
 }
 
 void dae::InputManager::UnbindCommand(GamepadButton gamepadButton, uint8_t gamepadIndex)
 {
 	std::erase_if(m_GamepadCommands, [&](std::unique_ptr<GamepadCommandBind>& command) { return command->gamepadIndex == gamepadIndex && command->button == gamepadButton; });
+	m_IsDirty = true;
 }
 
 void dae::InputManager::UnbindCommand(SDL_Scancode key)
 {
 	std::erase_if(m_KeyboardCommands, [&](std::unique_ptr<KeyboardCommandBind>& command) { return command->key == key; });
+	m_IsDirty = true;
 }
 
 void dae::InputManager::UnbindAll()
 {
 	m_GamepadCommands.clear();
 	m_KeyboardCommands.clear();
+	m_IsDirty = true;
 }
 
 void dae::InputManager::RemoveAllGamepads()
 {
 	m_Gamepads.clear();
+	m_CurrentGamepadIndex = 0;
+	m_IsDirty = true;
 }
 
 dae::InputManager::InputManager()

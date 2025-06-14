@@ -44,4 +44,5 @@ private:
 	void LoadLevel();
 	void LoadGameOverScreen();
 	void LoadMainMenu();
+	void LoadSinglePlayer();
 };
