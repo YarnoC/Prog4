@@ -6,11 +6,6 @@
 
 #include <functional>
 
-//dae::Transform dae::GameObject::GetTranform() const
-//{
-//	return m_Transform;
-//}
-
 bool dae::GameObject::IsTerminal() const
 {
 	return m_IsTerminal;
@@ -160,7 +155,6 @@ void dae::GameObject::Update()
 
 void dae::GameObject::LateUpdate()
 {
-
 	//destroy any terminal components
 	std::erase_if(m_ComponentVec, [](std::unique_ptr<Component>& comp)
 		{

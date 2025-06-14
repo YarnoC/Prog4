@@ -34,8 +34,20 @@ namespace dae
 			return reinterpret_cast<ComponentType*>(newComp.get());
 		}
 
-		//TODO: make RemoveComponent
-		//use std::erase_if for the remove func
+		template<IsComponentType ComponentType>
+		void RemoveComponent(ComponentType* component)
+		{
+			for (const auto& comp : m_ComponentVec)
+			{
+				ComponentType* compPtr = dynamic_cast<ComponentType*>(comp.get());
+
+				if (compPtr != nullptr)
+				{
+					compPtr->Destroy();
+					return;
+				}
+			}
+		}
 
 		template<IsComponentType ComponentType>
 		ComponentType* GetComponent()
